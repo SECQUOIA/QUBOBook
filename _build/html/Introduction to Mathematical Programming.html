@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -182,8 +182,6 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Mathematical Programming</a></li>
-
-
 </ul>
 
     </div>
@@ -379,22 +377,15 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Mathematical Programming</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling">Modeling</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem statement</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-programming">Linear Programming</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-go-back-to-the-slides">Let’s go back to the slides</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integer-programming">Integer Programming</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration">Enumeration</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Let’s go back to the slides</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integer-convex-nonlinear-programming">Integer convex nonlinear programming</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integer-non-convex-programming">Integer non-convex programming</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#powerful-commercial-solver-installation">Powerful commercial solver installation</a><ul class="nav section-nav flex-column">
@@ -403,9 +394,6 @@ document.write(`
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -646,12 +634,12 @@ Assuming the units produced of A are <span class="math notranslate nohighlight">
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLPSOL--GLPK LP/MIP Solver 5.0
 Parameter(s) specified in the command line:
- --write /tmp/tmpbuxgv332.glpk.raw --wglp /tmp/tmp522lldei.glpk.glp --cpxlp
- /tmp/tmpbn976fgz.pyomo.lp
-Reading problem data from &#39;/tmp/tmpbn976fgz.pyomo.lp&#39;...
+ --write /tmp/tmpy05tylhh.glpk.raw --wglp /tmp/tmpy5yn2ndr.glpk.glp --cpxlp
+ /tmp/tmpzg19muvj.pyomo.lp
+Reading problem data from &#39;/tmp/tmpzg19muvj.pyomo.lp&#39;...
 2 rows, 2 columns, 4 non-zeros
 23 lines were read
-Writing problem data to &#39;/tmp/tmp522lldei.glpk.glp&#39;...
+Writing problem data to &#39;/tmp/tmpy5yn2ndr.glpk.glp&#39;...
 15 lines were written
 GLPK Simplex Optimizer 5.0
 2 rows, 2 columns, 4 non-zeros
@@ -667,7 +655,7 @@ Size of triangular part is 2
 OPTIMAL LP SOLUTION FOUND
 Time used:   0.0 secs
 Memory used: 0.0 Mb (39693 bytes)
-Writing basic solution to &#39;/tmp/tmpbuxgv332.glpk.raw&#39;...
+Writing basic solution to &#39;/tmp/tmpy05tylhh.glpk.raw&#39;...
 13 lines were written
 </pre></div>
 </div>
@@ -872,9 +860,6 @@ EXIT: Optimal Solution Found.
 </div>
 <p>We obtain the same result as previously, but notice that the interior point method reports some solution subject to certain tolerance, given by its convergence properties when it can get infinitesimally close (but not directly at) the boundary of the feasible region.</p>
 </section>
-</section>
-<section id="let-s-go-back-to-the-slides">
-<h1>Let’s go back to the slides<a class="headerlink" href="#let-s-go-back-to-the-slides" title="Link to this heading">#</a></h1>
 <section id="integer-programming">
 <h2>Integer Programming<a class="headerlink" href="#integer-programming" title="Link to this heading">#</a></h2>
 <p>Now let’s consider that only integer units of each product can be produced, namely
@@ -1036,9 +1021,6 @@ x_1, x_2 \in \mathbb{Z}
 </div>
 </section>
 </section>
-</section>
-<section id="id1">
-<h1>Let’s go back to the slides<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <section id="integer-convex-nonlinear-programming">
 <h2>Integer convex nonlinear programming<a class="headerlink" href="#integer-convex-nonlinear-programming" title="Link to this heading">#</a></h2>
 <p>The following constraint “the production of B minus 1 squared can only be smaller than 2 minus the production of A” can be incorporated  in the following convex integer nonlinear program
@@ -1464,22 +1446,15 @@ x_1, x_2 \in \mathbb{Z}
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Mathematical Programming</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling">Modeling</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem statement</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-programming">Linear Programming</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-go-back-to-the-slides">Let’s go back to the slides</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integer-programming">Integer Programming</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumeration">Enumeration</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Let’s go back to the slides</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integer-convex-nonlinear-programming">Integer convex nonlinear programming</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integer-non-convex-programming">Integer non-convex programming</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#powerful-commercial-solver-installation">Powerful commercial solver installation</a><ul class="nav section-nav flex-column">
@@ -1488,9 +1463,6 @@ x_1, x_2 \in \mathbb{Z}
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
