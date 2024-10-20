@@ -5,3 +5,7 @@ format: jb-book
 root: intro
 chapters:
 - file: Introduction to Mathematical Programming
+- file: QUBO and Ising Models
+- file: Graver Augmentation Multiseed Algorithm
+- file: Quantum Annealing via D-Wave
+- file: Benchmarking

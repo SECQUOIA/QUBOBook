@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Introduction to Mathematical Programming';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quadratic Unconstrained Binary Optimization" href="QUBO%20and%20Ising%20Models.html" />
     <link rel="prev" title="QUBOBook" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -182,6 +183,17 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Mathematical Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QUBO%20and%20Ising%20Models.html">Quadratic Unconstrained Binary Optimization</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Graver%20Augmentation%20Multiseed%20Algorithm.html">Introduction to GAMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Quantum%20Annealing%20via%20D-Wave.html">Quantum Annealing via D-Wave</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">About this Notebook</a></li>
+
+
+
+
+
+
 </ul>
 
     </div>
@@ -634,12 +646,12 @@ Assuming the units produced of A are <span class="math notranslate nohighlight">
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLPSOL--GLPK LP/MIP Solver 5.0
 Parameter(s) specified in the command line:
- --write /tmp/tmpy05tylhh.glpk.raw --wglp /tmp/tmpy5yn2ndr.glpk.glp --cpxlp
- /tmp/tmpzg19muvj.pyomo.lp
-Reading problem data from &#39;/tmp/tmpzg19muvj.pyomo.lp&#39;...
+ --write /tmp/tmpsjjfwvef.glpk.raw --wglp /tmp/tmp2pnbpcht.glpk.glp --cpxlp
+ /tmp/tmp5a3_0t6t.pyomo.lp
+Reading problem data from &#39;/tmp/tmp5a3_0t6t.pyomo.lp&#39;...
 2 rows, 2 columns, 4 non-zeros
 23 lines were read
-Writing problem data to &#39;/tmp/tmpy5yn2ndr.glpk.glp&#39;...
+Writing problem data to &#39;/tmp/tmp2pnbpcht.glpk.glp&#39;...
 15 lines were written
 GLPK Simplex Optimizer 5.0
 2 rows, 2 columns, 4 non-zeros
@@ -655,7 +667,7 @@ Size of triangular part is 2
 OPTIMAL LP SOLUTION FOUND
 Time used:   0.0 secs
 Memory used: 0.0 Mb (39693 bytes)
-Writing basic solution to &#39;/tmp/tmpy05tylhh.glpk.raw&#39;...
+Writing basic solution to &#39;/tmp/tmpsjjfwvef.glpk.raw&#39;...
 13 lines were written
 </pre></div>
 </div>
@@ -827,7 +839,7 @@ Number of inequality constraint evaluations          = 6
 Number of equality constraint Jacobian evaluations   = 0
 Number of inequality constraint Jacobian evaluations = 6
 Number of Lagrangian Hessian evaluations             = 5
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.005
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.001
 Total CPU secs in NLP function evaluations           =      0.000
 
 EXIT: Optimal Solution Found.
@@ -1429,6 +1441,15 @@ x_1, x_2 \in \mathbb{Z}
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">QUBOBook</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="QUBO%20and%20Ising%20Models.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Quadratic Unconstrained Binary Optimization</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
