@@ -1,0 +1,930 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quantum Annealing via D-Wave &#8212; QUBOBook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Quantum Annealing via D-Wave';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="About this Notebook" href="Benchmarking.html" />
+    <link rel="prev" title="Introduction to GAMA" href="Graver%20Augmentation%20Multiseed%20Algorithm.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="QUBOBook - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="QUBOBook - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    QUBOBook
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Introduction%20to%20Mathematical%20Programming.html">Introduction to Mathematical Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QUBO%20and%20Ising%20Models.html">Quadratic Unconstrained Binary Optimization</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Graver%20Augmentation%20Multiseed%20Algorithm.html">Introduction to GAMA</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Quantum Annealing via D-Wave</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">About this Notebook</a></li>
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/SECQUOIA/QUBOBook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/SECQUOIA/QUBOBook/issues/new?title=Issue%20on%20page%20%2FQuantum Annealing via D-Wave.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Quantum Annealing via D-Wave.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Quantum Annealing via D-Wave</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem statement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-let-s-solve-this-using-quantum-annealing">Now let’s solve this using Quantum Annealing!</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p><a name="top" id="top"></a></p>
+<div align="center">
+    <h1>Quantum Annealing via D-Wave</h1>
+    <a href="https://github.com/bernalde">David E. Bernal Neira</a>
+    <br>
+    <i>Davidson School of Chemical Engineering, Purdue University</i>
+    <br>
+    <i>Universities Space Research Association</i>
+    <br>
+    <i>NASA QuAIL</i>
+    <br>
+    <br>
+    <a href="https://github.com/pedromxavier">Pedro Maciel Xavier</a>
+    <br>
+    <i>Davidson School of Chemical Engineering, Purdue University</i>
+    <br>
+    <i>Computer Science &amp; Systems Engineering Program, Federal University of Rio de Janeiro</i>
+    <br>
+    <i>PSR Energy Consulting &amp; Analytics</i>
+    <br>
+    <br>
+    <a href="https://github.com/murraybj">Benjamin J. L. Murray</a>
+    <br>
+    <i>Davidson School of Chemical Engineering, Purdue University</i>
+    <br>
+    <i>Undergraduate Research Assistant</i>
+    <br>
+    <br>
+    <a href="https://colab.research.google.com/github/JuliaQUBO/QUBONotebooks/blob/main/notebooks_py/4-DWAVE_python.ipynb" target="_parent">
+        <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+    </a>
+    <a href="https://secquoia.github.io/">
+        <img src="https://img.shields.io/badge/🌲⚛️🌐-SECQUOIA-blue" alt="SECQUOIA"/>
+    </a>
+</div><section id="quantum-annealing-via-d-wave">
+<h1>Quantum Annealing via D-Wave<a class="headerlink" href="#quantum-annealing-via-d-wave" title="Link to this heading">#</a></h1>
+<p>This notebook will give the first interaction with D-Wave’s Quantum Annealer. It will use the QUBO modeling problem introduced earlier and will define it using D-Wave’s package <strong><a class="reference external" href="https://github.com/dwavesystems/dimod">dimod</a></strong>, and then solve them using <strong><a class="reference external" href="https://github.com/dwavesystems/dwave-neal">neal</a></strong>’s implementation of simulated annealing classicaly and D-Wave system package to use Quantum Annealing.
+We will also leverage the use of <strong><a class="reference external" href="https://networkx.github.io/">Networkx</a></strong> for network models/graphs.</p>
+<section id="problem-statement">
+<h2>Problem statement<a class="headerlink" href="#problem-statement" title="Link to this heading">#</a></h2>
+<p>We define a QUBO as the following optimization problem:
+$<span class="math notranslate nohighlight">\(
+\min_{x \in \{0,1 \}^n} \sum_{(ij) \in E(G)} Q_{ij}x_i x_j + \sum_{i \in V(G)}Q_{ii}x_i + c_Q = \min_{x \in \{0,1 \}^n}  x^\top Q x + c_Q
+\)</span><span class="math notranslate nohighlight">\(
+where we optimize over binary variables \)</span>x \in { 0,1 }^n<span class="math notranslate nohighlight">\(, on a constrained graph \)</span>G(V,E)<span class="math notranslate nohighlight">\( defined by an adjacency matrix \)</span>Q<span class="math notranslate nohighlight">\(. We also include an arbitrary offset  \)</span>c_Q$.</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<p>Suppose we want to solve the following problem via QUBO
+$<span class="math notranslate nohighlight">\(
+\min_{\mathbf{x}} 2𝑥_0+4𝑥_1+4𝑥_2+4𝑥_3+4𝑥_4+4𝑥_5+5𝑥_6+4𝑥_7+5𝑥_8+6𝑥_9+5𝑥_{10} \\
+s.t. \begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 1 &amp; 1\\
+0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 1\\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1
+\end{bmatrix}\mathbf{x}=
+\begin{bmatrix}
+1\\
+1\\
+1
+\end{bmatrix} \\
+\mathbf{x} \in \{0,1 \}^{11}
+\)</span>$</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># If using this on Google collab, we need to install the packages</span>
+<span class="k">try</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">google.colab</span>
+  <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="k">if</span> <span class="n">IN_COLAB</span><span class="p">:</span>
+    <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dwave-ocean-sdk
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the Dwave packages dimod and neal</span>
+<span class="kn">import</span> <span class="nn">dimod</span>
+<span class="kn">import</span> <span class="nn">neal</span>
+<span class="c1"># Import Matplotlib to generate plots</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1"># Import numpy and scipy for certain numerical calculations below</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">gamma</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>First we would write this problem as a an unconstrained one by penalizing the linear constraints as quadratics in the objective. Let’s first define the problem parameters</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In order to define the <span class="math notranslate nohighlight">\(Q\)</span> matrix, we write the problem
+$<span class="math notranslate nohighlight">\(
+\min_{\mathbf{x}} \mathbf{c}^\top \mathbf{x}\\
+s.t. \mathbf{A}\mathbf{x}=\mathbf{b} \\
+\mathbf{x} \in \{0,1 \}^{11}
+\)</span><span class="math notranslate nohighlight">\(
+as follows:
+\)</span><span class="math notranslate nohighlight">\(
+\min_{\mathbf{x}} \mathbf{c}^\top \mathbf{x} + \rho(\mathbf{A}\mathbf{x}-\mathbf{b})^\top (\mathbf{A}\mathbf{x}-\mathbf{b}) \\
+\mathbf{x} \in \{0,1 \}^{11}
+\)</span><span class="math notranslate nohighlight">\(
+Exploting the fact that \)</span>x^2=x<span class="math notranslate nohighlight">\( for \)</span>x \in {0,1}<span class="math notranslate nohighlight">\(, we can make the linear terms appear in the diagonal of the \)</span>Q<span class="math notranslate nohighlight">\( matrix.
+\)</span><span class="math notranslate nohighlight">\(
+\rho(\mathbf{A}\mathbf{x}-\mathbf{b})^\top (\mathbf{A}\mathbf{x}-\mathbf{b}) = \rho( \mathbf{x}^\top (\mathbf{A}^\top \mathbf{A}) \mathbf{x} - 2\mathbf{b}^\top \mathbf{A} \mathbf{x} + \mathbf{b}^\top \mathbf{b} )
+\)</span><span class="math notranslate nohighlight">\(
+For this problem in particular, one can prove the the penalization factor is given by \)</span>\rho &gt; \sum_{i=1}^n |c_i|$, therefore we choose this bound + 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epsilon</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="o">+</span> <span class="n">epsilon</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">rho</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
+<span class="n">Q</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">Q</span> <span class="o">-=</span> <span class="n">rho</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">A</span><span class="p">))</span>
+<span class="n">cQ</span> <span class="o">=</span> <span class="n">rho</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cQ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ -46    0    0   48   48   48    0   48   48   48   48]
+ [   0  -44    0   48    0   48   48    0   48   48   48]
+ [   0    0  -44    0   48    0   48   48   48   48   48]
+ [  48   48    0  -92   48   96   48   48   96   96   96]
+ [  48    0   48   48  -92   48   48   96   96   96   96]
+ [  48   48    0   96   48  -92   48   48   96   96   96]
+ [   0   48   48   48   48   48  -91   48   96   96   96]
+ [  48    0   48   48   96   48   48  -92   96   96   96]
+ [  48   48   48   96   96   96   96   96 -139  144  144]
+ [  48   48   48   96   96   96   96   96  144 -138  144]
+ [  48   48   48   96   96   96   96   96  144  144 -139]]
+144
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can visualize the graph that defines this instance using the Q matrix as the adjacency matrix of a graph.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">from_numpy_array</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/96d05b099a77d98d9e1589f705bb6e03287ba895c183eb2d43a53d698bef5e58.png" src="_images/96d05b099a77d98d9e1589f705bb6e03287ba895c183eb2d43a53d698bef5e58.png" />
+</div>
+</div>
+<p>Let’s define a QUBO model and then solve it via simulated annealing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">dimod</span><span class="o">.</span><span class="n">BinaryQuadraticModel</span><span class="o">.</span><span class="n">from_qubo</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">cQ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+    <span class="n">energies</span> <span class="o">=</span> <span class="p">[</span><span class="n">datum</span><span class="o">.</span><span class="n">energy</span> <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">],</span> <span class="n">sorted_by</span><span class="o">=</span><span class="kc">None</span><span class="p">)]</span>
+    
+    <span class="k">if</span> <span class="n">results</span><span class="o">.</span><span class="n">vartype</span> <span class="o">==</span> <span class="s1">&#39;Vartype.BINARY&#39;</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">datum</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span>
+            <span class="s1">&#39;, &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())</span> <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="p">([</span><span class="s1">&#39;sample&#39;</span><span class="p">],</span> <span class="n">sorted_by</span><span class="o">=</span><span class="kc">None</span><span class="p">)]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;bitstring for solution&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">energies</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;solution&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="n">energies</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Energy&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;minimum energy:&quot;</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">energies</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">plot_energies</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">energies</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">data_vectors</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span>
+    <span class="n">occurrences</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">data_vectors</span><span class="p">[</span><span class="s1">&#39;num_occurrences&#39;</span><span class="p">]</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">energies</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">occurrences</span><span class="p">)</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">energy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">energies</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">energy</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">counts</span><span class="p">[</span><span class="n">energy</span><span class="p">]</span> <span class="o">+=</span> <span class="n">occurrences</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">counts</span><span class="p">[</span><span class="n">energy</span><span class="p">]</span> <span class="o">=</span> <span class="n">occurrences</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
+        <span class="n">counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">/=</span> <span class="n">total</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probabilities&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;minimum energy:&quot;</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">energies</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s now solve this problem using Simulated Annealing</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simAnnSampler</span> <span class="o">=</span> <span class="n">neal</span><span class="o">.</span><span class="n">SimulatedAnnealingSampler</span><span class="p">()</span>
+<span class="n">simAnnSamples</span> <span class="o">=</span> <span class="n">simAnnSampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">num_reads</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_enumerate</span><span class="p">(</span><span class="n">simAnnSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Simulated annealing in default parameters&#39;</span><span class="p">)</span>
+<span class="n">plot_energies</span><span class="p">(</span><span class="n">simAnnSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Simulated annealing in default parameters&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
+</pre></div>
+</div>
+<img alt="_images/90abed9427fcd6d9c8a8fb21eeda274ff178ae13db0ed81f74a5fa457dc37927.png" src="_images/90abed9427fcd6d9c8a8fb21eeda274ff178ae13db0ed81f74a5fa457dc37927.png" />
+<img alt="_images/d9490af4d2b6fa6cb9e2f8c9de6ab1e684e473ba862f9048b090dcdb6fef6b85.png" src="_images/d9490af4d2b6fa6cb9e2f8c9de6ab1e684e473ba862f9048b090dcdb6fef6b85.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="now-let-s-solve-this-using-quantum-annealing">
+<h2>Now let’s solve this using Quantum Annealing!<a class="headerlink" href="#now-let-s-solve-this-using-quantum-annealing" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s setup the D-Wave connection</span>
+<span class="k">if</span> <span class="n">IN_COLAB</span><span class="p">:</span>
+    <span class="o">!</span>dwave<span class="w"> </span>setup
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>dwave<span class="w"> </span>ping
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using endpoint: https://cloud.dwavesys.com/sapi/
+Using region: na-west-1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using solver: Advantage_system4.1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Submitted problem ID: c7bd349f-53b0-4b05-816d-0124c3c2bc12
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wall clock time:
+ * Solver definition fetch: 657.042 ms
+ * Problem submit and results fetch: 1040.471 ms
+ * Total: 1697.513 ms
+
+QPU timing:
+ * post_processing_overhead_time = 1.0 us
+ * qpu_access_overhead_time = 241.06 us
+ * qpu_access_time = 15860.94 us
+ * qpu_anneal_time_per_sample = 20.0 us
+ * qpu_delay_time_per_sample = 20.58 us
+ * qpu_programming_time = 15783.96 us
+ * qpu_readout_time_per_sample = 36.4 us
+ * qpu_sampling_time = 76.98 us
+ * total_post_processing_time = 1.0 us
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dwave_networkx</span> <span class="k">as</span> <span class="nn">dnx</span>
+<span class="kn">from</span> <span class="nn">dwave.system</span> <span class="kn">import</span> <span class="p">(</span><span class="n">DWaveSampler</span><span class="p">,</span> <span class="n">EmbeddingComposite</span><span class="p">,</span>
+                          <span class="n">FixedEmbeddingComposite</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Graph corresponding to D-Wave Model</span>
+<span class="n">qpu</span> <span class="o">=</span> <span class="n">DWaveSampler</span><span class="p">()</span>
+<span class="n">qpu_edges</span> <span class="o">=</span> <span class="n">qpu</span><span class="o">.</span><span class="n">edgelist</span>
+<span class="n">qpu_nodes</span> <span class="o">=</span> <span class="n">qpu</span><span class="o">.</span><span class="n">nodelist</span>
+<span class="c1"># pprint(dir(qpu))</span>
+<span class="k">if</span> <span class="n">qpu</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;DW_2000Q_6&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">qpu</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">dnx</span><span class="o">.</span><span class="n">chimera_graph</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">node_list</span><span class="o">=</span><span class="n">qpu_nodes</span><span class="p">,</span> <span class="n">edge_list</span><span class="o">=</span><span class="n">qpu_edges</span><span class="p">)</span>
+    <span class="n">dnx</span><span class="o">.</span><span class="n">draw_chimera</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of qubits=&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">qpu_nodes</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of couplers=&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">qpu_edges</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">qpu</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">dnx</span><span class="o">.</span><span class="n">pegasus_graph</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">node_list</span><span class="o">=</span><span class="n">qpu_nodes</span><span class="p">,</span> <span class="n">edge_list</span><span class="o">=</span><span class="n">qpu_edges</span><span class="p">)</span>
+    <span class="n">dnx</span><span class="o">.</span><span class="n">draw_pegasus</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of qubits=&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">qpu_nodes</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of couplers=&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">qpu_edges</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Advantage_system4.1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of qubits= 5627
+Number of couplers= 40279
+</pre></div>
+</div>
+<img alt="_images/57c7427c7071090aa94f03b6f4bdf262ab5c44a8fc407276a7de2e8609e1b503.png" src="_images/57c7427c7071090aa94f03b6f4bdf262ab5c44a8fc407276a7de2e8609e1b503.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DWavesampler</span> <span class="o">=</span> <span class="n">EmbeddingComposite</span><span class="p">(</span><span class="n">DWaveSampler</span><span class="p">())</span>
+<span class="n">DWaveSamples</span> <span class="o">=</span> <span class="n">DWavesampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">bqm</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">num_reads</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> 
+                                   <span class="n">return_embedding</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                                  <span class="c1">#  chain_strength=chain_strength, </span>
+                                  <span class="c1">#  annealing_time=annealing_time</span>
+                                   <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">DWaveSamples</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;timing&#39;: {&#39;qpu_sampling_time&#39;: 116700.0, &#39;qpu_anneal_time_per_sample&#39;: 20.0, &#39;qpu_readout_time_per_sample&#39;: 76.12, &#39;qpu_access_time&#39;: 132464.36, &#39;qpu_access_overhead_time&#39;: 948.64, &#39;qpu_programming_time&#39;: 15764.36, &#39;qpu_delay_time_per_sample&#39;: 20.58, &#39;post_processing_overhead_time&#39;: 1.0, &#39;total_post_processing_time&#39;: 1.0}, &#39;problem_id&#39;: &#39;3a36d937-65de-47e5-8516-76ea0acac0bf&#39;, &#39;embedding_context&#39;: {&#39;embedding&#39;: {3: (5148, 5147), 0: (582,), 1: (537,), 4: (5222, 522), 2: (597,), 5: (5192, 672), 6: (5132, 5133), 7: (567, 5087), 8: (687, 5207), 9: (611, 5162), 10: (656, 5177)}, &#39;chain_break_method&#39;: &#39;majority_vote&#39;, &#39;embedding_parameters&#39;: {}, &#39;chain_strength&#39;: 159.83033942960208}}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">embedding</span> <span class="o">=</span> <span class="n">DWaveSamples</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;embedding_context&#39;</span><span class="p">][</span><span class="s1">&#39;embedding&#39;</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">qpu</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;DW_2000Q_6&quot;</span><span class="p">:</span>
+  <span class="n">dnx</span><span class="o">.</span><span class="n">draw_chimera_embedding</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">dnx</span><span class="o">.</span><span class="n">draw_pegasus_embedding</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/c047b593413256814678542e91fa261593af126a6429ed91593de4e988df22d9.png" src="_images/c047b593413256814678542e91fa261593af126a6429ed91593de4e988df22d9.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_enumerate</span><span class="p">(</span><span class="n">DWaveSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Quantum annealing in default parameters&#39;</span><span class="p">)</span>
+<span class="n">plot_energies</span><span class="p">(</span><span class="n">DWaveSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Quantum annealing in default parameters&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
+</pre></div>
+</div>
+<img alt="_images/fb12f2a69d68f1c5ea3bf3656595a0fa88a9cf803425d30a0c063507da5d7fa6.png" src="_images/fb12f2a69d68f1c5ea3bf3656595a0fa88a9cf803425d30a0c063507da5d7fa6.png" />
+<img alt="_images/36cc7bd3abd29f316b45cde95f17be88146c8059ebde73cec3542a55ea994f73.png" src="_images/36cc7bd3abd29f316b45cde95f17be88146c8059ebde73cec3542a55ea994f73.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can play with the other parameters such as Annealing time, chain strength, and annealing schedule to improve the performance of D-Wave’s Quantum Annealing.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Graver%20Augmentation%20Multiseed%20Algorithm.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to GAMA</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Benchmarking.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">About this Notebook</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem statement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-let-s-solve-this-using-quantum-annealing">Now let’s solve this using Quantum Annealing!</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ben Murray
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

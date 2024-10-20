@@ -1,0 +1,2446 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quadratic Unconstrained Binary Optimization &#8212; QUBOBook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'QUBO and Ising Models';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction to GAMA" href="Graver%20Augmentation%20Multiseed%20Algorithm.html" />
+    <link rel="prev" title="Introduction to Mathematical Programming" href="Introduction%20to%20Mathematical%20Programming.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="QUBOBook - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="QUBOBook - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    QUBOBook
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Introduction%20to%20Mathematical%20Programming.html">Introduction to Mathematical Programming</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Quadratic Unconstrained Binary Optimization</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Graver%20Augmentation%20Multiseed%20Algorithm.html">Introduction to GAMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Quantum%20Annealing%20via%20D-Wave.html">Quantum Annealing via D-Wave</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">About this Notebook</a></li>
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/SECQUOIA/QUBOBook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/SECQUOIA/QUBOBook/issues/new?title=Issue%20on%20page%20%2FQUBO and Ising Models.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/QUBO and Ising Models.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Quadratic Unconstrained Binary Optimization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Quadratic Unconstrained Binary Optimization</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem statement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ising-model">Ising model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Problem statement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-solve-the-graph-coloring-problem-using-qubo">Let’s solve the graph coloring problem using QUBO.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vertex-k-coloring-of-graphs">Vertex <span class="math notranslate nohighlight">\(k\)</span>-coloring of graphs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p><a name="top" id="top"></a></p>
+<div align="center">
+    <h1>QUBO &amp; Ising Models</h1>
+    <a href="https://github.com/bernalde">David E. Bernal Neira</a>
+    <br>
+    <i>Davidson School of Chemical Engineering, Purdue University</i>
+    <br>
+    <i>Universities Space Research Association</i>
+    <br>
+    <i>NASA QuAIL</i>
+    <br>
+    <br>
+    <a href="https://github.com/pedromxavier">Pedro Maciel Xavier</a>
+    <br>
+    <i>Davidson School of Chemical Engineering, Purdue University</i>
+    <br>
+    <i>Computer Science &amp; Systems Engineering Program, Federal University of Rio de Janeiro</i>
+    <br>
+    <i>PSR Energy Consulting &amp; Analytics</i>
+    <br>
+    <br>
+    <a href="https://github.com/murraybj">Benjamin J. L. Murray</a>
+    <br>
+    <i>Davidson School of Chemical Engineering, Purdue University</i>
+    <br>
+    <i>Undergraduate Research Assistant</i>
+    <br>
+    <br>
+    <a href="https://colab.research.google.com/github/JuliaQUBO/QUBONotebooks/blob/main/notebooks_py/2-QUBO_python.ipynb" target="_parent">
+        <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+    </a>
+    <a href="https://secquoia.github.io/">
+        <img src="https://img.shields.io/badge/🌲⚛️🌐-SECQUOIA-blue" alt="SECQUOIA"/>
+    </a>
+</div><section id="quadratic-unconstrained-binary-optimization">
+<h1>Quadratic Unconstrained Binary Optimization<a class="headerlink" href="#quadratic-unconstrained-binary-optimization" title="Link to this heading">#</a></h1>
+<p>This notebook will explain the basics of the QUBO modeling. In order to implement the different QUBOs we will use D-Wave’s packages <strong><a class="reference external" href="https://github.com/dwavesystems/dimod">dimod</a></strong>, and then solve them using <strong><a class="reference external" href="https://github.com/dwavesystems/dwave-neal">neal</a></strong>’s implementation of simulated annealing.
+We will also leverage the use of D-Wave’s package <strong><a class="reference external" href="https://github.com/dwavesystems/dwavebinarycsp">dwavebinarycsp</a></strong> to translate constraint satisfaction problems to QUBOs. Finally, for Groebner basis computations we will use <strong><a class="reference external" href="https://www.sympy.org/">Sympy</a></strong> for symbolic computation in Python and <strong><a class="reference external" href="https://networkx.github.io/">Networkx</a></strong> for network models/graphs.</p>
+<section id="problem-statement">
+<h2>Problem statement<a class="headerlink" href="#problem-statement" title="Link to this heading">#</a></h2>
+<p>We define a QUBO as the following optimization problem:
+$<span class="math notranslate nohighlight">\(
+\min_{x \in \{0,1 \}^n} \sum_{(ij) \in E(G)} Q_{ij}x_i x_j + \sum_{i \in V(G)}Q_{ii}x_i + c_Q = \min_{x \in \{0,1 \}^n}  x^\top Q x + c_Q
+\)</span><span class="math notranslate nohighlight">\(
+where we optimize over binary variables \)</span>x \in { 0,1 }^n<span class="math notranslate nohighlight">\(, on a constrained graph \)</span>G(V,E)<span class="math notranslate nohighlight">\( defined by an adjacency matrix \)</span>Q<span class="math notranslate nohighlight">\(. We also include an arbitrary offset  \)</span>c_Q$.</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<p>Suppose we want to solve the following problem via QUBO
+$<span class="math notranslate nohighlight">\(
+\min_{\mathbf{x}} 2𝑥_0+4𝑥_1+4𝑥_2+4𝑥_3+4𝑥_4+4𝑥_5+5𝑥_6+4𝑥_7+5𝑥_8+6𝑥_9+5𝑥_{10} \\
+s.t. \begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 1 &amp; 1\\
+0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 1\\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1
+\end{bmatrix}\mathbf{x}=
+\begin{bmatrix}
+1\\
+1\\
+1
+\end{bmatrix} \\
+\mathbf{x} \in \{0,1 \}^{11}
+\)</span>$</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># If using this on Google collab, we need to install the packages</span>
+<span class="k">try</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">google.colab</span>
+  <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># Let&#39;s install dimod, neal, and pyomo</span>
+<span class="k">if</span> <span class="n">IN_COLAB</span><span class="p">:</span>
+    <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>pyomo
+    <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dimod
+    <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dwave-neal
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the Pyomo library, which can be installed via pip, conda or from Github https://github.com/Pyomo/pyomo</span>
+<span class="kn">import</span> <span class="nn">pyomo.environ</span> <span class="k">as</span> <span class="nn">pyo</span>
+<span class="c1"># Import the Dwave packages dimod and neal</span>
+<span class="kn">import</span> <span class="nn">dimod</span>
+<span class="kn">import</span> <span class="nn">neal</span>
+<span class="c1"># Import Matplotlib to generate plots</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1"># Import numpy and scipy for certain numerical calculations below</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">gamma</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>First we would write this problem as an unconstrained one by penalizing the linear constraints as quadratics in the objective. Let’s first define the problem parameters</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In order to define the <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> matrix, we first write the problem</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{rl}
+    \displaystyle%
+    \min_{\mathbf{x}} &amp;\mathbf{c}' \mathbf{x} \\
+    \textrm{s.t.}     &amp; \mathbf{A}\mathbf{x} = \mathbf{b} \\
+    ~                 &amp; \mathbf{x} \in \{0,1 \}^{11}
+\end{array}
+\end{split}\]</div>
+<p>as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{rl}
+    \displaystyle%
+    \min_{\mathbf{x}} &amp; \mathbf{c}' \mathbf{x} + \rho (\mathbf{A}\mathbf{x}-\mathbf{b})' (\mathbf{A}\mathbf{x}-\mathbf{b}) \\
+    \textrm{s.t.}     &amp; \mathbf{x} \in \{0,1 \}^{11}
+\end{array}
+\end{split}\]</div>
+<p>Exploiting the fact that <span class="math notranslate nohighlight">\(x^2=x\)</span> for <span class="math notranslate nohighlight">\(x \in \{0,1\}\)</span>, we can make the linear terms appear in the diagonal of the <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> matrix.</p>
+<div class="math notranslate nohighlight">
+\[
+\rho(\mathbf{A}\mathbf{x}-\mathbf{b})'(\mathbf{A}\mathbf{x}-\mathbf{b}) = \rho( \mathbf{x}'(\mathbf{A}'\mathbf{A}) \mathbf{x} - 2(\mathbf{A}'\mathbf{b}) \mathbf{x} + \mathbf{b}'\mathbf{b} )
+\]</div>
+<p>For this problem in particular, one can prove that a reasonable penalization factor is given by <span class="math notranslate nohighlight">\(\rho = \sum_{i=1}^n |c_i| + \epsilon\)</span> with <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epsilon</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="o">+</span> <span class="n">epsilon</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">rho</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
+<span class="n">Q</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">Q</span> <span class="o">-=</span> <span class="n">rho</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">A</span><span class="p">))</span>
+<span class="n">Beta</span> <span class="o">=</span> <span class="n">rho</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Beta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ -46    0    0   48   48   48    0   48   48   48   48]
+ [   0  -44    0   48    0   48   48    0   48   48   48]
+ [   0    0  -44    0   48    0   48   48   48   48   48]
+ [  48   48    0  -92   48   96   48   48   96   96   96]
+ [  48    0   48   48  -92   48   48   96   96   96   96]
+ [  48   48    0   96   48  -92   48   48   96   96   96]
+ [   0   48   48   48   48   48  -91   48   96   96   96]
+ [  48    0   48   48   96   48   48  -92   96   96   96]
+ [  48   48   48   96   96   96   96   96 -139  144  144]
+ [  48   48   48   96   96   96   96   96  144 -138  144]
+ [  48   48   48   96   96   96   96   96  144  144 -139]]
+144
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can visualize the graph that defines this instance using the Q matrix as the adjacency matrix of a graph.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">from_numpy_array</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5a9c3da393e24e216b3022291eedb007a1820c1c5f09d3574287ee88b7df0bd6.png" src="_images/5a9c3da393e24e216b3022291eedb007a1820c1c5f09d3574287ee88b7df0bd6.png" />
+</div>
+</div>
+<p>Let’s define a QUBO model and then solve it using DWaves code for complete enumeration and simulated annealing (eventually with Quantum annealiing too!).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">dimod</span><span class="o">.</span><span class="n">BinaryQuadraticModel</span><span class="o">.</span><span class="n">from_qubo</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">Beta</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BinaryQuadraticModel({0: -46.0, 1: -44.0, 2: -44.0, 3: -92.0, 4: -92.0, 5: -92.0, 6: -91.0, 7: -92.0, 8: -139.0, 9: -138.0, 10: -139.0}, {(3, 0): 96.0, (3, 1): 96.0, (4, 0): 96.0, (4, 2): 96.0, (4, 3): 96.0, (5, 0): 96.0, (5, 1): 96.0, (5, 3): 192.0, (5, 4): 96.0, (6, 1): 96.0, (6, 2): 96.0, (6, 3): 96.0, (6, 4): 96.0, (6, 5): 96.0, (7, 0): 96.0, (7, 2): 96.0, (7, 3): 96.0, (7, 4): 192.0, (7, 5): 96.0, (7, 6): 96.0, (8, 0): 96.0, (8, 1): 96.0, (8, 2): 96.0, (8, 3): 192.0, (8, 4): 192.0, (8, 5): 192.0, (8, 6): 192.0, (8, 7): 192.0, (9, 0): 96.0, (9, 1): 96.0, (9, 2): 96.0, (9, 3): 192.0, (9, 4): 192.0, (9, 5): 192.0, (9, 6): 192.0, (9, 7): 192.0, (9, 8): 288.0, (10, 0): 96.0, (10, 1): 96.0, (10, 2): 96.0, (10, 3): 192.0, (10, 4): 192.0, (10, 5): 192.0, (10, 6): 192.0, (10, 7): 192.0, (10, 8): 288.0, (10, 9): 288.0}, 144.0, &#39;BINARY&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since the problem is relatively small (11 variables, <span class="math notranslate nohighlight">\(2^{11}=2048\)</span> combinations), we can afford to enumerate all the solutions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exactSampler</span> <span class="o">=</span> <span class="n">dimod</span><span class="o">.</span><span class="n">reference</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">ExactSolver</span><span class="p">()</span>
+<span class="n">exactSamples</span> <span class="o">=</span> <span class="n">exactSampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Some useful functions to get plots</span>
+<span class="k">def</span> <span class="nf">plot_enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+    <span class="n">energies</span> <span class="o">=</span> <span class="p">[</span><span class="n">datum</span><span class="o">.</span><span class="n">energy</span> <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">],</span> <span class="n">sorted_by</span><span class="o">=</span><span class="s1">&#39;energy&#39;</span><span class="p">)]</span>
+    
+    <span class="k">if</span> <span class="n">results</span><span class="o">.</span><span class="n">vartype</span> <span class="o">==</span> <span class="s1">&#39;Vartype.BINARY&#39;</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">datum</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span>
+            <span class="s1">&#39;, &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())</span> <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="p">([</span><span class="s1">&#39;sample&#39;</span><span class="p">],</span> <span class="n">sorted_by</span><span class="o">=</span><span class="kc">None</span><span class="p">)]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;bitstring for solution&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">energies</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;solution&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="n">energies</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Energy&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;minimum energy:&quot;</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">energies</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">plot_samples</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">results</span><span class="o">.</span><span class="n">vartype</span> <span class="o">==</span> <span class="s1">&#39;Vartype.BINARY&#39;</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">datum</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span>
+            <span class="s1">&#39;, &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())</span> <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="p">([</span><span class="s1">&#39;sample&#39;</span><span class="p">],</span> <span class="n">sorted_by</span><span class="o">=</span><span class="kc">None</span><span class="p">)]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;bitstring for solution&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">energies</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;solution&#39;</span><span class="p">)</span>
+
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
+        <span class="n">counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">/=</span> <span class="n">total</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probabilities&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;minimum energy:&quot;</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">energies</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">plot_energies</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># skip parameter given to avoid putting all xlabels</span>
+    <span class="n">energies</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">data_vectors</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span>
+    <span class="n">occurrences</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">data_vectors</span><span class="p">[</span><span class="s1">&#39;num_occurrences&#39;</span><span class="p">]</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">energies</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">occurrences</span><span class="p">)</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">energy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">energies</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">energy</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">counts</span><span class="p">[</span><span class="n">energy</span><span class="p">]</span> <span class="o">+=</span> <span class="n">occurrences</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">counts</span><span class="p">[</span><span class="n">energy</span><span class="p">]</span> <span class="o">=</span> <span class="n">occurrences</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
+        <span class="n">counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">/=</span> <span class="n">total</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probabilities&#39;</span><span class="p">)</span>
+    <span class="c1"># Plot only a subset of xlabels (every skip steps)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="n">t</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">i</span><span class="o">%</span><span class="k">skip</span> else &quot;&quot; for i,t in enumerate(ax.get_xticklabels())])
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;minimum energy:&quot;</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">energies</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_enumerate</span><span class="p">(</span><span class="n">exactSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Enumerate all solutions&#39;</span><span class="p">)</span>
+<span class="n">plot_energies</span><span class="p">(</span><span class="n">exactSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Enumerate all solutions&#39;</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
+</pre></div>
+</div>
+<img alt="_images/5340412cadfe312df44ae680cc9a7868a3cb1230832a7bb9bd5f2fca3ddbfd29.png" src="_images/5340412cadfe312df44ae680cc9a7868a3cb1230832a7bb9bd5f2fca3ddbfd29.png" />
+<img alt="_images/7cfc2a9010c087c2bbd93ab9611f3a3238f5fb97821145cb0b691e7903f66c5a.png" src="_images/7cfc2a9010c087c2bbd93ab9611f3a3238f5fb97821145cb0b691e7903f66c5a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s now solve this QUBO via traditional Integer Programming.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We do not need to worry about the tranformation to QUBO since dimod takes care of it</span>
+<span class="n">Q</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to_qubo</span><span class="p">()</span>
+
+<span class="c1"># Define the model</span>
+<span class="n">model_pyo</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;QUBO example as an IP, 47-779/785 QuIPML&#39;</span><span class="p">)</span>
+
+<span class="n">I</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+<span class="n">J</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+<span class="c1">#Define the original variables</span>
+<span class="n">model_pyo</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">Binary</span><span class="p">)</span>
+<span class="c1"># Define the edges variables</span>
+<span class="n">model_pyo</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">Binary</span><span class="p">)</span>
+
+<span class="n">obj_expr</span> <span class="o">=</span> <span class="n">c</span>
+
+<span class="c1"># add model constraints</span>
+<span class="n">model_pyo</span><span class="o">.</span><span class="n">c1</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConstraintList</span><span class="p">()</span>
+<span class="n">model_pyo</span><span class="o">.</span><span class="n">c2</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConstraintList</span><span class="p">()</span>
+<span class="n">model_pyo</span><span class="o">.</span><span class="n">c3</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConstraintList</span><span class="p">()</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">Q</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+        <span class="n">model_pyo</span><span class="o">.</span><span class="n">c1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model_pyo</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">model_pyo</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">model_pyo</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">model_pyo</span><span class="o">.</span><span class="n">c2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model_pyo</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">model_pyo</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">model_pyo</span><span class="o">.</span><span class="n">c3</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model_pyo</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">model_pyo</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">obj_expr</span> <span class="o">+=</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">model_pyo</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">obj_expr</span> <span class="o">+=</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">model_pyo</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="c1"># Define the objective function</span>
+<span class="n">model_pyo</span><span class="o">.</span><span class="n">objective</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Objective</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="n">obj_expr</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">minimize</span><span class="p">)</span>
+<span class="c1"># Print the model</span>
+<span class="n">model_pyo</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model &#39;QUBO example as an IP, 47-779/785 QuIPML&#39;
+
+  Variables:
+    x : Size=11, Index={0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+          0 :     0 :  None :     1 : False :  True : Binary
+          1 :     0 :  None :     1 : False :  True : Binary
+          2 :     0 :  None :     1 : False :  True : Binary
+          3 :     0 :  None :     1 : False :  True : Binary
+          4 :     0 :  None :     1 : False :  True : Binary
+          5 :     0 :  None :     1 : False :  True : Binary
+          6 :     0 :  None :     1 : False :  True : Binary
+          7 :     0 :  None :     1 : False :  True : Binary
+          8 :     0 :  None :     1 : False :  True : Binary
+          9 :     0 :  None :     1 : False :  True : Binary
+         10 :     0 :  None :     1 : False :  True : Binary
+    y : Size=121, Index={0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}*{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+          (0, 0) :     0 :  None :     1 : False :  True : Binary
+          (0, 1) :     0 :  None :     1 : False :  True : Binary
+          (0, 2) :     0 :  None :     1 : False :  True : Binary
+          (0, 3) :     0 :  None :     1 : False :  True : Binary
+          (0, 4) :     0 :  None :     1 : False :  True : Binary
+          (0, 5) :     0 :  None :     1 : False :  True : Binary
+          (0, 6) :     0 :  None :     1 : False :  True : Binary
+          (0, 7) :     0 :  None :     1 : False :  True : Binary
+          (0, 8) :     0 :  None :     1 : False :  True : Binary
+          (0, 9) :     0 :  None :     1 : False :  True : Binary
+         (0, 10) :     0 :  None :     1 : False :  True : Binary
+          (1, 0) :     0 :  None :     1 : False :  True : Binary
+          (1, 1) :     0 :  None :     1 : False :  True : Binary
+          (1, 2) :     0 :  None :     1 : False :  True : Binary
+          (1, 3) :     0 :  None :     1 : False :  True : Binary
+          (1, 4) :     0 :  None :     1 : False :  True : Binary
+          (1, 5) :     0 :  None :     1 : False :  True : Binary
+          (1, 6) :     0 :  None :     1 : False :  True : Binary
+          (1, 7) :     0 :  None :     1 : False :  True : Binary
+          (1, 8) :     0 :  None :     1 : False :  True : Binary
+          (1, 9) :     0 :  None :     1 : False :  True : Binary
+         (1, 10) :     0 :  None :     1 : False :  True : Binary
+          (2, 0) :     0 :  None :     1 : False :  True : Binary
+          (2, 1) :     0 :  None :     1 : False :  True : Binary
+          (2, 2) :     0 :  None :     1 : False :  True : Binary
+          (2, 3) :     0 :  None :     1 : False :  True : Binary
+          (2, 4) :     0 :  None :     1 : False :  True : Binary
+          (2, 5) :     0 :  None :     1 : False :  True : Binary
+          (2, 6) :     0 :  None :     1 : False :  True : Binary
+          (2, 7) :     0 :  None :     1 : False :  True : Binary
+          (2, 8) :     0 :  None :     1 : False :  True : Binary
+          (2, 9) :     0 :  None :     1 : False :  True : Binary
+         (2, 10) :     0 :  None :     1 : False :  True : Binary
+          (3, 0) :     0 :  None :     1 : False :  True : Binary
+          (3, 1) :     0 :  None :     1 : False :  True : Binary
+          (3, 2) :     0 :  None :     1 : False :  True : Binary
+          (3, 3) :     0 :  None :     1 : False :  True : Binary
+          (3, 4) :     0 :  None :     1 : False :  True : Binary
+          (3, 5) :     0 :  None :     1 : False :  True : Binary
+          (3, 6) :     0 :  None :     1 : False :  True : Binary
+          (3, 7) :     0 :  None :     1 : False :  True : Binary
+          (3, 8) :     0 :  None :     1 : False :  True : Binary
+          (3, 9) :     0 :  None :     1 : False :  True : Binary
+         (3, 10) :     0 :  None :     1 : False :  True : Binary
+          (4, 0) :     0 :  None :     1 : False :  True : Binary
+          (4, 1) :     0 :  None :     1 : False :  True : Binary
+          (4, 2) :     0 :  None :     1 : False :  True : Binary
+          (4, 3) :     0 :  None :     1 : False :  True : Binary
+          (4, 4) :     0 :  None :     1 : False :  True : Binary
+          (4, 5) :     0 :  None :     1 : False :  True : Binary
+          (4, 6) :     0 :  None :     1 : False :  True : Binary
+          (4, 7) :     0 :  None :     1 : False :  True : Binary
+          (4, 8) :     0 :  None :     1 : False :  True : Binary
+          (4, 9) :     0 :  None :     1 : False :  True : Binary
+         (4, 10) :     0 :  None :     1 : False :  True : Binary
+          (5, 0) :     0 :  None :     1 : False :  True : Binary
+          (5, 1) :     0 :  None :     1 : False :  True : Binary
+          (5, 2) :     0 :  None :     1 : False :  True : Binary
+          (5, 3) :     0 :  None :     1 : False :  True : Binary
+          (5, 4) :     0 :  None :     1 : False :  True : Binary
+          (5, 5) :     0 :  None :     1 : False :  True : Binary
+          (5, 6) :     0 :  None :     1 : False :  True : Binary
+          (5, 7) :     0 :  None :     1 : False :  True : Binary
+          (5, 8) :     0 :  None :     1 : False :  True : Binary
+          (5, 9) :     0 :  None :     1 : False :  True : Binary
+         (5, 10) :     0 :  None :     1 : False :  True : Binary
+          (6, 0) :     0 :  None :     1 : False :  True : Binary
+          (6, 1) :     0 :  None :     1 : False :  True : Binary
+          (6, 2) :     0 :  None :     1 : False :  True : Binary
+          (6, 3) :     0 :  None :     1 : False :  True : Binary
+          (6, 4) :     0 :  None :     1 : False :  True : Binary
+          (6, 5) :     0 :  None :     1 : False :  True : Binary
+          (6, 6) :     0 :  None :     1 : False :  True : Binary
+          (6, 7) :     0 :  None :     1 : False :  True : Binary
+          (6, 8) :     0 :  None :     1 : False :  True : Binary
+          (6, 9) :     0 :  None :     1 : False :  True : Binary
+         (6, 10) :     0 :  None :     1 : False :  True : Binary
+          (7, 0) :     0 :  None :     1 : False :  True : Binary
+          (7, 1) :     0 :  None :     1 : False :  True : Binary
+          (7, 2) :     0 :  None :     1 : False :  True : Binary
+          (7, 3) :     0 :  None :     1 : False :  True : Binary
+          (7, 4) :     0 :  None :     1 : False :  True : Binary
+          (7, 5) :     0 :  None :     1 : False :  True : Binary
+          (7, 6) :     0 :  None :     1 : False :  True : Binary
+          (7, 7) :     0 :  None :     1 : False :  True : Binary
+          (7, 8) :     0 :  None :     1 : False :  True : Binary
+          (7, 9) :     0 :  None :     1 : False :  True : Binary
+         (7, 10) :     0 :  None :     1 : False :  True : Binary
+          (8, 0) :     0 :  None :     1 : False :  True : Binary
+          (8, 1) :     0 :  None :     1 : False :  True : Binary
+          (8, 2) :     0 :  None :     1 : False :  True : Binary
+          (8, 3) :     0 :  None :     1 : False :  True : Binary
+          (8, 4) :     0 :  None :     1 : False :  True : Binary
+          (8, 5) :     0 :  None :     1 : False :  True : Binary
+          (8, 6) :     0 :  None :     1 : False :  True : Binary
+          (8, 7) :     0 :  None :     1 : False :  True : Binary
+          (8, 8) :     0 :  None :     1 : False :  True : Binary
+          (8, 9) :     0 :  None :     1 : False :  True : Binary
+         (8, 10) :     0 :  None :     1 : False :  True : Binary
+          (9, 0) :     0 :  None :     1 : False :  True : Binary
+          (9, 1) :     0 :  None :     1 : False :  True : Binary
+          (9, 2) :     0 :  None :     1 : False :  True : Binary
+          (9, 3) :     0 :  None :     1 : False :  True : Binary
+          (9, 4) :     0 :  None :     1 : False :  True : Binary
+          (9, 5) :     0 :  None :     1 : False :  True : Binary
+          (9, 6) :     0 :  None :     1 : False :  True : Binary
+          (9, 7) :     0 :  None :     1 : False :  True : Binary
+          (9, 8) :     0 :  None :     1 : False :  True : Binary
+          (9, 9) :     0 :  None :     1 : False :  True : Binary
+         (9, 10) :     0 :  None :     1 : False :  True : Binary
+         (10, 0) :     0 :  None :     1 : False :  True : Binary
+         (10, 1) :     0 :  None :     1 : False :  True : Binary
+         (10, 2) :     0 :  None :     1 : False :  True : Binary
+         (10, 3) :     0 :  None :     1 : False :  True : Binary
+         (10, 4) :     0 :  None :     1 : False :  True : Binary
+         (10, 5) :     0 :  None :     1 : False :  True : Binary
+         (10, 6) :     0 :  None :     1 : False :  True : Binary
+         (10, 7) :     0 :  None :     1 : False :  True : Binary
+         (10, 8) :     0 :  None :     1 : False :  True : Binary
+         (10, 9) :     0 :  None :     1 : False :  True : Binary
+        (10, 10) :     0 :  None :     1 : False :  True : Binary
+
+  Objectives:
+    objective : Size=1, Index=None, Active=True
+ERROR: evaluating object as numeric value: y[3,0]
+        (object: &lt;class &#39;pyomo.core.base.var.VarData&#39;&gt;)
+    No value for uninitialized NumericValue object y[3,0]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR: evaluating object as numeric value: objective
+        (object: &lt;class &#39;pyomo.core.base.objective.ScalarObjective&#39;&gt;)
+    No value for uninitialized NumericValue object y[3,0]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        Key : Active : Value
+        None :   None :  None
+
+  Constraints:
+    c1 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None : None :   0.0
+          2 :  None : None :   0.0
+          3 :  None : None :   0.0
+          4 :  None : None :   0.0
+          5 :  None : None :   0.0
+          6 :  None : None :   0.0
+          7 :  None : None :   0.0
+          8 :  None : None :   0.0
+          9 :  None : None :   0.0
+         10 :  None : None :   0.0
+         11 :  None : None :   0.0
+         12 :  None : None :   0.0
+         13 :  None : None :   0.0
+         14 :  None : None :   0.0
+         15 :  None : None :   0.0
+         16 :  None : None :   0.0
+         17 :  None : None :   0.0
+         18 :  None : None :   0.0
+         19 :  None : None :   0.0
+         20 :  None : None :   0.0
+         21 :  None : None :   0.0
+         22 :  None : None :   0.0
+         23 :  None : None :   0.0
+         24 :  None : None :   0.0
+         25 :  None : None :   0.0
+         26 :  None : None :   0.0
+         27 :  None : None :   0.0
+         28 :  None : None :   0.0
+         29 :  None : None :   0.0
+         30 :  None : None :   0.0
+         31 :  None : None :   0.0
+         32 :  None : None :   0.0
+         33 :  None : None :   0.0
+         34 :  None : None :   0.0
+         35 :  None : None :   0.0
+         36 :  None : None :   0.0
+         37 :  None : None :   0.0
+         38 :  None : None :   0.0
+         39 :  None : None :   0.0
+         40 :  None : None :   0.0
+         41 :  None : None :   0.0
+         42 :  None : None :   0.0
+         43 :  None : None :   0.0
+         44 :  None : None :   0.0
+         45 :  None : None :   0.0
+         46 :  None : None :   0.0
+         47 :  None : None :   0.0
+    c2 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None : None :   0.0
+          2 :  None : None :   0.0
+          3 :  None : None :   0.0
+          4 :  None : None :   0.0
+          5 :  None : None :   0.0
+          6 :  None : None :   0.0
+          7 :  None : None :   0.0
+          8 :  None : None :   0.0
+          9 :  None : None :   0.0
+         10 :  None : None :   0.0
+         11 :  None : None :   0.0
+         12 :  None : None :   0.0
+         13 :  None : None :   0.0
+         14 :  None : None :   0.0
+         15 :  None : None :   0.0
+         16 :  None : None :   0.0
+         17 :  None : None :   0.0
+         18 :  None : None :   0.0
+         19 :  None : None :   0.0
+         20 :  None : None :   0.0
+         21 :  None : None :   0.0
+         22 :  None : None :   0.0
+         23 :  None : None :   0.0
+         24 :  None : None :   0.0
+         25 :  None : None :   0.0
+         26 :  None : None :   0.0
+         27 :  None : None :   0.0
+         28 :  None : None :   0.0
+         29 :  None : None :   0.0
+         30 :  None : None :   0.0
+         31 :  None : None :   0.0
+         32 :  None : None :   0.0
+         33 :  None : None :   0.0
+         34 :  None : None :   0.0
+         35 :  None : None :   0.0
+         36 :  None : None :   0.0
+         37 :  None : None :   0.0
+         38 :  None : None :   0.0
+         39 :  None : None :   0.0
+         40 :  None : None :   0.0
+         41 :  None : None :   0.0
+         42 :  None : None :   0.0
+         43 :  None : None :   0.0
+         44 :  None : None :   0.0
+         45 :  None : None :   0.0
+         46 :  None : None :   0.0
+         47 :  None : None :   0.0
+    c3 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None : None :   0.0
+          2 :  None : None :   0.0
+          3 :  None : None :   0.0
+          4 :  None : None :   0.0
+          5 :  None : None :   0.0
+          6 :  None : None :   0.0
+          7 :  None : None :   0.0
+          8 :  None : None :   0.0
+          9 :  None : None :   0.0
+         10 :  None : None :   0.0
+         11 :  None : None :   0.0
+         12 :  None : None :   0.0
+         13 :  None : None :   0.0
+         14 :  None : None :   0.0
+         15 :  None : None :   0.0
+         16 :  None : None :   0.0
+         17 :  None : None :   0.0
+         18 :  None : None :   0.0
+         19 :  None : None :   0.0
+         20 :  None : None :   0.0
+         21 :  None : None :   0.0
+         22 :  None : None :   0.0
+         23 :  None : None :   0.0
+         24 :  None : None :   0.0
+         25 :  None : None :   0.0
+         26 :  None : None :   0.0
+         27 :  None : None :   0.0
+         28 :  None : None :   0.0
+         29 :  None : None :   0.0
+         30 :  None : None :   0.0
+         31 :  None : None :   0.0
+         32 :  None : None :   0.0
+         33 :  None : None :   0.0
+         34 :  None : None :   0.0
+         35 :  None : None :   0.0
+         36 :  None : None :   0.0
+         37 :  None : None :   0.0
+         38 :  None : None :   0.0
+         39 :  None : None :   0.0
+         40 :  None : None :   0.0
+         41 :  None : None :   0.0
+         42 :  None : None :   0.0
+         43 :  None : None :   0.0
+         44 :  None : None :   0.0
+         45 :  None : None :   0.0
+         46 :  None : None :   0.0
+         47 :  None : None :   0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s install the MIP solver GLPK</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s install the LP/MIP solver GLPK</span>
+<span class="k">if</span> <span class="n">IN_COLAB</span><span class="p">:</span>
+    <span class="o">!</span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>-qq<span class="w"> </span>glpk-utils
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the solver GLPK</span>
+<span class="k">if</span> <span class="n">IN_COLAB</span><span class="p">:</span>
+    <span class="n">opt_glpk</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;glpk&#39;</span><span class="p">,</span> <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;/usr/bin/glpsol&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">opt_glpk</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;glpk&#39;</span><span class="p">)</span>
+<span class="c1"># Here we could use another solver, e.g. gurobi or cplex</span>
+<span class="c1"># opt_gurobi = pyo.SolverFactory(&#39;gurobi&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We obtain the solution with GLPK</span>
+<span class="n">result_obj</span> <span class="o">=</span> <span class="n">opt_glpk</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">model_pyo</span><span class="p">,</span> <span class="n">tee</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">model_pyo</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model &#39;QUBO example as an IP, 47-779/785 QuIPML&#39;
+
+  Variables:
+    x : Size=11, Index={0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+          0 :     0 :   0.0 :     1 : False : False : Binary
+          1 :     0 :   0.0 :     1 : False : False : Binary
+          2 :     0 :   0.0 :     1 : False : False : Binary
+          3 :     0 :   0.0 :     1 : False : False : Binary
+          4 :     0 :   0.0 :     1 : False : False : Binary
+          5 :     0 :   0.0 :     1 : False : False : Binary
+          6 :     0 :   0.0 :     1 : False : False : Binary
+          7 :     0 :   0.0 :     1 : False : False : Binary
+          8 :     0 :   0.0 :     1 : False : False : Binary
+          9 :     0 :   0.0 :     1 : False : False : Binary
+         10 :     0 :   1.0 :     1 : False : False : Binary
+    y : Size=121, Index={0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}*{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+          (0, 0) :     0 :  None :     1 : False :  True : Binary
+          (0, 1) :     0 :  None :     1 : False :  True : Binary
+          (0, 2) :     0 :  None :     1 : False :  True : Binary
+          (0, 3) :     0 :  None :     1 : False :  True : Binary
+          (0, 4) :     0 :  None :     1 : False :  True : Binary
+          (0, 5) :     0 :  None :     1 : False :  True : Binary
+          (0, 6) :     0 :  None :     1 : False :  True : Binary
+          (0, 7) :     0 :  None :     1 : False :  True : Binary
+          (0, 8) :     0 :  None :     1 : False :  True : Binary
+          (0, 9) :     0 :  None :     1 : False :  True : Binary
+         (0, 10) :     0 :  None :     1 : False :  True : Binary
+          (1, 0) :     0 :  None :     1 : False :  True : Binary
+          (1, 1) :     0 :  None :     1 : False :  True : Binary
+          (1, 2) :     0 :  None :     1 : False :  True : Binary
+          (1, 3) :     0 :  None :     1 : False :  True : Binary
+          (1, 4) :     0 :  None :     1 : False :  True : Binary
+          (1, 5) :     0 :  None :     1 : False :  True : Binary
+          (1, 6) :     0 :  None :     1 : False :  True : Binary
+          (1, 7) :     0 :  None :     1 : False :  True : Binary
+          (1, 8) :     0 :  None :     1 : False :  True : Binary
+          (1, 9) :     0 :  None :     1 : False :  True : Binary
+         (1, 10) :     0 :  None :     1 : False :  True : Binary
+          (2, 0) :     0 :  None :     1 : False :  True : Binary
+          (2, 1) :     0 :  None :     1 : False :  True : Binary
+          (2, 2) :     0 :  None :     1 : False :  True : Binary
+          (2, 3) :     0 :  None :     1 : False :  True : Binary
+          (2, 4) :     0 :  None :     1 : False :  True : Binary
+          (2, 5) :     0 :  None :     1 : False :  True : Binary
+          (2, 6) :     0 :  None :     1 : False :  True : Binary
+          (2, 7) :     0 :  None :     1 : False :  True : Binary
+          (2, 8) :     0 :  None :     1 : False :  True : Binary
+          (2, 9) :     0 :  None :     1 : False :  True : Binary
+         (2, 10) :     0 :  None :     1 : False :  True : Binary
+          (3, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (3, 1) :     0 :   0.0 :     1 : False : False : Binary
+          (3, 2) :     0 :  None :     1 : False :  True : Binary
+          (3, 3) :     0 :  None :     1 : False :  True : Binary
+          (3, 4) :     0 :  None :     1 : False :  True : Binary
+          (3, 5) :     0 :  None :     1 : False :  True : Binary
+          (3, 6) :     0 :  None :     1 : False :  True : Binary
+          (3, 7) :     0 :  None :     1 : False :  True : Binary
+          (3, 8) :     0 :  None :     1 : False :  True : Binary
+          (3, 9) :     0 :  None :     1 : False :  True : Binary
+         (3, 10) :     0 :  None :     1 : False :  True : Binary
+          (4, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (4, 1) :     0 :  None :     1 : False :  True : Binary
+          (4, 2) :     0 :   0.0 :     1 : False : False : Binary
+          (4, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (4, 4) :     0 :  None :     1 : False :  True : Binary
+          (4, 5) :     0 :  None :     1 : False :  True : Binary
+          (4, 6) :     0 :  None :     1 : False :  True : Binary
+          (4, 7) :     0 :  None :     1 : False :  True : Binary
+          (4, 8) :     0 :  None :     1 : False :  True : Binary
+          (4, 9) :     0 :  None :     1 : False :  True : Binary
+         (4, 10) :     0 :  None :     1 : False :  True : Binary
+          (5, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (5, 1) :     0 :   0.0 :     1 : False : False : Binary
+          (5, 2) :     0 :  None :     1 : False :  True : Binary
+          (5, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (5, 4) :     0 :   0.0 :     1 : False : False : Binary
+          (5, 5) :     0 :  None :     1 : False :  True : Binary
+          (5, 6) :     0 :  None :     1 : False :  True : Binary
+          (5, 7) :     0 :  None :     1 : False :  True : Binary
+          (5, 8) :     0 :  None :     1 : False :  True : Binary
+          (5, 9) :     0 :  None :     1 : False :  True : Binary
+         (5, 10) :     0 :  None :     1 : False :  True : Binary
+          (6, 0) :     0 :  None :     1 : False :  True : Binary
+          (6, 1) :     0 :   0.0 :     1 : False : False : Binary
+          (6, 2) :     0 :   0.0 :     1 : False : False : Binary
+          (6, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (6, 4) :     0 :   0.0 :     1 : False : False : Binary
+          (6, 5) :     0 :   0.0 :     1 : False : False : Binary
+          (6, 6) :     0 :  None :     1 : False :  True : Binary
+          (6, 7) :     0 :  None :     1 : False :  True : Binary
+          (6, 8) :     0 :  None :     1 : False :  True : Binary
+          (6, 9) :     0 :  None :     1 : False :  True : Binary
+         (6, 10) :     0 :  None :     1 : False :  True : Binary
+          (7, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (7, 1) :     0 :  None :     1 : False :  True : Binary
+          (7, 2) :     0 :   0.0 :     1 : False : False : Binary
+          (7, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (7, 4) :     0 :   0.0 :     1 : False : False : Binary
+          (7, 5) :     0 :   0.0 :     1 : False : False : Binary
+          (7, 6) :     0 :   0.0 :     1 : False : False : Binary
+          (7, 7) :     0 :  None :     1 : False :  True : Binary
+          (7, 8) :     0 :  None :     1 : False :  True : Binary
+          (7, 9) :     0 :  None :     1 : False :  True : Binary
+         (7, 10) :     0 :  None :     1 : False :  True : Binary
+          (8, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 1) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 2) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 4) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 5) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 6) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 7) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 8) :     0 :  None :     1 : False :  True : Binary
+          (8, 9) :     0 :  None :     1 : False :  True : Binary
+         (8, 10) :     0 :  None :     1 : False :  True : Binary
+          (9, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 1) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 2) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 4) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 5) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 6) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 7) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 8) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 9) :     0 :  None :     1 : False :  True : Binary
+         (9, 10) :     0 :  None :     1 : False :  True : Binary
+         (10, 0) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 1) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 2) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 3) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 4) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 5) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 6) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 7) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 8) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 9) :     0 :   0.0 :     1 : False : False : Binary
+        (10, 10) :     0 :  None :     1 : False :  True : Binary
+
+  Objectives:
+    objective : Size=1, Index=None, Active=True
+        Key  : Active : Value
+        None :   True :   5.0
+
+  Constraints:
+    c1 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None : -1.0 :   0.0
+          2 :  None : -1.0 :   0.0
+          3 :  None : -1.0 :   0.0
+          4 :  None : -1.0 :   0.0
+          5 :  None : -1.0 :   0.0
+          6 :  None : -1.0 :   0.0
+          7 :  None : -1.0 :   0.0
+          8 :  None : -1.0 :   0.0
+          9 :  None : -1.0 :   0.0
+         10 :  None : -1.0 :   0.0
+         11 :  None : -1.0 :   0.0
+         12 :  None : -1.0 :   0.0
+         13 :  None : -1.0 :   0.0
+         14 :  None : -1.0 :   0.0
+         15 :  None : -1.0 :   0.0
+         16 :  None : -1.0 :   0.0
+         17 :  None : -1.0 :   0.0
+         18 :  None : -1.0 :   0.0
+         19 :  None : -1.0 :   0.0
+         20 :  None : -1.0 :   0.0
+         21 :  None : -1.0 :   0.0
+         22 :  None : -1.0 :   0.0
+         23 :  None : -1.0 :   0.0
+         24 :  None : -1.0 :   0.0
+         25 :  None : -1.0 :   0.0
+         26 :  None : -1.0 :   0.0
+         27 :  None : -1.0 :   0.0
+         28 :  None : -1.0 :   0.0
+         29 :  None : -1.0 :   0.0
+         30 :  None : -1.0 :   0.0
+         31 :  None : -1.0 :   0.0
+         32 :  None : -1.0 :   0.0
+         33 :  None : -1.0 :   0.0
+         34 :  None : -1.0 :   0.0
+         35 :  None : -1.0 :   0.0
+         36 :  None : -1.0 :   0.0
+         37 :  None : -1.0 :   0.0
+         38 :  None :  0.0 :   0.0
+         39 :  None :  0.0 :   0.0
+         40 :  None :  0.0 :   0.0
+         41 :  None :  0.0 :   0.0
+         42 :  None :  0.0 :   0.0
+         43 :  None :  0.0 :   0.0
+         44 :  None :  0.0 :   0.0
+         45 :  None :  0.0 :   0.0
+         46 :  None :  0.0 :   0.0
+         47 :  None :  0.0 :   0.0
+    c2 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None :  0.0 :   0.0
+          2 :  None :  0.0 :   0.0
+          3 :  None :  0.0 :   0.0
+          4 :  None :  0.0 :   0.0
+          5 :  None :  0.0 :   0.0
+          6 :  None :  0.0 :   0.0
+          7 :  None :  0.0 :   0.0
+          8 :  None :  0.0 :   0.0
+          9 :  None :  0.0 :   0.0
+         10 :  None :  0.0 :   0.0
+         11 :  None :  0.0 :   0.0
+         12 :  None :  0.0 :   0.0
+         13 :  None :  0.0 :   0.0
+         14 :  None :  0.0 :   0.0
+         15 :  None :  0.0 :   0.0
+         16 :  None :  0.0 :   0.0
+         17 :  None :  0.0 :   0.0
+         18 :  None :  0.0 :   0.0
+         19 :  None :  0.0 :   0.0
+         20 :  None :  0.0 :   0.0
+         21 :  None :  0.0 :   0.0
+         22 :  None :  0.0 :   0.0
+         23 :  None :  0.0 :   0.0
+         24 :  None :  0.0 :   0.0
+         25 :  None :  0.0 :   0.0
+         26 :  None :  0.0 :   0.0
+         27 :  None :  0.0 :   0.0
+         28 :  None :  0.0 :   0.0
+         29 :  None :  0.0 :   0.0
+         30 :  None :  0.0 :   0.0
+         31 :  None :  0.0 :   0.0
+         32 :  None :  0.0 :   0.0
+         33 :  None :  0.0 :   0.0
+         34 :  None :  0.0 :   0.0
+         35 :  None :  0.0 :   0.0
+         36 :  None :  0.0 :   0.0
+         37 :  None :  0.0 :   0.0
+         38 :  None : -1.0 :   0.0
+         39 :  None : -1.0 :   0.0
+         40 :  None : -1.0 :   0.0
+         41 :  None : -1.0 :   0.0
+         42 :  None : -1.0 :   0.0
+         43 :  None : -1.0 :   0.0
+         44 :  None : -1.0 :   0.0
+         45 :  None : -1.0 :   0.0
+         46 :  None : -1.0 :   0.0
+         47 :  None : -1.0 :   0.0
+    c3 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None :  0.0 :   0.0
+          2 :  None :  0.0 :   0.0
+          3 :  None :  0.0 :   0.0
+          4 :  None :  0.0 :   0.0
+          5 :  None :  0.0 :   0.0
+          6 :  None :  0.0 :   0.0
+          7 :  None :  0.0 :   0.0
+          8 :  None :  0.0 :   0.0
+          9 :  None :  0.0 :   0.0
+         10 :  None :  0.0 :   0.0
+         11 :  None :  0.0 :   0.0
+         12 :  None :  0.0 :   0.0
+         13 :  None :  0.0 :   0.0
+         14 :  None :  0.0 :   0.0
+         15 :  None :  0.0 :   0.0
+         16 :  None :  0.0 :   0.0
+         17 :  None :  0.0 :   0.0
+         18 :  None :  0.0 :   0.0
+         19 :  None :  0.0 :   0.0
+         20 :  None :  0.0 :   0.0
+         21 :  None :  0.0 :   0.0
+         22 :  None :  0.0 :   0.0
+         23 :  None :  0.0 :   0.0
+         24 :  None :  0.0 :   0.0
+         25 :  None :  0.0 :   0.0
+         26 :  None :  0.0 :   0.0
+         27 :  None :  0.0 :   0.0
+         28 :  None :  0.0 :   0.0
+         29 :  None :  0.0 :   0.0
+         30 :  None :  0.0 :   0.0
+         31 :  None :  0.0 :   0.0
+         32 :  None :  0.0 :   0.0
+         33 :  None :  0.0 :   0.0
+         34 :  None :  0.0 :   0.0
+         35 :  None :  0.0 :   0.0
+         36 :  None :  0.0 :   0.0
+         37 :  None :  0.0 :   0.0
+         38 :  None :  0.0 :   0.0
+         39 :  None :  0.0 :   0.0
+         40 :  None :  0.0 :   0.0
+         41 :  None :  0.0 :   0.0
+         42 :  None :  0.0 :   0.0
+         43 :  None :  0.0 :   0.0
+         44 :  None :  0.0 :   0.0
+         45 :  None :  0.0 :   0.0
+         46 :  None :  0.0 :   0.0
+         47 :  None :  0.0 :   0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>We observe that the optimal solution of this problem is <span class="math notranslate nohighlight">\(x_{8} = 1, 0\)</span> otherwise, leading to an objective of <span class="math notranslate nohighlight">\(5\)</span>. Notice that this problem has a degenerate optimal solution given that <span class="math notranslate nohighlight">\(x_{10} = 1, 0\)</span> otherwise also leads to the same solution.</p>
+</section>
+</section>
+<section id="ising-model">
+<h1>Ising model<a class="headerlink" href="#ising-model" title="Link to this heading">#</a></h1>
+<p>This notebook will explain the basics of the Ising model. In order to implement the different Ising Models we will use D-Wave’s packages <strong><a class="reference external" href="https://github.com/dwavesystems/dimod">dimod</a></strong> and <strong><a class="reference external" href="https://github.com/dwavesystems/dwave-neal">neal</a></strong>, for defining the Ising model and solving it with simulated annealing, respectively. When posing the problems as Integer programs, we will model using <strong><a class="reference external" href="http://www.pyomo.org/">Pyomo</a></strong>, an open-source Python package, which provides a flexible access to different solvers and a general modeling framework for linear and nonlinear integer programs.
+The examples solved here will make use of open-source solver <strong><a class="reference external" href="https://www.gnu.org/software/glpk/">GLPK</a></strong> for mixed-integer linear programming.</p>
+<section id="id1">
+<h2>Problem statement<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>We pose the Ising problem as the following optimization problem:
+$<span class="math notranslate nohighlight">\(
+\min_{\sigma \in \{ -1,+1 \}^n} H(\sigma) =\min_{\sigma \in \{ -1,+1 \}^n} \sum_{(ij) \in E(G)} J_{ij}\sigma_i\sigma_j + \sum_{i \in V(G)}h_i\sigma_i + c_I
+\)</span><span class="math notranslate nohighlight">\(
+where we optimize over spins \)</span>\sigma \in { -1,+1 }^n<span class="math notranslate nohighlight">\(, on a constrained graph \)</span>G(V,E)<span class="math notranslate nohighlight">\(, where the quadratic coefficients are \)</span>J_{ij}<span class="math notranslate nohighlight">\( and the linear coefficients are \)</span>h_i<span class="math notranslate nohighlight">\(. We also include an arbitrary offset of the Ising model \)</span>c_I$.</p>
+</section>
+<section id="id2">
+<h2>Example<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>Suppose we have an Ising model defined from</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+h = \begin{bmatrix}
+145.0 \\ 122.0 \\ 122.0 \\ 266.0 \\ 266.0 \\ 266.0 \\ 242.5 \\ 266.0 \\ 386.5 \\ 387.0 \\ 386.5
+\end{bmatrix},
+J = \begin{bmatrix}
+0 &amp; 0 &amp; 0 &amp; 24 &amp; 24 &amp; 24 &amp; 24 &amp; 24 &amp; 24 &amp; 24 &amp; 24\\
+0 &amp; 0 &amp; 0 &amp; 24 &amp; 0 &amp; 24 &amp; 24 &amp; 24 &amp; 24 &amp; 24 &amp; 24\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 24 &amp; 0 &amp; 24 &amp; 24 &amp; 24 &amp; 24 &amp; 24\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 24 &amp; 48 &amp; 24 &amp; 24 &amp; 48 &amp; 48 &amp; 48\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 24 &amp; 24 &amp; 48 &amp; 48 &amp; 48 &amp; 48\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 24 &amp; 24 &amp; 48 &amp; 48 &amp; 48\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 24 &amp; 48 &amp; 48 &amp; 48\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 48 &amp; 48 &amp; 48\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 72 &amp; 72\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 72\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+\end{bmatrix} \text{ and }
+\beta = 1319.5
+\end{split}\]</div>
+<p>Let’s solve this problem</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># These could also be simple lists and numpy matrices</span>
+<span class="n">h</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mf">145.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mf">122.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mf">122.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mf">266.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mf">266.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="mf">266.0</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mf">242.5</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="mf">266.0</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="mf">386.5</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="mf">387.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="mf">386.5</span><span class="p">}</span>
+<span class="n">J</span> <span class="o">=</span> <span class="p">{(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span> <span class="mf">24.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="mf">48.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span> <span class="mf">72.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="mf">72.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="mf">72.0</span><span class="p">}</span>
+<span class="n">cI</span> <span class="o">=</span> <span class="mf">1319.5</span>
+
+<span class="n">model_ising</span> <span class="o">=</span> <span class="n">dimod</span><span class="o">.</span><span class="n">BinaryQuadraticModel</span><span class="o">.</span><span class="n">from_ising</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">cI</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since the problem is relatively small (11 variables, <span class="math notranslate nohighlight">\(2^{11}=2048\)</span> combinations), we can afford to enumerate all the solutions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exactSamples</span> <span class="o">=</span> <span class="n">exactSampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">model_ising</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_enumerate</span><span class="p">(</span><span class="n">exactSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Enumerate all solutions&#39;</span><span class="p">)</span>
+<span class="n">plot_energies</span><span class="p">(</span><span class="n">exactSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Enumerate all solutions&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
+</pre></div>
+</div>
+<img alt="_images/5340412cadfe312df44ae680cc9a7868a3cb1230832a7bb9bd5f2fca3ddbfd29.png" src="_images/5340412cadfe312df44ae680cc9a7868a3cb1230832a7bb9bd5f2fca3ddbfd29.png" />
+<img alt="_images/a93d160a3db8ecbc1669620293bd8532fc8333102a9bfd74a2a0937c3daa0f82.png" src="_images/a93d160a3db8ecbc1669620293bd8532fc8333102a9bfd74a2a0937c3daa0f82.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s now solve this Ising Model via traditional Integer Programming.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We do not need to worry about the tranformation from Ising to QUBO since dimod takes care of it</span>
+<span class="n">Q</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">model_ising</span><span class="o">.</span><span class="n">to_qubo</span><span class="p">()</span>
+
+<span class="c1"># Define the model</span>
+<span class="n">model_ising_pyo</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Ising example as an IP, 47-779/785 QuIPML&#39;</span><span class="p">)</span>
+
+<span class="n">I</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+<span class="n">J</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+<span class="c1">#Define the original variables</span>
+<span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">Binary</span><span class="p">)</span>
+<span class="c1"># Define the edges variables</span>
+<span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">Binary</span><span class="p">)</span>
+
+<span class="n">obj_expr</span> <span class="o">=</span> <span class="n">c</span>
+
+<span class="c1"># add model constraints</span>
+<span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">c1</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConstraintList</span><span class="p">()</span>
+<span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">c2</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConstraintList</span><span class="p">()</span>
+<span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">c3</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConstraintList</span><span class="p">()</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">Q</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+        <span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">c1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">c2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">c3</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">obj_expr</span> <span class="o">+=</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">obj_expr</span> <span class="o">+=</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="c1"># Define the objective function</span>
+<span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">objective</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Objective</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="n">obj_expr</span><span class="p">,</span> <span class="n">sense</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">minimize</span><span class="p">)</span>
+<span class="c1"># Print the model</span>
+<span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model &#39;Ising example as an IP, 47-779/785 QuIPML&#39;
+
+  Variables:
+    x : Size=11, Index={0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+          0 :     0 :  None :     1 : False :  True : Binary
+          1 :     0 :  None :     1 : False :  True : Binary
+          2 :     0 :  None :     1 : False :  True : Binary
+          3 :     0 :  None :     1 : False :  True : Binary
+          4 :     0 :  None :     1 : False :  True : Binary
+          5 :     0 :  None :     1 : False :  True : Binary
+          6 :     0 :  None :     1 : False :  True : Binary
+          7 :     0 :  None :     1 : False :  True : Binary
+          8 :     0 :  None :     1 : False :  True : Binary
+          9 :     0 :  None :     1 : False :  True : Binary
+         10 :     0 :  None :     1 : False :  True : Binary
+    y : Size=121, Index={0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}*{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+          (0, 0) :     0 :  None :     1 : False :  True : Binary
+          (0, 1) :     0 :  None :     1 : False :  True : Binary
+          (0, 2) :     0 :  None :     1 : False :  True : Binary
+          (0, 3) :     0 :  None :     1 : False :  True : Binary
+          (0, 4) :     0 :  None :     1 : False :  True : Binary
+          (0, 5) :     0 :  None :     1 : False :  True : Binary
+          (0, 6) :     0 :  None :     1 : False :  True : Binary
+          (0, 7) :     0 :  None :     1 : False :  True : Binary
+          (0, 8) :     0 :  None :     1 : False :  True : Binary
+          (0, 9) :     0 :  None :     1 : False :  True : Binary
+         (0, 10) :     0 :  None :     1 : False :  True : Binary
+          (1, 0) :     0 :  None :     1 : False :  True : Binary
+          (1, 1) :     0 :  None :     1 : False :  True : Binary
+          (1, 2) :     0 :  None :     1 : False :  True : Binary
+          (1, 3) :     0 :  None :     1 : False :  True : Binary
+          (1, 4) :     0 :  None :     1 : False :  True : Binary
+          (1, 5) :     0 :  None :     1 : False :  True : Binary
+          (1, 6) :     0 :  None :     1 : False :  True : Binary
+          (1, 7) :     0 :  None :     1 : False :  True : Binary
+          (1, 8) :     0 :  None :     1 : False :  True : Binary
+          (1, 9) :     0 :  None :     1 : False :  True : Binary
+         (1, 10) :     0 :  None :     1 : False :  True : Binary
+          (2, 0) :     0 :  None :     1 : False :  True : Binary
+          (2, 1) :     0 :  None :     1 : False :  True : Binary
+          (2, 2) :     0 :  None :     1 : False :  True : Binary
+          (2, 3) :     0 :  None :     1 : False :  True : Binary
+          (2, 4) :     0 :  None :     1 : False :  True : Binary
+          (2, 5) :     0 :  None :     1 : False :  True : Binary
+          (2, 6) :     0 :  None :     1 : False :  True : Binary
+          (2, 7) :     0 :  None :     1 : False :  True : Binary
+          (2, 8) :     0 :  None :     1 : False :  True : Binary
+          (2, 9) :     0 :  None :     1 : False :  True : Binary
+         (2, 10) :     0 :  None :     1 : False :  True : Binary
+          (3, 0) :     0 :  None :     1 : False :  True : Binary
+          (3, 1) :     0 :  None :     1 : False :  True : Binary
+          (3, 2) :     0 :  None :     1 : False :  True : Binary
+          (3, 3) :     0 :  None :     1 : False :  True : Binary
+          (3, 4) :     0 :  None :     1 : False :  True : Binary
+          (3, 5) :     0 :  None :     1 : False :  True : Binary
+          (3, 6) :     0 :  None :     1 : False :  True : Binary
+          (3, 7) :     0 :  None :     1 : False :  True : Binary
+          (3, 8) :     0 :  None :     1 : False :  True : Binary
+          (3, 9) :     0 :  None :     1 : False :  True : Binary
+         (3, 10) :     0 :  None :     1 : False :  True : Binary
+          (4, 0) :     0 :  None :     1 : False :  True : Binary
+          (4, 1) :     0 :  None :     1 : False :  True : Binary
+          (4, 2) :     0 :  None :     1 : False :  True : Binary
+          (4, 3) :     0 :  None :     1 : False :  True : Binary
+          (4, 4) :     0 :  None :     1 : False :  True : Binary
+          (4, 5) :     0 :  None :     1 : False :  True : Binary
+          (4, 6) :     0 :  None :     1 : False :  True : Binary
+          (4, 7) :     0 :  None :     1 : False :  True : Binary
+          (4, 8) :     0 :  None :     1 : False :  True : Binary
+          (4, 9) :     0 :  None :     1 : False :  True : Binary
+         (4, 10) :     0 :  None :     1 : False :  True : Binary
+          (5, 0) :     0 :  None :     1 : False :  True : Binary
+          (5, 1) :     0 :  None :     1 : False :  True : Binary
+          (5, 2) :     0 :  None :     1 : False :  True : Binary
+          (5, 3) :     0 :  None :     1 : False :  True : Binary
+          (5, 4) :     0 :  None :     1 : False :  True : Binary
+          (5, 5) :     0 :  None :     1 : False :  True : Binary
+          (5, 6) :     0 :  None :     1 : False :  True : Binary
+          (5, 7) :     0 :  None :     1 : False :  True : Binary
+          (5, 8) :     0 :  None :     1 : False :  True : Binary
+          (5, 9) :     0 :  None :     1 : False :  True : Binary
+         (5, 10) :     0 :  None :     1 : False :  True : Binary
+          (6, 0) :     0 :  None :     1 : False :  True : Binary
+          (6, 1) :     0 :  None :     1 : False :  True : Binary
+          (6, 2) :     0 :  None :     1 : False :  True : Binary
+          (6, 3) :     0 :  None :     1 : False :  True : Binary
+          (6, 4) :     0 :  None :     1 : False :  True : Binary
+          (6, 5) :     0 :  None :     1 : False :  True : Binary
+          (6, 6) :     0 :  None :     1 : False :  True : Binary
+          (6, 7) :     0 :  None :     1 : False :  True : Binary
+          (6, 8) :     0 :  None :     1 : False :  True : Binary
+          (6, 9) :     0 :  None :     1 : False :  True : Binary
+         (6, 10) :     0 :  None :     1 : False :  True : Binary
+          (7, 0) :     0 :  None :     1 : False :  True : Binary
+          (7, 1) :     0 :  None :     1 : False :  True : Binary
+          (7, 2) :     0 :  None :     1 : False :  True : Binary
+          (7, 3) :     0 :  None :     1 : False :  True : Binary
+          (7, 4) :     0 :  None :     1 : False :  True : Binary
+          (7, 5) :     0 :  None :     1 : False :  True : Binary
+          (7, 6) :     0 :  None :     1 : False :  True : Binary
+          (7, 7) :     0 :  None :     1 : False :  True : Binary
+          (7, 8) :     0 :  None :     1 : False :  True : Binary
+          (7, 9) :     0 :  None :     1 : False :  True : Binary
+         (7, 10) :     0 :  None :     1 : False :  True : Binary
+          (8, 0) :     0 :  None :     1 : False :  True : Binary
+          (8, 1) :     0 :  None :     1 : False :  True : Binary
+          (8, 2) :     0 :  None :     1 : False :  True : Binary
+          (8, 3) :     0 :  None :     1 : False :  True : Binary
+          (8, 4) :     0 :  None :     1 : False :  True : Binary
+          (8, 5) :     0 :  None :     1 : False :  True : Binary
+          (8, 6) :     0 :  None :     1 : False :  True : Binary
+          (8, 7) :     0 :  None :     1 : False :  True : Binary
+          (8, 8) :     0 :  None :     1 : False :  True : Binary
+          (8, 9) :     0 :  None :     1 : False :  True : Binary
+         (8, 10) :     0 :  None :     1 : False :  True : Binary
+          (9, 0) :     0 :  None :     1 : False :  True : Binary
+          (9, 1) :     0 :  None :     1 : False :  True : Binary
+          (9, 2) :     0 :  None :     1 : False :  True : Binary
+          (9, 3) :     0 :  None :     1 : False :  True : Binary
+          (9, 4) :     0 :  None :     1 : False :  True : Binary
+          (9, 5) :     0 :  None :     1 : False :  True : Binary
+          (9, 6) :     0 :  None :     1 : False :  True : Binary
+          (9, 7) :     0 :  None :     1 : False :  True : Binary
+          (9, 8) :     0 :  None :     1 : False :  True : Binary
+          (9, 9) :     0 :  None :     1 : False :  True : Binary
+         (9, 10) :     0 :  None :     1 : False :  True : Binary
+         (10, 0) :     0 :  None :     1 : False :  True : Binary
+         (10, 1) :     0 :  None :     1 : False :  True : Binary
+         (10, 2) :     0 :  None :     1 : False :  True : Binary
+         (10, 3) :     0 :  None :     1 : False :  True : Binary
+         (10, 4) :     0 :  None :     1 : False :  True : Binary
+         (10, 5) :     0 :  None :     1 : False :  True : Binary
+         (10, 6) :     0 :  None :     1 : False :  True : Binary
+         (10, 7) :     0 :  None :     1 : False :  True : Binary
+         (10, 8) :     0 :  None :     1 : False :  True : Binary
+         (10, 9) :     0 :  None :     1 : False :  True : Binary
+        (10, 10) :     0 :  None :     1 : False :  True : Binary
+
+  Objectives:
+    objective : Size=1, Index=None, Active=True
+ERROR: evaluating object as numeric value: y[3,0]
+        (object: &lt;class &#39;pyomo.core.base.var.VarData&#39;&gt;)
+    No value for uninitialized NumericValue object y[3,0]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ERROR: evaluating object as numeric value: objective
+        (object: &lt;class &#39;pyomo.core.base.objective.ScalarObjective&#39;&gt;)
+    No value for uninitialized NumericValue object y[3,0]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        Key : Active : Value
+        None :   None :  None
+
+  Constraints:
+    c1 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None : None :   0.0
+          2 :  None : None :   0.0
+          3 :  None : None :   0.0
+          4 :  None : None :   0.0
+          5 :  None : None :   0.0
+          6 :  None : None :   0.0
+          7 :  None : None :   0.0
+          8 :  None : None :   0.0
+          9 :  None : None :   0.0
+         10 :  None : None :   0.0
+         11 :  None : None :   0.0
+         12 :  None : None :   0.0
+         13 :  None : None :   0.0
+         14 :  None : None :   0.0
+         15 :  None : None :   0.0
+         16 :  None : None :   0.0
+         17 :  None : None :   0.0
+         18 :  None : None :   0.0
+         19 :  None : None :   0.0
+         20 :  None : None :   0.0
+         21 :  None : None :   0.0
+         22 :  None : None :   0.0
+         23 :  None : None :   0.0
+         24 :  None : None :   0.0
+         25 :  None : None :   0.0
+         26 :  None : None :   0.0
+         27 :  None : None :   0.0
+         28 :  None : None :   0.0
+         29 :  None : None :   0.0
+         30 :  None : None :   0.0
+         31 :  None : None :   0.0
+         32 :  None : None :   0.0
+         33 :  None : None :   0.0
+         34 :  None : None :   0.0
+         35 :  None : None :   0.0
+         36 :  None : None :   0.0
+         37 :  None : None :   0.0
+         38 :  None : None :   0.0
+         39 :  None : None :   0.0
+         40 :  None : None :   0.0
+         41 :  None : None :   0.0
+         42 :  None : None :   0.0
+         43 :  None : None :   0.0
+         44 :  None : None :   0.0
+         45 :  None : None :   0.0
+         46 :  None : None :   0.0
+         47 :  None : None :   0.0
+    c2 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None : None :   0.0
+          2 :  None : None :   0.0
+          3 :  None : None :   0.0
+          4 :  None : None :   0.0
+          5 :  None : None :   0.0
+          6 :  None : None :   0.0
+          7 :  None : None :   0.0
+          8 :  None : None :   0.0
+          9 :  None : None :   0.0
+         10 :  None : None :   0.0
+         11 :  None : None :   0.0
+         12 :  None : None :   0.0
+         13 :  None : None :   0.0
+         14 :  None : None :   0.0
+         15 :  None : None :   0.0
+         16 :  None : None :   0.0
+         17 :  None : None :   0.0
+         18 :  None : None :   0.0
+         19 :  None : None :   0.0
+         20 :  None : None :   0.0
+         21 :  None : None :   0.0
+         22 :  None : None :   0.0
+         23 :  None : None :   0.0
+         24 :  None : None :   0.0
+         25 :  None : None :   0.0
+         26 :  None : None :   0.0
+         27 :  None : None :   0.0
+         28 :  None : None :   0.0
+         29 :  None : None :   0.0
+         30 :  None : None :   0.0
+         31 :  None : None :   0.0
+         32 :  None : None :   0.0
+         33 :  None : None :   0.0
+         34 :  None : None :   0.0
+         35 :  None : None :   0.0
+         36 :  None : None :   0.0
+         37 :  None : None :   0.0
+         38 :  None : None :   0.0
+         39 :  None : None :   0.0
+         40 :  None : None :   0.0
+         41 :  None : None :   0.0
+         42 :  None : None :   0.0
+         43 :  None : None :   0.0
+         44 :  None : None :   0.0
+         45 :  None : None :   0.0
+         46 :  None : None :   0.0
+         47 :  None : None :   0.0
+    c3 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None : None :   0.0
+          2 :  None : None :   0.0
+          3 :  None : None :   0.0
+          4 :  None : None :   0.0
+          5 :  None : None :   0.0
+          6 :  None : None :   0.0
+          7 :  None : None :   0.0
+          8 :  None : None :   0.0
+          9 :  None : None :   0.0
+         10 :  None : None :   0.0
+         11 :  None : None :   0.0
+         12 :  None : None :   0.0
+         13 :  None : None :   0.0
+         14 :  None : None :   0.0
+         15 :  None : None :   0.0
+         16 :  None : None :   0.0
+         17 :  None : None :   0.0
+         18 :  None : None :   0.0
+         19 :  None : None :   0.0
+         20 :  None : None :   0.0
+         21 :  None : None :   0.0
+         22 :  None : None :   0.0
+         23 :  None : None :   0.0
+         24 :  None : None :   0.0
+         25 :  None : None :   0.0
+         26 :  None : None :   0.0
+         27 :  None : None :   0.0
+         28 :  None : None :   0.0
+         29 :  None : None :   0.0
+         30 :  None : None :   0.0
+         31 :  None : None :   0.0
+         32 :  None : None :   0.0
+         33 :  None : None :   0.0
+         34 :  None : None :   0.0
+         35 :  None : None :   0.0
+         36 :  None : None :   0.0
+         37 :  None : None :   0.0
+         38 :  None : None :   0.0
+         39 :  None : None :   0.0
+         40 :  None : None :   0.0
+         41 :  None : None :   0.0
+         42 :  None : None :   0.0
+         43 :  None : None :   0.0
+         44 :  None : None :   0.0
+         45 :  None : None :   0.0
+         46 :  None : None :   0.0
+         47 :  None : None :   0.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We obtain the solution with GLPK</span>
+<span class="n">result_obj</span> <span class="o">=</span> <span class="n">opt_glpk</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">model_ising_pyo</span><span class="p">,</span> <span class="n">tee</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">model_ising_pyo</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model &#39;Ising example as an IP, 47-779/785 QuIPML&#39;
+
+  Variables:
+    x : Size=11, Index={0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+        Key : Lower : Value : Upper : Fixed : Stale : Domain
+          0 :     0 :   0.0 :     1 : False : False : Binary
+          1 :     0 :   0.0 :     1 : False : False : Binary
+          2 :     0 :   0.0 :     1 : False : False : Binary
+          3 :     0 :   0.0 :     1 : False : False : Binary
+          4 :     0 :   0.0 :     1 : False : False : Binary
+          5 :     0 :   0.0 :     1 : False : False : Binary
+          6 :     0 :   0.0 :     1 : False : False : Binary
+          7 :     0 :   0.0 :     1 : False : False : Binary
+          8 :     0 :   0.0 :     1 : False : False : Binary
+          9 :     0 :   0.0 :     1 : False : False : Binary
+         10 :     0 :   1.0 :     1 : False : False : Binary
+    y : Size=121, Index={0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}*{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+        Key      : Lower : Value : Upper : Fixed : Stale : Domain
+          (0, 0) :     0 :  None :     1 : False :  True : Binary
+          (0, 1) :     0 :  None :     1 : False :  True : Binary
+          (0, 2) :     0 :  None :     1 : False :  True : Binary
+          (0, 3) :     0 :  None :     1 : False :  True : Binary
+          (0, 4) :     0 :  None :     1 : False :  True : Binary
+          (0, 5) :     0 :  None :     1 : False :  True : Binary
+          (0, 6) :     0 :  None :     1 : False :  True : Binary
+          (0, 7) :     0 :  None :     1 : False :  True : Binary
+          (0, 8) :     0 :  None :     1 : False :  True : Binary
+          (0, 9) :     0 :  None :     1 : False :  True : Binary
+         (0, 10) :     0 :  None :     1 : False :  True : Binary
+          (1, 0) :     0 :  None :     1 : False :  True : Binary
+          (1, 1) :     0 :  None :     1 : False :  True : Binary
+          (1, 2) :     0 :  None :     1 : False :  True : Binary
+          (1, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (1, 4) :     0 :  None :     1 : False :  True : Binary
+          (1, 5) :     0 :   0.0 :     1 : False : False : Binary
+          (1, 6) :     0 :  None :     1 : False :  True : Binary
+          (1, 7) :     0 :  None :     1 : False :  True : Binary
+          (1, 8) :     0 :   0.0 :     1 : False : False : Binary
+          (1, 9) :     0 :   0.0 :     1 : False : False : Binary
+         (1, 10) :     0 :   0.0 :     1 : False : False : Binary
+          (2, 0) :     0 :  None :     1 : False :  True : Binary
+          (2, 1) :     0 :  None :     1 : False :  True : Binary
+          (2, 2) :     0 :  None :     1 : False :  True : Binary
+          (2, 3) :     0 :  None :     1 : False :  True : Binary
+          (2, 4) :     0 :   0.0 :     1 : False : False : Binary
+          (2, 5) :     0 :  None :     1 : False :  True : Binary
+          (2, 6) :     0 :   0.0 :     1 : False : False : Binary
+          (2, 7) :     0 :   0.0 :     1 : False : False : Binary
+          (2, 8) :     0 :   0.0 :     1 : False : False : Binary
+          (2, 9) :     0 :   0.0 :     1 : False : False : Binary
+         (2, 10) :     0 :   0.0 :     1 : False : False : Binary
+          (3, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (3, 1) :     0 :  None :     1 : False :  True : Binary
+          (3, 2) :     0 :  None :     1 : False :  True : Binary
+          (3, 3) :     0 :  None :     1 : False :  True : Binary
+          (3, 4) :     0 :  None :     1 : False :  True : Binary
+          (3, 5) :     0 :  None :     1 : False :  True : Binary
+          (3, 6) :     0 :  None :     1 : False :  True : Binary
+          (3, 7) :     0 :  None :     1 : False :  True : Binary
+          (3, 8) :     0 :  None :     1 : False :  True : Binary
+          (3, 9) :     0 :  None :     1 : False :  True : Binary
+         (3, 10) :     0 :  None :     1 : False :  True : Binary
+          (4, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (4, 1) :     0 :  None :     1 : False :  True : Binary
+          (4, 2) :     0 :  None :     1 : False :  True : Binary
+          (4, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (4, 4) :     0 :  None :     1 : False :  True : Binary
+          (4, 5) :     0 :  None :     1 : False :  True : Binary
+          (4, 6) :     0 :  None :     1 : False :  True : Binary
+          (4, 7) :     0 :  None :     1 : False :  True : Binary
+          (4, 8) :     0 :  None :     1 : False :  True : Binary
+          (4, 9) :     0 :  None :     1 : False :  True : Binary
+         (4, 10) :     0 :  None :     1 : False :  True : Binary
+          (5, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (5, 1) :     0 :  None :     1 : False :  True : Binary
+          (5, 2) :     0 :  None :     1 : False :  True : Binary
+          (5, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (5, 4) :     0 :   0.0 :     1 : False : False : Binary
+          (5, 5) :     0 :  None :     1 : False :  True : Binary
+          (5, 6) :     0 :  None :     1 : False :  True : Binary
+          (5, 7) :     0 :  None :     1 : False :  True : Binary
+          (5, 8) :     0 :  None :     1 : False :  True : Binary
+          (5, 9) :     0 :  None :     1 : False :  True : Binary
+         (5, 10) :     0 :  None :     1 : False :  True : Binary
+          (6, 0) :     0 :  None :     1 : False :  True : Binary
+          (6, 1) :     0 :   0.0 :     1 : False : False : Binary
+          (6, 2) :     0 :  None :     1 : False :  True : Binary
+          (6, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (6, 4) :     0 :   0.0 :     1 : False : False : Binary
+          (6, 5) :     0 :   0.0 :     1 : False : False : Binary
+          (6, 6) :     0 :  None :     1 : False :  True : Binary
+          (6, 7) :     0 :   0.0 :     1 : False : False : Binary
+          (6, 8) :     0 :   0.0 :     1 : False : False : Binary
+          (6, 9) :     0 :   0.0 :     1 : False : False : Binary
+         (6, 10) :     0 :   0.0 :     1 : False : False : Binary
+          (7, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (7, 1) :     0 :  None :     1 : False :  True : Binary
+          (7, 2) :     0 :  None :     1 : False :  True : Binary
+          (7, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (7, 4) :     0 :   0.0 :     1 : False : False : Binary
+          (7, 5) :     0 :   0.0 :     1 : False : False : Binary
+          (7, 6) :     0 :  None :     1 : False :  True : Binary
+          (7, 7) :     0 :  None :     1 : False :  True : Binary
+          (7, 8) :     0 :  None :     1 : False :  True : Binary
+          (7, 9) :     0 :  None :     1 : False :  True : Binary
+         (7, 10) :     0 :  None :     1 : False :  True : Binary
+          (8, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 1) :     0 :  None :     1 : False :  True : Binary
+          (8, 2) :     0 :  None :     1 : False :  True : Binary
+          (8, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 4) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 5) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 6) :     0 :  None :     1 : False :  True : Binary
+          (8, 7) :     0 :   0.0 :     1 : False : False : Binary
+          (8, 8) :     0 :  None :     1 : False :  True : Binary
+          (8, 9) :     0 :  None :     1 : False :  True : Binary
+         (8, 10) :     0 :  None :     1 : False :  True : Binary
+          (9, 0) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 1) :     0 :  None :     1 : False :  True : Binary
+          (9, 2) :     0 :  None :     1 : False :  True : Binary
+          (9, 3) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 4) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 5) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 6) :     0 :  None :     1 : False :  True : Binary
+          (9, 7) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 8) :     0 :   0.0 :     1 : False : False : Binary
+          (9, 9) :     0 :  None :     1 : False :  True : Binary
+         (9, 10) :     0 :  None :     1 : False :  True : Binary
+         (10, 0) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 1) :     0 :  None :     1 : False :  True : Binary
+         (10, 2) :     0 :  None :     1 : False :  True : Binary
+         (10, 3) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 4) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 5) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 6) :     0 :  None :     1 : False :  True : Binary
+         (10, 7) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 8) :     0 :   0.0 :     1 : False : False : Binary
+         (10, 9) :     0 :   0.0 :     1 : False : False : Binary
+        (10, 10) :     0 :  None :     1 : False :  True : Binary
+
+  Objectives:
+    objective : Size=1, Index=None, Active=True
+        Key  : Active : Value
+        None :   True :   5.0
+
+  Constraints:
+    c1 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None : -1.0 :   0.0
+          2 :  None : -1.0 :   0.0
+          3 :  None : -1.0 :   0.0
+          4 :  None : -1.0 :   0.0
+          5 :  None : -1.0 :   0.0
+          6 :  None : -1.0 :   0.0
+          7 :  None : -1.0 :   0.0
+          8 :  None : -1.0 :   0.0
+          9 :  None : -1.0 :   0.0
+         10 :  None : -1.0 :   0.0
+         11 :  None : -1.0 :   0.0
+         12 :  None : -1.0 :   0.0
+         13 :  None : -1.0 :   0.0
+         14 :  None : -1.0 :   0.0
+         15 :  None : -1.0 :   0.0
+         16 :  None : -1.0 :   0.0
+         17 :  None : -1.0 :   0.0
+         18 :  None : -1.0 :   0.0
+         19 :  None : -1.0 :   0.0
+         20 :  None : -1.0 :   0.0
+         21 :  None : -1.0 :   0.0
+         22 :  None :  0.0 :   0.0
+         23 :  None :  0.0 :   0.0
+         24 :  None :  0.0 :   0.0
+         25 :  None :  0.0 :   0.0
+         26 :  None :  0.0 :   0.0
+         27 :  None :  0.0 :   0.0
+         28 :  None :  0.0 :   0.0
+         29 :  None : -1.0 :   0.0
+         30 :  None : -1.0 :   0.0
+         31 :  None : -1.0 :   0.0
+         32 :  None : -1.0 :   0.0
+         33 :  None :  0.0 :   0.0
+         34 :  None : -1.0 :   0.0
+         35 :  None : -1.0 :   0.0
+         36 :  None : -1.0 :   0.0
+         37 :  None : -1.0 :   0.0
+         38 :  None : -1.0 :   0.0
+         39 :  None : -1.0 :   0.0
+         40 :  None :  0.0 :   0.0
+         41 :  None : -1.0 :   0.0
+         42 :  None : -1.0 :   0.0
+         43 :  None : -1.0 :   0.0
+         44 :  None : -1.0 :   0.0
+         45 :  None : -1.0 :   0.0
+         46 :  None :  0.0 :   0.0
+         47 :  None : -1.0 :   0.0
+    c2 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None :  0.0 :   0.0
+          2 :  None :  0.0 :   0.0
+          3 :  None :  0.0 :   0.0
+          4 :  None :  0.0 :   0.0
+          5 :  None :  0.0 :   0.0
+          6 :  None :  0.0 :   0.0
+          7 :  None :  0.0 :   0.0
+          8 :  None :  0.0 :   0.0
+          9 :  None :  0.0 :   0.0
+         10 :  None :  0.0 :   0.0
+         11 :  None :  0.0 :   0.0
+         12 :  None :  0.0 :   0.0
+         13 :  None :  0.0 :   0.0
+         14 :  None :  0.0 :   0.0
+         15 :  None :  0.0 :   0.0
+         16 :  None :  0.0 :   0.0
+         17 :  None :  0.0 :   0.0
+         18 :  None :  0.0 :   0.0
+         19 :  None :  0.0 :   0.0
+         20 :  None :  0.0 :   0.0
+         21 :  None :  0.0 :   0.0
+         22 :  None : -1.0 :   0.0
+         23 :  None : -1.0 :   0.0
+         24 :  None : -1.0 :   0.0
+         25 :  None : -1.0 :   0.0
+         26 :  None : -1.0 :   0.0
+         27 :  None : -1.0 :   0.0
+         28 :  None : -1.0 :   0.0
+         29 :  None :  0.0 :   0.0
+         30 :  None :  0.0 :   0.0
+         31 :  None :  0.0 :   0.0
+         32 :  None :  0.0 :   0.0
+         33 :  None :  0.0 :   0.0
+         34 :  None :  0.0 :   0.0
+         35 :  None :  0.0 :   0.0
+         36 :  None :  0.0 :   0.0
+         37 :  None :  0.0 :   0.0
+         38 :  None :  0.0 :   0.0
+         39 :  None :  0.0 :   0.0
+         40 :  None :  0.0 :   0.0
+         41 :  None :  0.0 :   0.0
+         42 :  None :  0.0 :   0.0
+         43 :  None :  0.0 :   0.0
+         44 :  None :  0.0 :   0.0
+         45 :  None :  0.0 :   0.0
+         46 :  None :  0.0 :   0.0
+         47 :  None :  0.0 :   0.0
+    c3 : Size=47
+        Key : Lower : Body : Upper
+          1 :  None :  0.0 :   0.0
+          2 :  None :  0.0 :   0.0
+          3 :  None :  0.0 :   0.0
+          4 :  None :  0.0 :   0.0
+          5 :  None :  0.0 :   0.0
+          6 :  None :  0.0 :   0.0
+          7 :  None :  0.0 :   0.0
+          8 :  None :  0.0 :   0.0
+          9 :  None :  0.0 :   0.0
+         10 :  None :  0.0 :   0.0
+         11 :  None :  0.0 :   0.0
+         12 :  None :  0.0 :   0.0
+         13 :  None :  0.0 :   0.0
+         14 :  None :  0.0 :   0.0
+         15 :  None :  0.0 :   0.0
+         16 :  None :  0.0 :   0.0
+         17 :  None :  0.0 :   0.0
+         18 :  None :  0.0 :   0.0
+         19 :  None :  0.0 :   0.0
+         20 :  None :  0.0 :   0.0
+         21 :  None :  0.0 :   0.0
+         22 :  None :  0.0 :   0.0
+         23 :  None :  0.0 :   0.0
+         24 :  None :  0.0 :   0.0
+         25 :  None :  0.0 :   0.0
+         26 :  None :  0.0 :   0.0
+         27 :  None :  0.0 :   0.0
+         28 :  None :  0.0 :   0.0
+         29 :  None :  0.0 :   0.0
+         30 :  None :  0.0 :   0.0
+         31 :  None :  0.0 :   0.0
+         32 :  None :  0.0 :   0.0
+         33 :  None : -1.0 :   0.0
+         34 :  None :  0.0 :   0.0
+         35 :  None :  0.0 :   0.0
+         36 :  None :  0.0 :   0.0
+         37 :  None :  0.0 :   0.0
+         38 :  None :  0.0 :   0.0
+         39 :  None :  0.0 :   0.0
+         40 :  None : -1.0 :   0.0
+         41 :  None :  0.0 :   0.0
+         42 :  None :  0.0 :   0.0
+         43 :  None :  0.0 :   0.0
+         44 :  None :  0.0 :   0.0
+         45 :  None :  0.0 :   0.0
+         46 :  None : -1.0 :   0.0
+         47 :  None :  0.0 :   0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>We observe that the optimal solution of this problem is <span class="math notranslate nohighlight">\(x_{10} = 1, 0\)</span> otherwise, leading to an objective of <span class="math notranslate nohighlight">\(5\)</span>. Notice that this problem has a degenerate optimal solution given that <span class="math notranslate nohighlight">\(x_8 = 1, 0\)</span> otherwise also leads to the same solution.</p>
+<p>We can also solve this problem using Simulated Annealing</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simAnnSampler</span> <span class="o">=</span> <span class="n">neal</span><span class="o">.</span><span class="n">SimulatedAnnealingSampler</span><span class="p">()</span>
+<span class="n">simAnnSamples</span> <span class="o">=</span> <span class="n">simAnnSampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">model_ising</span><span class="p">,</span> <span class="n">num_reads</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_enumerate</span><span class="p">(</span><span class="n">simAnnSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Simulated annealing in default parameters&#39;</span><span class="p">)</span>
+<span class="n">plot_energies</span><span class="p">(</span><span class="n">simAnnSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Simulated annealing in default parameters&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
+</pre></div>
+</div>
+<img alt="_images/ae0056cb937d611e47cdccce808485904481c3086de914e9d2c5065a9b36eca1.png" src="_images/ae0056cb937d611e47cdccce808485904481c3086de914e9d2c5065a9b36eca1.png" />
+<img alt="_images/b5cca0466888a67e29248154dcbf0b1522c4475fe54f921a3d38e5234ab81f0c.png" src="_images/b5cca0466888a67e29248154dcbf0b1522c4475fe54f921a3d38e5234ab81f0c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simAnnSamples</span><span class="o">.</span><span class="n">info</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;beta_range&#39;: [0.00041111932417553103, 0.1458971970580513],
+ &#39;beta_schedule_type&#39;: &#39;geometric&#39;,
+ &#39;timing&#39;: {&#39;preprocessing_ns&#39;: 1803106,
+  &#39;sampling_ns&#39;: 277244162,
+  &#39;postprocessing_ns&#39;: 239426}}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="let-s-solve-the-graph-coloring-problem-using-qubo">
+<h2>Let’s solve the graph coloring problem using QUBO.<a class="headerlink" href="#let-s-solve-the-graph-coloring-problem-using-qubo" title="Link to this heading">#</a></h2>
+<section id="vertex-k-coloring-of-graphs">
+<h3>Vertex <span class="math notranslate nohighlight">\(k\)</span>-coloring of graphs<a class="headerlink" href="#vertex-k-coloring-of-graphs" title="Link to this heading">#</a></h3>
+<p>Given a graph <span class="math notranslate nohighlight">\(G(V, E)\)</span>, where <span class="math notranslate nohighlight">\(V\)</span> is the set of vertices and <span class="math notranslate nohighlight">\(E\)</span> is the set of edges of <span class="math notranslate nohighlight">\(G\)</span>, and a positive integer <span class="math notranslate nohighlight">\(k\)</span>, we ask if it is possible to assign a color to every vertex from <span class="math notranslate nohighlight">\(V\)</span>, such that adjacent vertices have different colors assigned.</p>
+<p><span class="math notranslate nohighlight">\(G(V, E)\)</span> has <span class="math notranslate nohighlight">\(12\)</span> vertices and <span class="math notranslate nohighlight">\(23\)</span> edges.
+We ask if the graph is <span class="math notranslate nohighlight">\(3\)</span>–colorable.
+Let’s first encode <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(E\)</span> using Julia’s built–in data structures:</p>
+<p><strong>Note:</strong> This tutorial is heavily inspired in D-Wave’s Map coloring of Canada found <strong><a class="reference external" href="https://docs.ocean.dwavesys.com/en/stable/examples/map_coloring.html">here</a></strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s install with dimod and neal</span>
+<span class="k">if</span> <span class="n">IN_COLAB</span><span class="p">:</span>
+    <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dwavebinarycsp
+    <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dwavebinarycsp<span class="o">[</span>maxgap<span class="o">]</span>
+    <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>dwavebinarycsp<span class="o">[</span>mip<span class="o">]</span>
+
+<span class="kn">import</span> <span class="nn">dwavebinarycsp</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">V</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">E</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">11</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">),(</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">),(</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">),(</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">),(</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">),(</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">),(</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">),(</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">),(</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">),(</span><span class="mi">7</span><span class="p">,</span><span class="mi">11</span><span class="p">),(</span><span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">)]</span>
+<span class="n">layout</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">8</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">8</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">13</span><span class="p">)}</span>
+<span class="n">layout</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">]</span>
+<span class="n">layout</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">]</span>
+<span class="n">layout</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span><span class="o">-</span><span class="mf">1.5</span><span class="p">]</span>
+<span class="n">layout</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="o">-</span><span class="mf">1.5</span><span class="p">]</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/9b5ea27f1dcff9fdc6a960318009ab68b5464ce7f8d3c4dedb786c8be48a2f35.png" src="_images/9b5ea27f1dcff9fdc6a960318009ab68b5464ce7f8d3c4dedb786c8be48a2f35.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function for the constraint that two nodes with a shared edge not both select</span>
+<span class="c1"># one color</span>
+<span class="k">def</span> <span class="nf">not_both_1</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="n">v</span> <span class="ow">and</span> <span class="n">u</span><span class="p">)</span>
+
+<span class="c1"># Valid configurations for the constraint that each node select a single color, in this case we want to use 3 colors</span>
+<span class="n">one_color_configurations</span> <span class="o">=</span> <span class="p">{(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">one_color_configurations</span><span class="p">)</span>
+
+<span class="c1"># Create a binary constraint satisfaction problem</span>
+<span class="n">csp</span> <span class="o">=</span> <span class="n">dwavebinarycsp</span><span class="o">.</span><span class="n">ConstraintSatisfactionProblem</span><span class="p">(</span><span class="n">dwavebinarycsp</span><span class="o">.</span><span class="n">BINARY</span><span class="p">)</span>
+
+<span class="c1"># Add constraint that each node select a single color</span>
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">V</span><span class="p">:</span>
+    <span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;,&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colors</span><span class="p">)]</span>
+    <span class="n">csp</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="n">one_color_configurations</span><span class="p">,</span> <span class="n">variables</span><span class="p">)</span>
+
+<span class="c1"># Add constraint that each pair of nodes with a shared edge not both select one color</span>
+<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">E</span><span class="p">:</span>
+    <span class="n">v</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">edge</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colors</span><span class="p">):</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;,&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;,&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span>
+        <span class="n">csp</span><span class="o">.</span><span class="n">add_constraint</span><span class="p">(</span><span class="n">not_both_1</span><span class="p">,</span> <span class="n">variables</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Defining the Binary Quandratic model (QUBO) using the CSP library we have:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bqm</span> <span class="o">=</span> <span class="n">dwavebinarycsp</span><span class="o">.</span><span class="n">stitch</span><span class="p">(</span><span class="n">csp</span><span class="p">)</span>
+<span class="n">simAnnSamples</span> <span class="o">=</span> <span class="n">simAnnSampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">bqm</span><span class="p">,</span> <span class="n">num_reads</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_enumerate</span><span class="p">(</span><span class="n">simAnnSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Simulated annealing in default parameters&#39;</span><span class="p">)</span>
+<span class="n">plot_energies</span><span class="p">(</span><span class="n">simAnnSamples</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Simulated annealing in default parameters&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 0.0
+</pre></div>
+</div>
+<img alt="_images/c6a45c78cbb2cc95f3db318a2f239225786ebbd3b8f5170e908d874e557a9d13.png" src="_images/c6a45c78cbb2cc95f3db318a2f239225786ebbd3b8f5170e908d874e557a9d13.png" />
+<img alt="_images/c975d26fc28fa6aca86381936fe7a3e4a0e474f1cf9582e3395ed0480ab8b0a5.png" src="_images/c975d26fc28fa6aca86381936fe7a3e4a0e474f1cf9582e3395ed0480ab8b0a5.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because of precision issues in the translation to BQM, we <em>may</em> obtain very tiny coefficeints that should be zero. In any case, since this is a constraint satisfaction problem, any of the solutions with energy ~0 is a valid coloring.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check that a good solution was found</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">simAnnSamples</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">sample</span>     <span class="c1"># doctest: +SKIP</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">csp</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">sample</span><span class="p">):</span>           <span class="c1"># doctest: +SKIP</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to color map. Try sampling again.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;x1,0&#39;: 0, &#39;x1,1&#39;: 1, &#39;x1,2&#39;: 0, &#39;x10,0&#39;: 0, &#39;x10,1&#39;: 1, &#39;x10,2&#39;: 0, &#39;x11,0&#39;: 1, &#39;x11,1&#39;: 0, &#39;x11,2&#39;: 0, &#39;x12,0&#39;: 0, &#39;x12,1&#39;: 0, &#39;x12,2&#39;: 1, &#39;x2,0&#39;: 1, &#39;x2,1&#39;: 0, &#39;x2,2&#39;: 0, &#39;x3,0&#39;: 0, &#39;x3,1&#39;: 0, &#39;x3,2&#39;: 1, &#39;x4,0&#39;: 0, &#39;x4,1&#39;: 0, &#39;x4,2&#39;: 1, &#39;x5,0&#39;: 0, &#39;x5,1&#39;: 1, &#39;x5,2&#39;: 0, &#39;x6,0&#39;: 1, &#39;x6,1&#39;: 0, &#39;x6,2&#39;: 0, &#39;x7,0&#39;: 0, &#39;x7,1&#39;: 0, &#39;x7,2&#39;: 1, &#39;x8,0&#39;: 0, &#39;x8,1&#39;: 1, &#39;x8,2&#39;: 0, &#39;x9,0&#39;: 1, &#39;x9,1&#39;: 0, &#39;x9,2&#39;: 0}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function that plots a returned sample</span>
+<span class="k">def</span> <span class="nf">plot_map</span><span class="p">(</span><span class="n">sample</span><span class="p">):</span>
+    <span class="c1"># Translate from binary to integer color representation</span>
+    <span class="n">color_map</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">V</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colors</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;,&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]:</span>
+                <span class="n">color_map</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="c1"># Plot the sample with color-coded nodes</span>
+    <span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">color_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span>
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">layout</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_map</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6f72db60968238b9b86a065ee0bf19687e86961773c4671d62e53ef6ecba98e1.png" src="_images/6f72db60968238b9b86a065ee0bf19687e86961773c4671d62e53ef6ecba98e1.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Introduction%20to%20Mathematical%20Programming.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Mathematical Programming</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Graver%20Augmentation%20Multiseed%20Algorithm.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introduction to GAMA</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Quadratic Unconstrained Binary Optimization</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem statement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ising-model">Ising model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Problem statement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-solve-the-graph-coloring-problem-using-qubo">Let’s solve the graph coloring problem using QUBO.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vertex-k-coloring-of-graphs">Vertex <span class="math notranslate nohighlight">\(k\)</span>-coloring of graphs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ben Murray
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
