@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>About this Notebook &#8212; QUBOBook</title>
+    <title>Benchmarking &#8212; QUBOBook</title>
   
   
   
@@ -186,13 +186,7 @@
 
 <li class="toctree-l1"><a class="reference internal" href="Graver%20Augmentation%20Multiseed%20Algorithm.html">Introduction to GAMA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Quantum%20Annealing%20via%20D-Wave.html">Quantum Annealing via D-Wave</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">About this Notebook</a></li>
-
-
-
-
-
-
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Benchmarking</a></li>
 </ul>
 
     </div>
@@ -378,7 +372,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>About this Notebook</h1>
+    <h1>Benchmarking</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -388,15 +382,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">About this Notebook</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ising-model">Ising model</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem statement</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">Example 2</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Problem statement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-this-notebook">About this Notebook</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ising-model">Ising model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem statement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">Example 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Problem statement</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -441,8 +434,10 @@ document.write(`
     <a href="https://secquoia.github.io/">
         <img src="https://img.shields.io/badge/🌲⚛️🌐-SECQUOIA-blue" alt="SECQUOIA"/>
     </a>
-</div><section id="about-this-notebook">
-<h1>About this Notebook<a class="headerlink" href="#about-this-notebook" title="Link to this heading">#</a></h1>
+</div><section id="benchmarking">
+<h1>Benchmarking<a class="headerlink" href="#benchmarking" title="Link to this heading">#</a></h1>
+<section id="about-this-notebook">
+<h2>About this Notebook<a class="headerlink" href="#about-this-notebook" title="Link to this heading">#</a></h2>
 <p>With the new availability of unconventional hardware, novel algorithms, and increasingly optimized software to address optimization problems; the first question that arises is, which one is better?
 We will call the combination of hardware, algorithm, and software within a solution method a solver.
 This question is also relevant when evaluating a single solver, given that usually they rely on hyperparameters, for which the quesiton now becomes, which is the best parameter setting for a given solver?
@@ -454,15 +449,15 @@ Then, you can use a larger amount of resources to solve that family of problems 
 Finally, you would like to use the results that you found off-line as a guidance to solve your unknown problem more efficiently.</p>
 </section>
 <section id="example">
-<h1>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h1>
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>For illustration purposes, we will use an example that you are already familiar with, which is an Ising model. As a solver, we will use a simulated annealing code provided by D-Wave Ocean Tools.</p>
 </section>
 <section id="ising-model">
-<h1>Ising model<a class="headerlink" href="#ising-model" title="Link to this heading">#</a></h1>
+<h2>Ising model<a class="headerlink" href="#ising-model" title="Link to this heading">#</a></h2>
 <p>In order to implement the different Ising Models we will use D-Wave’s packages <strong><a class="reference external" href="https://github.com/dwavesystems/dimod">dimod</a></strong> and <strong><a class="reference external" href="https://github.com/dwavesystems/dwave-neal">neal</a></strong>, for defining the Ising model and solving it with simulated annealing, respectively.</p>
 </section>
 <section id="problem-statement">
-<h1>Problem statement<a class="headerlink" href="#problem-statement" title="Link to this heading">#</a></h1>
+<h2>Problem statement<a class="headerlink" href="#problem-statement" title="Link to this heading">#</a></h2>
 <p>We pose the Ising problem as the following optimization problem:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -472,7 +467,7 @@ Finally, you would like to use the results that you found off-line as a guidance
 We also include an arbitrary offset of the Ising model <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
 </section>
 <section id="id1">
-<h1>Example<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h2>Example<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>Suppose we have an Ising model defined from</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -562,11 +557,11 @@ c_I = 1319.5
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_152484/1437022254.py:1: DeprecationWarning: BinaryQuadraticModel.to_networkx_graph() is deprecated since dimod 0.10.0 and will be removed in 0.12.0. Use dimod.to_networkx_graph() instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_162951/1437022254.py:1: DeprecationWarning: BinaryQuadraticModel.to_networkx_graph() is deprecated since dimod 0.10.0 and will be removed in 0.12.0. Use dimod.to_networkx_graph() instead.
   nx_graph = model_ising.to_networkx_graph()
 </pre></div>
 </div>
-<img alt="_images/562bb93830f99f49e3551184121389e8b1101374d27d8bb0483439863f30cdf9.png" src="_images/562bb93830f99f49e3551184121389e8b1101374d27d8bb0483439863f30cdf9.png" />
+<img alt="_images/a05255e68464a3287caf2e9b938b300697a3afb37af7c97cfe9a79f34fee4c33.png" src="_images/a05255e68464a3287caf2e9b938b300697a3afb37af7c97cfe9a79f34fee4c33.png" />
 </div>
 </div>
 <p>Since the problem is relatively small (11 variables, <span class="math notranslate nohighlight">\(2^{11}=2048\)</span> combinations), we can afford to enumerate all the solutions.</p>
@@ -581,7 +576,7 @@ c_I = 1319.5
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>runtime: 0.004426717758178711 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>runtime: 0.004312992095947266 seconds
 </pre></div>
 </div>
 </div>
@@ -714,8 +709,8 @@ minimum energy: 5.0
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: title={&#39;center&#39;: &#39;Simulated annealing in default parameters&#39;}, xlabel=&#39;Energy&#39;, ylabel=&#39;Probabilities&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/d5fe6681459ad8b3d1cf130fcf2cb5c4c7229567c3d5500e1aa8f8a867f89c86.png" src="_images/d5fe6681459ad8b3d1cf130fcf2cb5c4c7229567c3d5500e1aa8f8a867f89c86.png" />
-<img alt="_images/57b98b382f78660331bb9fdd824f130aacda80cfbbf324668ec2e26eaddb78e0.png" src="_images/57b98b382f78660331bb9fdd824f130aacda80cfbbf324668ec2e26eaddb78e0.png" />
+<img alt="_images/5c0dca24844819bc24e5963bfa9618c58a6a67afbe767b9eec5062a15435beec.png" src="_images/5c0dca24844819bc24e5963bfa9618c58a6a67afbe767b9eec5062a15435beec.png" />
+<img alt="_images/897508c917daa428a78a82188e6abb08c5b5db2ac7bf9f4ee90af1c57cd20a9e.png" src="_images/897508c917daa428a78a82188e6abb08c5b5db2ac7bf9f4ee90af1c57cd20a9e.png" />
 </div>
 </div>
 <p>We are going to use the default limits of temperature given by the simulating annealing code. These are defined using the minimum and maximum nonzero coefficients in the Ising model. Then the range for beta is defined as</p>
@@ -860,10 +855,10 @@ minimum energy: 5.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7de39d93f4f0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7733105a6710&gt;
 </pre></div>
 </div>
-<img alt="_images/09060ae248cb763d1f4db2096fbaaed52fea7c4c24860aef5bda72b983683642.png" src="_images/09060ae248cb763d1f4db2096fbaaed52fea7c4c24860aef5bda72b983683642.png" />
+<img alt="_images/137ffab0ed301f71b56a46760a58f67bfc5bea9014bf61ac561e75fc9d69438b.png" src="_images/137ffab0ed301f71b56a46760a58f67bfc5bea9014bf61ac561e75fc9d69438b.png" />
 </div>
 </div>
 <p>These plots represent ofter contradictory metrics, on one hand you would like to obtain a large probability of finding a right solution (the deffinition of right comes from what you define as success). On the other hand, the time it takes to solve these cases should be as small as possible.
@@ -902,10 +897,10 @@ where s is a success factor, usually takes as \)</span>s = 99%<span class="math 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7de39ded7af0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x77330e537670&gt;
 </pre></div>
 </div>
-<img alt="_images/f532e8a176226e9e9655337e6a7cb63f0de133b0416f035aab6087bbfb7ba79c.png" src="_images/f532e8a176226e9e9655337e6a7cb63f0de133b0416f035aab6087bbfb7ba79c.png" />
+<img alt="_images/2ad1767169caf68a3b6f7aa98c7501843bb083a6922e2fa12124ebaccecd04b9.png" src="_images/2ad1767169caf68a3b6f7aa98c7501843bb083a6922e2fa12124ebaccecd04b9.png" />
 </div>
 </div>
 <p>As you can notice, the default parameters given by D-Wave (number of sweeps = 1000 and a geometric update of <span class="math notranslate nohighlight">\(\beta\)</span>) are not optimal for our tiny example in terms of expected runtime.
@@ -913,7 +908,7 @@ This is certainly a function of the problem, for such a small instance having tw
 This parameters choice might not generalize to any other problem, as seen below.</p>
 </section>
 <section id="example-2">
-<h1>Example 2<a class="headerlink" href="#example-2" title="Link to this heading">#</a></h1>
+<h2>Example 2<a class="headerlink" href="#example-2" title="Link to this heading">#</a></h2>
 <p>Let’s define a larger model, with 100 variables and random weights, to see how this performance changes.</p>
 <p>Assume that we are interested at the instance created with random weights <span class="math notranslate nohighlight">\(h_{i}, J_{i, j} \sim U[-1, +1]\)</span>.</p>
 <div class="cell docutils container">
@@ -944,7 +939,7 @@ This parameters choice might not generalize to any other problem, as seen below.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_152484/1579279843.py:1: DeprecationWarning: BinaryQuadraticModel.to_networkx_graph() is deprecated since dimod 0.10.0 and will be removed in 0.12.0. Use dimod.to_networkx_graph() instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_162951/1579279843.py:1: DeprecationWarning: BinaryQuadraticModel.to_networkx_graph() is deprecated since dimod 0.10.0 and will be removed in 0.12.0. Use dimod.to_networkx_graph() instead.
   nx_graph = model_random.to_networkx_graph()
 </pre></div>
 </div>
@@ -964,7 +959,7 @@ This parameters choice might not generalize to any other problem, as seen below.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average random energy:1.6236994182056115
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average random energy:0.20821570081702884
 </pre></div>
 </div>
 </div>
@@ -977,13 +972,13 @@ This parameters choice might not generalize to any other problem, as seen below.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: -78.64466995580136
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: -68.92432189311049
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: title={&#39;center&#39;: &#39;Random sampling&#39;}, xlabel=&#39;solution&#39;, ylabel=&#39;Energy&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/10e233f9622c3cc83773af9c3e627aaa6909f06fb1ec02ad19ed38542f03a040.png" src="_images/10e233f9622c3cc83773af9c3e627aaa6909f06fb1ec02ad19ed38542f03a040.png" />
+<img alt="_images/250e34d059bc1064d5446a6972cccaa14314946ded727cf00eae6f710c2316ad.png" src="_images/250e34d059bc1064d5446a6972cccaa14314946ded727cf00eae6f710c2316ad.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1001,14 +996,14 @@ This parameters choice might not generalize to any other problem, as seen below.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: -236.4258051878277
-runtime: 2.9985294342041016 seconds
+runtime: 3.028658866882324 seconds
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="id2">
-<h1>Problem statement<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<h2>Problem statement<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>We pose the Ising problem as the following optimization problem:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1053,7 +1048,7 @@ Moreover, the distributions that both lead to are extremely different too.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;beta_range&#39;: [0.0061437051318809005, 86238.87552721801], &#39;beta_schedule_type&#39;: &#39;geometric&#39;, &#39;timing&#39;: {&#39;preprocessing_ns&#39;: 17983932, &#39;sampling_ns&#39;: 2979946053, &#39;postprocessing_ns&#39;: 471868}}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;beta_range&#39;: [0.0061437051318809005, 86238.87552721801], &#39;beta_schedule_type&#39;: &#39;geometric&#39;, &#39;timing&#39;: {&#39;preprocessing_ns&#39;: 19006312, &#39;sampling_ns&#39;: 3009042127, &#39;postprocessing_ns&#39;: 483317}}
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Default Geometric temperature schedule&#39;)
@@ -1322,7 +1317,7 @@ To account for the stochasticity of this method, we are bootstrapping all of our
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7de39c0c2e60&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x77330c8bb220&gt;
 </pre></div>
 </div>
 <img alt="_images/6158fd3afd37dc7bba94a7bac3370b0b3c148e9caac3f32a94f3f7268a06d44c.png" src="_images/6158fd3afd37dc7bba94a7bac3370b0b3c148e9caac3f32a94f3f7268a06d44c.png" />
@@ -1394,7 +1389,7 @@ To account for the stochasticity of this method, we are bootstrapping all of our
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7de397daecb0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x77330c312650&gt;
 </pre></div>
 </div>
 <img alt="_images/39ea0aba9fc5d4d787f13165f5fbec63f23f584889b3096a4e68225070204a40.png" src="_images/39ea0aba9fc5d4d787f13165f5fbec63f23f584889b3096a4e68225070204a40.png" />
@@ -1482,10 +1477,10 @@ To account for the stochasticity of this method, we are bootstrapping all of our
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7de397ce00a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x77330c423b80&gt;
 </pre></div>
 </div>
-<img alt="_images/1cdd463902f8f0cd76dae3ecf94f5eb3f3982b5cad679e015d580e3eb74a3205.png" src="_images/1cdd463902f8f0cd76dae3ecf94f5eb3f3982b5cad679e015d580e3eb74a3205.png" />
+<img alt="_images/8f6911ad51aa87629a98d7a98697cc06e9ed3a8664237370e1e47b930663a02b.png" src="_images/8f6911ad51aa87629a98d7a98697cc06e9ed3a8664237370e1e47b930663a02b.png" />
 </div>
 </div>
 <p>Here see how using the optimal number of sweeps is better than using other values (including the default recommended by the solver) in terms of solving this problem.
@@ -1755,7 +1750,7 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Text(0.5, 0, &#39;Sweeps&#39;)]
 </pre></div>
 </div>
-<img alt="_images/4a33419cad34364cb96b2f65e822644c3edcb2ce6d8ef6ce33228e6535983f00.png" src="_images/4a33419cad34364cb96b2f65e822644c3edcb2ce6d8ef6ce33228e6535983f00.png" />
+<img alt="_images/fb6a11e8d988f0663f8fbe4d203db00b1138e11c6f828af6c6b20428c613010f.png" src="_images/fb6a11e8d988f0663f8fbe4d203db00b1138e11c6f828af6c6b20428c613010f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1781,7 +1776,7 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(0.8, 1.01)]
 </pre></div>
 </div>
-<img alt="_images/901cd9a2855910451e53a16c63044f4dbaccf1a7405f1ad81772aa8dfed82f8f.png" src="_images/901cd9a2855910451e53a16c63044f4dbaccf1a7405f1ad81772aa8dfed82f8f.png" />
+<img alt="_images/79dba2885e19eaa0e5bce5fd743b6595b2d19741fd6b692a320c36898137bc8c.png" src="_images/79dba2885e19eaa0e5bce5fd743b6595b2d19741fd6b692a320c36898137bc8c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1808,7 +1803,7 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(0.8, 1.01)]
 </pre></div>
 </div>
-<img alt="_images/6c08266c632f516b257931eb10b4a7de6f99d811bdddfbcdfd90f1a670789245.png" src="_images/6c08266c632f516b257931eb10b4a7de6f99d811bdddfbcdfd90f1a670789245.png" />
+<img alt="_images/3e03909d69aa81e3e30b6343c8f187d400f5106aeb72befee6368e3dea64bdc5.png" src="_images/3e03909d69aa81e3e30b6343c8f187d400f5106aeb72befee6368e3dea64bdc5.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1832,7 +1827,7 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7de39c403a30&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x77330c827340&gt;
 </pre></div>
 </div>
 <img alt="_images/3dd989b0a1d670a6d3a15cc97d57982a0b3a92a041b5deb05f13921f113bb99e.png" src="_images/3dd989b0a1d670a6d3a15cc97d57982a0b3a92a041b5deb05f13921f113bb99e.png" />
@@ -1915,12 +1910,13 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7de396b8bd60&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x773307c5fac0&gt;
 </pre></div>
 </div>
-<img alt="_images/74b3cf332deed1489f0e915735f251ba74337686b4b787f4f1b4bbb27154766c.png" src="_images/74b3cf332deed1489f0e915735f251ba74337686b4b787f4f1b4bbb27154766c.png" />
+<img alt="_images/dd0ddf68059afa5be2f19392f54520392d51d0f57837fd3353058fc0d9c773b2.png" src="_images/dd0ddf68059afa5be2f19392f54520392d51d0f57837fd3353058fc0d9c773b2.png" />
 </div>
 </div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1978,15 +1974,14 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">About this Notebook</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ising-model">Ising model</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem statement</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">Example 2</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Problem statement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-this-notebook">About this Notebook</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ising-model">Ising model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem statement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">Example 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Problem statement</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
