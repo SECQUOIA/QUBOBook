@@ -1,0 +1,1713 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Solving QUBOs with DWAVE Simulated Annealing &#8212; QUBOBook</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'DWAVE Simulated Annealing';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Benchmarking" href="Benchmarking.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="QUBOBook - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="QUBOBook - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    QUBOBook
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Introduction%20to%20Mathematical%20Programming.html">Introduction to Mathematical Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QUBO%20and%20Ising%20Models.html">Quadratic Unconstrained Binary Optimization</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Graver%20Augmentation%20Multiseed%20Algorithm.html">Introduction to GAMA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Quantum%20Annealing%20via%20D-Wave.html">Quantum Annealing via D-Wave</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Solving QUBOs with DWAVE Simulated Annealing</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/SECQUOIA/QUBOBook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/SECQUOIA/QUBOBook/issues/new?title=Issue%20on%20page%20%2FDWAVE Simulated Annealing.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/DWAVE Simulated Annealing.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Solving QUBOs with DWAVE Simulated Annealing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction"><strong>Introduction</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-number-partitioning-problem"><strong>Example 1 - Number Partitioning Problem</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-max-cut"><strong>Example 2 - Max-Cut</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-minimum-vertex-cover"><strong>Example 3 - Minimum Vertex Cover</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-cancer-genomics"><strong>Example 4 - Cancer Genomics</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-5-hedge-fund-applications"><strong>Example 5 - Hedge Fund Applications</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="solving-qubos-with-dwave-simulated-annealing">
+<h1>Solving QUBOs with DWAVE Simulated Annealing<a class="headerlink" href="#solving-qubos-with-dwave-simulated-annealing" title="Link to this heading">#</a></h1>
+<p>Date: December 4th, 2023</p>
+<p>The notebook contains materials supporting the tutorial paper:
+<em>Five Starter Problems: Solving QUBOs on Quantum Computers</em> by Arul Rhik Mazumder (<a class="reference external" href="mailto:arulm&#37;&#52;&#48;andrew&#46;cmu&#46;edu">arulm<span>&#64;</span>andrew<span>&#46;</span>cmu<span>&#46;</span>edu</a>) and Sridhar Tayur (<a class="reference external" href="mailto:stayur&#37;&#52;&#48;cmu&#46;edu">stayur<span>&#64;</span>cmu<span>&#46;</span>edu</a>).
+It depends on various packages shown below.</p>
+<section id="introduction">
+<h2><strong>Introduction</strong><a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>Simulated Annealing is a widely used probabilistic optimization algorithm that is used to find the global minimum or maximum of a complex, multivariate objective function. It is often employed in optimization problems where an exhaustive search of the entire solution space is not feasible due to its size or computational cost.</p>
+<p>The algorithm is inspired by the annealing process in metallurgy, where a material is heated and then gradually cooled to remove defects and optimize its structure. In a similar fashion, simulated annealing iteratively explores the solution space in search of the optimal solution, while allowing for occasional uphill moves (accepting worse solutions) to escape local minima or maxima. Over time, the likelihood of accepting worse solutions decreases, simulating the annealing process.</p>
+<p>DWAVE Ocean offers a Simulated Annealing Sampler that can be used to solve approprate QUBOs using Simulated Annealing. Further details about this utility can be found below:</p>
+<p><a class="reference external" href="https://docs.ocean.dwavesys.com/projects/neal/en/latest/reference/sampler.html">https://docs.ocean.dwavesys.com/projects/neal/en/latest/reference/sampler.html</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">google.colab</span>
+  <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">if</span> <span class="n">IN_COLAB</span><span class="p">:</span>
+  <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>dwave-ocean-sdk<span class="o">==</span><span class="m">6</span>.10.0
+  <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">bravado</span><span class="o">==</span><span class="m">11</span>.0.3
+  <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">pyqubo</span><span class="o">==</span><span class="m">1</span>.4.0
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All Packages Installed!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># imports necessary packages to run on a DWAVE Machine</span>
+<span class="kn">from</span> <span class="nn">pyqubo</span> <span class="kn">import</span> <span class="n">Spin</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Placeholder</span><span class="p">,</span> <span class="n">Constraint</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">dimod</span>
+<span class="kn">import</span> <span class="nn">neal</span>
+
+<span class="c1"># Misc. imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># Connecting to DWAVE Account</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DWAVE_API_TOKEN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ADD YOUR DWAVE API KEY HERE&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># imports necessary packages to run on a DWAVE Machine</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">pyqubo</span> <span class="kn">import</span> <span class="n">Spin</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Placeholder</span><span class="p">,</span> <span class="n">Constraint</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pyqubo&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-1-number-partitioning-problem">
+<h2><strong>Example 1 - Number Partitioning Problem</strong><a class="headerlink" href="#example-1-number-partitioning-problem" title="Link to this heading">#</a></h2>
+<p>Initializing an arbitrary number partitioning instance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">test_2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">test_2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[25, 7, 13, 31, 42, 17, 21, 10]
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Number Partitioning Models</strong></p>
+<p>Given an array of <span class="math notranslate nohighlight">\(n\)</span> integers <span class="math notranslate nohighlight">\([a_{1}, a_{2}, a_{3} ... a_{n}]\)</span>, the corresponding Ising Hamiltonian is:</p>
+<div class="math notranslate nohighlight">
+\[H=(\sum_{i=1}^{n}a_{i}s_{i})^2\]</div>
+<p>Where <span class="math notranslate nohighlight">\(s_{i} \in \{-1,1\}\)</span> is the Ising spin variable.</p>
+<p>Similarly the corresponding QUBO Model is:</p>
+<div class="math notranslate nohighlight">
+\[Q=(\sum_{i=1}^{n}a_{i}-2\sum_{i=1}^{n}a_{i}x_{i})^{2}\]</div>
+<p>or
+$<span class="math notranslate nohighlight">\(Q=(c-2\sum_{i=1}^{n}a_{i}x_{i})^{2}\)</span>$</p>
+<p>Where <span class="math notranslate nohighlight">\(c=\sum_{i=1}^{n}a_{i}\)</span> and <span class="math notranslate nohighlight">\(x_{i} \in \{0, 1\}\)</span> is a binary quadratic variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Array</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;BINARY&#39;</span><span class="p">)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+<span class="n">bqm</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to_bqm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Running the problem on the the DWAVE Simulated Annealing Sampler</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sa</span> <span class="o">=</span> <span class="n">neal</span><span class="o">.</span><span class="n">SimulatedAnnealingSampler</span><span class="p">()</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">sampleset</span> <span class="o">=</span> <span class="n">sa</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">bqm</span><span class="p">,</span> <span class="n">num_reads</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="n">decoded_samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decode_sampleset</span><span class="p">(</span><span class="n">sampleset</span><span class="p">)</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">decoded_samples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Converting the output binary variables to produce a valid output</span>
+<span class="k">def</span> <span class="nf">NPP_measure</span><span class="p">(</span><span class="n">sortedSample</span><span class="p">):</span>
+  <span class="n">P1</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">P2</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sortedSample</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">sortedSample</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">P1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">P2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])])</span>
+  <span class="n">sum1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">P1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">P1</span><span class="p">)))</span>
+  <span class="n">sum2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">P2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">P2</span><span class="p">)))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sum: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sum1</span><span class="p">))</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">P2</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sum: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sum2</span><span class="p">))</span>
+  <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sum2</span><span class="o">-</span><span class="n">sum1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Sorts samples by numbers to see which quadratic variables are 0 and 1</span>
+<span class="n">sampleKeys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">sortbynumber</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sampleKeys</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">sortbynumber</span><span class="p">)</span>
+<span class="n">sortedSample</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sampleKeys</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Execution Time: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">elapsed_time</span><span class="p">))</span>
+<span class="n">NPP_measure</span><span class="p">(</span><span class="n">sortedSample</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Execution Time: 0.20899653434753418
+[25, 7, 13, 17, 21]
+Sum: 83
+[31, 42, 10]
+Sum: 83
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-2-max-cut">
+<h2><strong>Example 2 - Max-Cut</strong><a class="headerlink" href="#example-2-max-cut" title="Link to this heading">#</a></h2>
+<p>Initializing an arbitrary Max-Cut instance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">draw_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+    <span class="n">default_axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">default_axes</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">)</span>
+    <span class="n">edge_labels</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_edge_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating a graph of 4 nodes</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># Number of nodes in graph</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_weighted_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r&quot;</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+
+<span class="n">draw_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1d88ac2cda538716353b95f7adcaba04fe1b75224fe44c11a287e86411d230a8.png" src="_images/1d88ac2cda538716353b95f7adcaba04fe1b75224fe44c11a287e86411d230a8.png" />
+</div>
+</div>
+<p><strong>Max-Cut Models</strong></p>
+<p>Given an undirected unweighted Graph <span class="math notranslate nohighlight">\(G\)</span> with vertex set <span class="math notranslate nohighlight">\(V\)</span> and edge set <span class="math notranslate nohighlight">\(E\)</span> with edges <span class="math notranslate nohighlight">\((i, j)\)</span> the corresponding Ising Hamiltonian is:</p>
+<div class="math notranslate nohighlight">
+\[H=\sum_{(i, j) \in E}\frac{1-s_{i}s_{j}}{2}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(s_{i} \in \{-1,1\}\)</span> is the Ising spin variable.</p>
+<p>The corresponding QUBO Model is:</p>
+<div class="math notranslate nohighlight">
+\[Q=\sum_{(i, j)\in E}(x_{i}+x_{j}-2x_{i}x_{j})\]</div>
+<p>Where <span class="math notranslate nohighlight">\(x_{i} \in \{0, 1\}\)</span> is a binary quadratic variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Array</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;BINARY&#39;</span><span class="p">)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+<span class="n">bqm</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to_bqm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Running the problem on the the DWAVE Simulated Annealing Sampler</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sa</span> <span class="o">=</span> <span class="n">neal</span><span class="o">.</span><span class="n">SimulatedAnnealingSampler</span><span class="p">()</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">sampleset</span> <span class="o">=</span> <span class="n">sa</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">bqm</span><span class="p">,</span> <span class="n">num_reads</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="n">decoded_samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decode_sampleset</span><span class="p">(</span><span class="n">sampleset</span><span class="p">)</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">decoded_samples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Sorts samples by numbers to see which quadratic variables are 0 and 1</span>
+<span class="n">sampleKeys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">sortbynumber</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sampleKeys</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">sortbynumber</span><span class="p">)</span>
+<span class="n">sortedSample</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sampleKeys</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sortedSample</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;x[0]&#39;: 0, &#39;x[1]&#39;: 1, &#39;x[2]&#39;: 0, &#39;x[3]&#39;: 1, &#39;x[4]&#39;: 0}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Converting the output binary variables to produce a valid output</span>
+<span class="k">def</span> <span class="nf">MaxCut</span><span class="p">(</span><span class="n">sortedSample</span><span class="p">):</span>
+  <span class="n">maxcut_sol</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sortedSample</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">sortedSample</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">maxcut_sol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">maxcut_sol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r&quot;</span> <span class="k">if</span> <span class="n">maxcut_sol</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;c&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">maxcut_sol</span><span class="p">))]</span>
+  <span class="n">draw_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+  <span class="n">cutsize</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">maxcut_sol</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">!=</span> <span class="n">maxcut_sol</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+      <span class="n">cutsize</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="n">cutsize</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Execution Time: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">elapsed_time</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">MaxCut</span><span class="p">(</span><span class="n">sortedSample</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Execution Time: 0.0999906063079834
+5
+</pre></div>
+</div>
+<img alt="_images/45531fbee313f470636ca04519b7033f3095d6b91f6e5ee15d25e4e0116ed10b.png" src="_images/45531fbee313f470636ca04519b7033f3095d6b91f6e5ee15d25e4e0116ed10b.png" />
+</div>
+</div>
+</section>
+<section id="example-3-minimum-vertex-cover">
+<h2><strong>Example 3 - Minimum Vertex Cover</strong><a class="headerlink" href="#example-3-minimum-vertex-cover" title="Link to this heading">#</a></h2>
+<p>Initializing an arbitrary Minimum Vertex Cover instance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating a graph of 4 nodes</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># Number of nodes in graph</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)]</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_weighted_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r&quot;</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()]</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+
+<span class="n">draw_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/435edc1bb7da57714bf4467c4dc06ad8d39ac5a3e5299aad5f43f982639c239d.png" src="_images/435edc1bb7da57714bf4467c4dc06ad8d39ac5a3e5299aad5f43f982639c239d.png" />
+</div>
+</div>
+<p><strong>Minimum Vertex Cover Models</strong></p>
+<p>Given an undirected unweighted Graph <span class="math notranslate nohighlight">\(G\)</span> with vertex set <span class="math notranslate nohighlight">\(V\)</span> with vertices <span class="math notranslate nohighlight">\(i\)</span> and edge set <span class="math notranslate nohighlight">\(E\)</span> with edges <span class="math notranslate nohighlight">\((i, j)\)</span> the corresponding Ising Hamiltonian is:</p>
+<div class="math notranslate nohighlight">
+\[H=P\sum_{(i, j) \in E}(1-s_{i})(1-s_{j}) + \sum_{i \in V}s_{i}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(s_{i} \in \{-1,1\}\)</span> is the Ising spin variable and <span class="math notranslate nohighlight">\(P\)</span> is the penalty coefficient.</p>
+<p>The corresponding QUBO Model is:</p>
+<div class="math notranslate nohighlight">
+\[Q=\sum_{i \in V}x_{i} + P(\sum_{(i, j) \in E}(1-x_{i}-x_{j}+x_{i}x_{j}))\]</div>
+<p>Where <span class="math notranslate nohighlight">\(x_{i} \in \{0, 1\}\)</span> is a binary quadratic variable.</p>
+<p>Note in the example <span class="math notranslate nohighlight">\(P\)</span> was chosen through trial-and-error although there exists rigorous mathematical processes</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Array</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;BINARY&#39;</span><span class="p">)</span>
+<span class="n">P</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">H</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="o">+</span> <span class="n">P</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+<span class="n">bqm</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to_bqm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Running the problem on a DWAVE Simulated Annealing Sampler.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sa</span> <span class="o">=</span> <span class="n">neal</span><span class="o">.</span><span class="n">SimulatedAnnealingSampler</span><span class="p">()</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">sampleset</span> <span class="o">=</span> <span class="n">sa</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">bqm</span><span class="p">,</span> <span class="n">num_reads</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="n">decoded_samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decode_sampleset</span><span class="p">(</span><span class="n">sampleset</span><span class="p">)</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">decoded_samples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Sorts samples by numbers to see which quadratic variables are 0 and 1</span>
+<span class="n">sampleKeys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">sortbynumber</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sampleKeys</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">sortbynumber</span><span class="p">)</span>
+<span class="n">sortedSample</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sampleKeys</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sortedSample</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;x[0]&#39;: 0, &#39;x[1]&#39;: 1, &#39;x[2]&#39;: 0, &#39;x[3]&#39;: 0, &#39;x[4]&#39;: 0, &#39;x[5]&#39;: 0}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Converting the output binary variables to produce a valid output</span>
+<span class="k">def</span> <span class="nf">MVC</span><span class="p">(</span><span class="n">sortedSample</span><span class="p">):</span>
+  <span class="n">mvc_sol</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sortedSample</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">sortedSample</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">mvc_sol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mvc_sol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r&quot;</span> <span class="k">if</span> <span class="n">mvc_sol</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;c&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mvc_sol</span><span class="p">))]</span>
+  <span class="n">draw_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+  <span class="n">covered</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">mvc_sol</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">mvc_sol</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="n">covered</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="n">covered</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Execution Time: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">elapsed_time</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">MVC</span><span class="p">(</span><span class="n">sortedSample</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Execution Time: 0.16471481323242188
+5
+</pre></div>
+</div>
+<img alt="_images/5d8971c92dcc1a92c2f9239759f38adf6a53fe70145958f3a62a9d41e4bcfe13.png" src="_images/5d8971c92dcc1a92c2f9239759f38adf6a53fe70145958f3a62a9d41e4bcfe13.png" />
+</div>
+</div>
+</section>
+<section id="example-4-cancer-genomics">
+<h2><strong>Example 4 - Cancer Genomics</strong><a class="headerlink" href="#example-4-cancer-genomics" title="Link to this heading">#</a></h2>
+<p>Identifying Cancer Gene Pathways from the TCGA-AML Data. The techniques used were taken from: <a class="reference external" href="https://www.biorxiv.org/content/10.1101/845719v1">https://www.biorxiv.org/content/10.1101/845719v1</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import necessary package for data imports</span>
+<span class="kn">from</span> <span class="nn">bravado.client</span> <span class="kn">import</span> <span class="n">SwaggerClient</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Accessing AML study data from the cbioportal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># connects to cbioportal to access data</span>
+<span class="c1">#info here https://github.com/mskcc/cbsp-hackathon/blob/master/0-introduction/cbsp_hackathon.ipynb</span>
+<span class="n">cbioportal</span> <span class="o">=</span> <span class="n">SwaggerClient</span><span class="o">.</span><span class="n">from_url</span><span class="p">(</span><span class="s1">&#39;https://www.cbioportal.org/api/v2/api-docs&#39;</span><span class="p">,</span>
+                                <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;validate_requests&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span><span class="s2">&quot;validate_responses&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span><span class="s2">&quot;validate_swagger_spec&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># connects to cbioportal to access data</span>
+<span class="c1">#info here https://github.com/mskcc/cbsp-hackathon/blob/master/0-introduction/cbsp_hackathon.ipynb</span>
+<span class="n">cbioportal</span> <span class="o">=</span> <span class="n">SwaggerClient</span><span class="o">.</span><span class="n">from_url</span><span class="p">(</span><span class="s1">&#39;https://www.cbioportal.org/api/v2/api-docs&#39;</span><span class="p">,</span>
+                                <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;validate_requests&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span><span class="s2">&quot;validate_responses&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span><span class="s2">&quot;validate_swagger_spec&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">})</span>
+
+<span class="c1"># access the patient data of AML study</span>
+<span class="n">patients</span> <span class="o">=</span> <span class="n">cbioportal</span><span class="o">.</span><span class="n">Patients</span><span class="o">.</span><span class="n">getAllPatientsInStudyUsingGET</span><span class="p">(</span><span class="n">studyId</span><span class="o">=</span><span class="s1">&#39;laml_tcga&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+<span class="c1"># for each mutation, creates a list of properties associated with the mutation include geneID, patientID, and more</span>
+<span class="n">InitialMutations</span> <span class="o">=</span> <span class="n">cbioportal</span><span class="o">.</span><span class="n">Mutations</span><span class="o">.</span><span class="n">getMutationsInMolecularProfileBySampleListIdUsingGET</span><span class="p">(</span>
+    <span class="n">molecularProfileId</span><span class="o">=</span><span class="s1">&#39;laml_tcga_mutations&#39;</span><span class="p">,</span>
+    <span class="n">sampleListId</span><span class="o">=</span><span class="s1">&#39;laml_tcga_all&#39;</span><span class="p">,</span>
+    <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;DETAILED&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Identifying the <span class="math notranslate nohighlight">\(33\)</span> most common genes from the study.</p>
+<p>Then preprocessing the data to create a Patient-Gene Dictionary to construct the matrices from.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># tests if data is correct</span>
+<span class="c1"># Compares the frequency of the 33 most common genes and compares them with the information listed on</span>
+<span class="c1"># https://www.cbioportal.org/study/summary?id=laml_tcga</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="n">mutation_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">gene</span><span class="o">.</span><span class="n">hugoGeneSymbol</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">InitialMutations</span><span class="p">])</span>
+<span class="n">MostImportantMutationsCounts</span> <span class="o">=</span> <span class="n">mutation_counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span>
+<span class="n">MostImportantMutations</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">MostImportantMutationsCounts</span><span class="p">)):</span>
+    <span class="n">MostImportantMutations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MostImportantMutationsCounts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adds mutations including 33 most frequent genes to a mutations list</span>
+<span class="n">mutations</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">InitialMutations</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">gene</span><span class="o">.</span><span class="n">hugoGeneSymbol</span> <span class="ow">in</span> <span class="n">MostImportantMutations</span><span class="p">:</span>
+        <span class="n">mutations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creates a gene set also for later use (can also be utilized to count the number of genes)</span>
+<span class="n">geneset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mutations</span><span class="p">:</span>
+    <span class="n">geneset</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">gene</span><span class="o">.</span><span class="n">hugoGeneSymbol</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># creates a patient-(gene-list) dictionary</span>
+<span class="n">PatientGeneDict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="c1"># first sort the patients by index</span>
+<span class="k">def</span> <span class="nf">sortPatients</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">patientId</span>
+<span class="n">mutations</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">sortPatients</span><span class="p">)</span>
+<span class="c1">#print(mutations)</span>
+<span class="c1"># iterates through the mutation list</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mutations</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">patientId</span> <span class="ow">in</span> <span class="n">PatientGeneDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c1"># if the patient is already in dictionary add the gene to their previous gene list</span>
+        <span class="n">PatientGeneDict</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">patientId</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">gene</span><span class="o">.</span><span class="n">hugoGeneSymbol</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">PatientGeneDict</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">patientId</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">gene</span><span class="o">.</span><span class="n">hugoGeneSymbol</span><span class="p">]</span> <span class="c1"># else add the patient their associated gene</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create independent patient and gene lists</span>
+<span class="n">patientset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mutations</span><span class="p">:</span>
+    <span class="n">patientset</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">patientId</span><span class="p">)</span>
+<span class="n">patientList</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># patient list</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">patientset</span><span class="p">:</span>
+    <span class="n">patientList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">geneList</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># gene list</span>
+<span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">geneset</span><span class="p">:</span>
+    <span class="n">geneList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gene</span><span class="p">)</span>
+<span class="n">geneList</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Patient-Gene Dictionary that displays each patient and their corresponding gene-list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Organized way to visualize the patient-(gene-list) dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Patient-Gene Dictionary:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">PatientGeneDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">PatientGeneDict</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Patient-Gene Dictionary:
+TCGA-AB-2802
+[&#39;DNMT3A&#39;, &#39;IDH1&#39;, &#39;MT-ND5&#39;, &#39;NPM1&#39;, &#39;NPM1&#39;, &#39;PTPN11&#39;]
+TCGA-AB-2804
+[&#39;PHF6&#39;]
+TCGA-AB-2805
+[&#39;RUNX1&#39;, &#39;RUNX1&#39;, &#39;IDH2&#39;]
+TCGA-AB-2806
+[&#39;PLCE1&#39;]
+TCGA-AB-2807
+[&#39;RUNX1&#39;, &#39;IDH2&#39;, &#39;ASXL1&#39;]
+TCGA-AB-2808
+[&#39;CEBPA&#39;, &#39;NRAS&#39;]
+TCGA-AB-2809
+[&#39;DNMT3A&#39;, &#39;NPM1&#39;]
+TCGA-AB-2810
+[&#39;IDH2&#39;, &#39;NPM1&#39;]
+TCGA-AB-2811
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;, &#39;SMC1A&#39;]
+TCGA-AB-2812
+[&#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2813
+[&#39;CACNA1B&#39;, &#39;TP53&#39;]
+TCGA-AB-2814
+[&#39;CACNA1B&#39;, &#39;FLT3&#39;, &#39;MT-CO2&#39;]
+TCGA-AB-2816
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;, &#39;NRAS&#39;]
+TCGA-AB-2817
+[&#39;EZH2&#39;, &#39;EZH2&#39;, &#39;MT-ND5&#39;, &#39;BRINP3&#39;]
+TCGA-AB-2818
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;, &#39;RAD21&#39;]
+TCGA-AB-2819
+[&#39;KIT&#39;]
+TCGA-AB-2820
+[&#39;MT-CO2&#39;, &#39;TP53&#39;]
+TCGA-AB-2821
+[&#39;RUNX1&#39;, &#39;IDH1&#39;, &#39;IDH2&#39;, &#39;U2AF1&#39;, &#39;ASXL1&#39;]
+TCGA-AB-2822
+[&#39;DNMT3A&#39;, &#39;IDH1&#39;, &#39;SMC1A&#39;, &#39;TET2&#39;]
+TCGA-AB-2824
+[&#39;DNMT3A&#39;, &#39;NPM1&#39;, &#39;SMC1A&#39;]
+TCGA-AB-2825
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2826
+[&#39;IDH2&#39;, &#39;KRAS&#39;, &#39;NPM1&#39;]
+TCGA-AB-2829
+[&#39;TP53&#39;, &#39;TP53&#39;]
+TCGA-AB-2830
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;TET2&#39;, &#39;TET2&#39;]
+TCGA-AB-2831
+[&#39;DNMT3A&#39;]
+TCGA-AB-2833
+[&#39;DNMT3A&#39;]
+TCGA-AB-2834
+[&#39;FLT3&#39;]
+TCGA-AB-2835
+[&#39;NPM1&#39;]
+TCGA-AB-2836
+[&#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2837
+[&#39;NPM1&#39;]
+TCGA-AB-2838
+[&#39;NRAS&#39;, &#39;TP53&#39;, &#39;BRINP3&#39;, &#39;BRINP3&#39;]
+TCGA-AB-2839
+[&#39;CEBPA&#39;, &#39;DNMT3A&#39;, &#39;NPM1&#39;, &#39;NRAS&#39;, &#39;PTPN11&#39;, &#39;WT1&#39;, &#39;SMC3&#39;]
+TCGA-AB-2840
+[&#39;FLT3&#39;]
+TCGA-AB-2843
+[&#39;KIT&#39;, &#39;KIT&#39;, &#39;U2AF1&#39;, &#39;PLCE1&#39;]
+TCGA-AB-2844
+[&#39;FLT3&#39;, &#39;WT1&#39;, &#39;SMC1A&#39;]
+TCGA-AB-2845
+[&#39;CEBPA&#39;, &#39;CEBPA&#39;, &#39;CEBPA&#39;, &#39;TET2&#39;]
+TCGA-AB-2846
+[&#39;KIT&#39;, &#39;KIT&#39;, &#39;WT1&#39;]
+TCGA-AB-2847
+[&#39;U2AF1&#39;]
+TCGA-AB-2848
+[&#39;NPM1&#39;]
+TCGA-AB-2850
+[&#39;RUNX1&#39;, &#39;IDH2&#39;, &#39;STAG2&#39;]
+TCGA-AB-2851
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;SMC3&#39;]
+TCGA-AB-2853
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;, &#39;SMC3&#39;]
+TCGA-AB-2855
+[&#39;PTPN11&#39;, &#39;PHF6&#39;]
+TCGA-AB-2857
+[&#39;TP53&#39;]
+TCGA-AB-2858
+[&#39;SMC1A&#39;]
+TCGA-AB-2859
+[&#39;DNMT3A&#39;, &#39;HNRNPK&#39;, &#39;NPM1&#39;]
+TCGA-AB-2860
+[&#39;TP53&#39;]
+TCGA-AB-2861
+[&#39;DNMT3A&#39;, &#39;KRAS&#39;, &#39;NPM1&#39;, &#39;U2AF1&#39;]
+TCGA-AB-2863
+[&#39;CEBPA&#39;, &#39;DNMT3A&#39;, &#39;IDH1&#39;]
+TCGA-AB-2864
+[&#39;DNMT3A&#39;, &#39;IDH2&#39;, &#39;KRAS&#39;, &#39;ASXL1&#39;]
+TCGA-AB-2865
+[&#39;RUNX1&#39;, &#39;RUNX1&#39;, &#39;EZH2&#39;, &#39;KRAS&#39;, &#39;TET2&#39;, &#39;TET2&#39;, &#39;TET2&#39;]
+TCGA-AB-2866
+[&#39;IDH2&#39;]
+TCGA-AB-2867
+[&#39;DNMT3A&#39;, &#39;DNMT3A&#39;, &#39;IDH1&#39;]
+TCGA-AB-2868
+[&#39;TP53&#39;]
+TCGA-AB-2869
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2870
+[&#39;COL12A1&#39;, &#39;FLT3&#39;, &#39;NRAS&#39;]
+TCGA-AB-2871
+[&#39;COL12A1&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;, &#39;PTPN11&#39;, &#39;STAG2&#39;]
+TCGA-AB-2872
+[&#39;TTN&#39;]
+TCGA-AB-2873
+[&#39;DNMT3A&#39;, &#39;TET2&#39;]
+TCGA-AB-2874
+[&#39;CEBPA&#39;, &#39;IDH2&#39;, &#39;WT1&#39;]
+TCGA-AB-2875
+[&#39;FLT3&#39;]
+TCGA-AB-2876
+[&#39;TET2&#39;, &#39;TET2&#39;]
+TCGA-AB-2877
+[&#39;FLT3&#39;, &#39;IDH2&#39;, &#39;NPM1&#39;]
+TCGA-AB-2878
+[&#39;CACNA1E&#39;, &#39;TP53&#39;, &#39;TP53&#39;]
+TCGA-AB-2879
+[&#39;FLT3&#39;, &#39;NPM1&#39;, &#39;TET2&#39;, &#39;TET2&#39;]
+TCGA-AB-2880
+[&#39;CEBPA&#39;, &#39;FLT3&#39;]
+TCGA-AB-2881
+[&#39;KIT&#39;]
+TCGA-AB-2882
+[&#39;U2AF1&#39;]
+TCGA-AB-2884
+[&#39;DNMT3A&#39;, &#39;IDH1&#39;, &#39;NPM1&#39;, &#39;PTPN11&#39;]
+TCGA-AB-2885
+[&#39;MT-CO2&#39;, &#39;PTPN11&#39;, &#39;TP53&#39;]
+TCGA-AB-2886
+[&#39;RAD21&#39;]
+TCGA-AB-2887
+[&#39;DNMT3A&#39;, &#39;EZH2&#39;, &#39;IDH1&#39;, &#39;NRAS&#39;]
+TCGA-AB-2888
+[&#39;KIT&#39;]
+TCGA-AB-2890
+[&#39;RUNX1&#39;]
+TCGA-AB-2891
+[&#39;DNMT3A&#39;, &#39;DNMT3A&#39;, &#39;IDH2&#39;]
+TCGA-AB-2892
+[&#39;NRAS&#39;]
+TCGA-AB-2895
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2896
+[&#39;DNMT3A&#39;, &#39;NPM1&#39;]
+TCGA-AB-2898
+[&#39;DNMT3A&#39;, &#39;DNMT3A&#39;, &#39;IDH2&#39;]
+TCGA-AB-2899
+[&#39;RUNX1&#39;]
+TCGA-AB-2900
+[&#39;CEBPA&#39;, &#39;FLT3&#39;, &#39;MT-CYB&#39;, &#39;NPM1&#39;, &#39;SMC1A&#39;]
+TCGA-AB-2901
+[&#39;IDH1&#39;]
+TCGA-AB-2903
+[&#39;MT-CO2&#39;, &#39;NPM1&#39;]
+TCGA-AB-2904
+[&#39;MT-CYB&#39;, &#39;TP53&#39;]
+TCGA-AB-2905
+[&#39;WT1&#39;]
+TCGA-AB-2906
+[&#39;FLT3&#39;]
+TCGA-AB-2907
+[&#39;RUNX1&#39;, &#39;IDH2&#39;, &#39;TTN&#39;, &#39;ASXL1&#39;]
+TCGA-AB-2908
+[&#39;DNMT3A&#39;, &#39;TP53&#39;, &#39;TP53&#39;, &#39;SMC3&#39;, &#39;TET2&#39;]
+TCGA-AB-2909
+[&#39;FLT3&#39;]
+TCGA-AB-2910
+[&#39;FLT3&#39;]
+TCGA-AB-2912
+[&#39;RUNX1&#39;, &#39;DNMT3A&#39;, &#39;U2AF1&#39;, &#39;SMC3&#39;, &#39;PHF6&#39;]
+TCGA-AB-2913
+[&#39;FLT3&#39;, &#39;NPM1&#39;, &#39;WT1&#39;, &#39;STAG2&#39;]
+TCGA-AB-2914
+[&#39;PTPN11&#39;]
+TCGA-AB-2915
+[&#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2916
+[&#39;DNMT3A&#39;]
+TCGA-AB-2917
+[&#39;COL12A1&#39;, &#39;KRAS&#39;]
+TCGA-AB-2918
+[&#39;FLT3&#39;]
+TCGA-AB-2919
+[&#39;DNMT3A&#39;, &#39;IDH1&#39;, &#39;NPM1&#39;, &#39;WT1&#39;]
+TCGA-AB-2921
+[&#39;FLT3&#39;]
+TCGA-AB-2922
+[&#39;FLT3&#39;]
+TCGA-AB-2923
+[&#39;NRAS&#39;, &#39;TET2&#39;, &#39;TET2&#39;]
+TCGA-AB-2924
+[&#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2925
+[&#39;CACNA1B&#39;, &#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;, &#39;TTN&#39;]
+TCGA-AB-2926
+[&#39;FLT3&#39;, &#39;IDH1&#39;]
+TCGA-AB-2927
+[&#39;RUNX1&#39;, &#39;RUNX1&#39;, &#39;MT-ND5&#39;, &#39;MT-ND5&#39;, &#39;TTN&#39;, &#39;ASXL1&#39;]
+TCGA-AB-2928
+[&#39;DNMT3A&#39;, &#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;IDH1&#39;, &#39;TET2&#39;, &#39;TET2&#39;]
+TCGA-AB-2929
+[&#39;KRAS&#39;]
+TCGA-AB-2930
+[&#39;FLT3&#39;, &#39;WT1&#39;, &#39;WT1&#39;]
+TCGA-AB-2931
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2932
+[&#39;NPM1&#39;, &#39;NRAS&#39;]
+TCGA-AB-2933
+[&#39;RUNX1&#39;]
+TCGA-AB-2934
+[&#39;DNMT3A&#39;, &#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;IDH2&#39;, &#39;MT-CYB&#39;]
+TCGA-AB-2935
+[&#39;TP53&#39;]
+TCGA-AB-2936
+[&#39;RUNX1&#39;, &#39;IDH2&#39;]
+TCGA-AB-2937
+[&#39;DNAH9&#39;, &#39;HNRNPK&#39;, &#39;HNRNPK&#39;, &#39;KIT&#39;, &#39;TET2&#39;]
+TCGA-AB-2938
+[&#39;DNMT3A&#39;, &#39;TP53&#39;, &#39;TP53&#39;]
+TCGA-AB-2939
+[&#39;KIT&#39;]
+TCGA-AB-2940
+[&#39;CEBPA&#39;, &#39;CEBPA&#39;]
+TCGA-AB-2941
+[&#39;MT-ND5&#39;, &#39;TP53&#39;]
+TCGA-AB-2942
+[&#39;FLT3&#39;]
+TCGA-AB-2943
+[&#39;TP53&#39;]
+TCGA-AB-2945
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;IDH1&#39;, &#39;KIT&#39;, &#39;NPM1&#39;]
+TCGA-AB-2947
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2948
+[&#39;IDH2&#39;]
+TCGA-AB-2949
+[&#39;RUNX1&#39;, &#39;DNMT3A&#39;, &#39;IDH1&#39;]
+TCGA-AB-2950
+[&#39;SMC3&#39;]
+TCGA-AB-2952
+[&#39;CEBPA&#39;, &#39;NRAS&#39;, &#39;TP53&#39;]
+TCGA-AB-2955
+[&#39;CEBPA&#39;, &#39;CEBPA&#39;, &#39;DNMT3A&#39;, &#39;MT-CO2&#39;]
+TCGA-AB-2957
+[&#39;FLT3&#39;]
+TCGA-AB-2959
+[&#39;RUNX1&#39;, &#39;IDH2&#39;, &#39;PLCE1&#39;, &#39;PHF6&#39;]
+TCGA-AB-2963
+[&#39;FLT3&#39;, &#39;NPM1&#39;, &#39;PTPN11&#39;, &#39;SMC1A&#39;]
+TCGA-AB-2964
+[&#39;CACNA1E&#39;, &#39;STAG2&#39;, &#39;TET2&#39;, &#39;TET2&#39;]
+TCGA-AB-2965
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;, &#39;TET2&#39;, &#39;BRINP3&#39;]
+TCGA-AB-2966
+[&#39;DNMT3A&#39;, &#39;IDH2&#39;, &#39;KRAS&#39;, &#39;PLCE1&#39;]
+TCGA-AB-2967
+[&#39;DNMT3A&#39;, &#39;NPM1&#39;, &#39;NRAS&#39;, &#39;RAD21&#39;]
+TCGA-AB-2968
+[&#39;DNMT3A&#39;, &#39;DNMT3A&#39;, &#39;NRAS&#39;, &#39;U2AF1&#39;]
+TCGA-AB-2969
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;IDH1&#39;, &#39;NPM1&#39;]
+TCGA-AB-2970
+[&#39;RUNX1&#39;, &#39;FLT3&#39;, &#39;WT1&#39;]
+TCGA-AB-2971
+[&#39;TET2&#39;, &#39;TET2&#39;]
+TCGA-AB-2972
+[&#39;NPM1&#39;, &#39;PTPN11&#39;, &#39;STAG2&#39;]
+TCGA-AB-2973
+[&#39;IDH2&#39;, &#39;NPM1&#39;]
+TCGA-AB-2974
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2975
+[&#39;DNMT3A&#39;, &#39;RAD21&#39;]
+TCGA-AB-2976
+[&#39;FLT3&#39;, &#39;NPM1&#39;, &#39;WT1&#39;, &#39;PHF6&#39;, &#39;BRINP3&#39;]
+TCGA-AB-2977
+[&#39;IDH1&#39;]
+TCGA-AB-2978
+[&#39;RUNX1&#39;, &#39;DNAH9&#39;, &#39;NRAS&#39;, &#39;STAG2&#39;, &#39;TET2&#39;, &#39;TET2&#39;]
+TCGA-AB-2979
+[&#39;CEBPA&#39;, &#39;CEBPA&#39;]
+TCGA-AB-2980
+[&#39;FLT3&#39;]
+TCGA-AB-2981
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2983
+[&#39;RUNX1&#39;]
+TCGA-AB-2984
+[&#39;IDH1&#39;, &#39;NPM1&#39;, &#39;NRAS&#39;]
+TCGA-AB-2985
+[&#39;NRAS&#39;]
+TCGA-AB-2986
+[&#39;FLT3&#39;, &#39;NPM1&#39;, &#39;RAD21&#39;]
+TCGA-AB-2987
+[&#39;DNMT3A&#39;, &#39;KRAS&#39;, &#39;NPM1&#39;]
+TCGA-AB-2988
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;]
+TCGA-AB-2989
+[&#39;NPM1&#39;, &#39;WT1&#39;]
+TCGA-AB-2990
+[&#39;IDH1&#39;, &#39;NPM1&#39;]
+TCGA-AB-2992
+[&#39;IDH1&#39;, &#39;NPM1&#39;]
+TCGA-AB-2993
+[&#39;DNMT3A&#39;, &#39;FLT3&#39;, &#39;NPM1&#39;, &#39;TTN&#39;, &#39;SMC3&#39;]
+TCGA-AB-2994
+[&#39;FLT3&#39;]
+TCGA-AB-2996
+[&#39;U2AF1&#39;, &#39;TET2&#39;, &#39;TET2&#39;]
+TCGA-AB-2997
+[&#39;DNAH9&#39;]
+TCGA-AB-2998
+[&#39;FLT3&#39;, &#39;BRINP3&#39;]
+TCGA-AB-3000
+[&#39;CEBPA&#39;, &#39;CEBPA&#39;]
+TCGA-AB-3001
+[&#39;CACNA1E&#39;]
+TCGA-AB-3002
+[&#39;IDH2&#39;]
+TCGA-AB-3006
+[&#39;FLT3&#39;, &#39;TET2&#39;]
+TCGA-AB-3007
+[&#39;FLT3&#39;]
+TCGA-AB-3008
+[&#39;CEBPA&#39;]
+TCGA-AB-3009
+[&#39;RUNX1&#39;, &#39;TTN&#39;, &#39;WT1&#39;, &#39;PHF6&#39;]
+TCGA-AB-3011
+[&#39;IDH1&#39;, &#39;NPM1&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create the diagonal <span class="math notranslate nohighlight">\(\mathbf{D}\)</span> matrix to represent gene-coverage.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">PatientGeneDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">geneList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">PatientGeneDict</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Generate gene pairs to create the <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> exclusivity matrix</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+
+<span class="k">def</span> <span class="nf">generate_power_sets</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+    <span class="n">power_sets</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">power_sets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">subset</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">power_sets</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using the patient-gene dictionary, we identify all gene-pairs for each patient. This used to create the <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">PatientGeneDict</span><span class="p">:</span>
+    <span class="n">PatientGeneDict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">PatientGeneDict</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+<span class="c1"># creates a patient-(gene-list-pair) dictionary</span>
+<span class="n">PatientGeneDictPairs</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mutations</span><span class="p">:</span>
+        <span class="n">PatientGeneDictPairs</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">patientId</span><span class="p">]</span> <span class="o">=</span> <span class="n">generate_power_sets</span><span class="p">(</span><span class="n">PatientGeneDict</span><span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">patientId</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With all the preprocessing done, the <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> matrix is completed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># creates the A exclusivity matrix</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">PatientGeneDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">geneList</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">geneList</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="ow">in</span> <span class="n">PatientGeneDictPairs</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Identify properties from the gene pathway:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># returns the coverage of a gene</span>
+<span class="k">def</span> <span class="nf">gene_coverage</span><span class="p">(</span><span class="n">gene</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">D</span><span class="p">[</span><span class="n">geneList</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">gene</span><span class="p">)][</span><span class="n">geneList</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">gene</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># returns the coverage of a pathway</span>
+<span class="k">def</span> <span class="nf">coverage</span><span class="p">(</span><span class="n">pathway</span><span class="p">):</span>
+    <span class="n">coverage_val</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pathway</span><span class="p">:</span>
+        <span class="n">coverage_val</span> <span class="o">+=</span> <span class="n">gene_coverage</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">coverage_val</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># returns the indepence(exclusivity) of a pathway</span>
+<span class="k">def</span> <span class="nf">indep</span><span class="p">(</span><span class="n">pathway</span><span class="p">):</span>
+    <span class="n">num_overlap</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pathway</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">pathway</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">num_overlap</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">geneList</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)][</span><span class="n">geneList</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">j</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">num_overlap</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using the <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{D}\)</span> matrices, we create the QUBO to identify the Cancer Genes. As stated in “Quantum and Quantum-inspired Methods for de novo
+Discovery of Altered Cancer Pathways”, the QUBO formulation to identify the cancer gene set while balancing Indepence and Coverage is:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{Q}=\mathbf{x}^{T}(\mathbf{A}-\alpha \mathbf{D})\mathbf{x}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\mathbf{D}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are the previously found matrices and <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the vector of binary variables <span class="math notranslate nohighlight">\(x_{i}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initializes an array of QUBO variables</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Array</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;BINARY&#39;</span><span class="p">)</span>
+<span class="n">H1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="n">H2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">H1</span> <span class="o">-</span> <span class="n">a</span><span class="o">*</span><span class="n">H2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Embedding and solving the problem on a DWAVE Simulated Annealer Sampler.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate QUBO</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+<span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.45</span><span class="p">}</span>
+<span class="n">bqm</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to_bqm</span><span class="p">(</span><span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Get sampler solving details.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Getting Results from Sampler</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">sa</span> <span class="o">=</span> <span class="n">neal</span><span class="o">.</span><span class="n">SimulatedAnnealingSampler</span><span class="p">()</span>
+<span class="n">sampleset</span> <span class="o">=</span> <span class="n">sa</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">bqm</span><span class="p">,</span> <span class="n">num_reads</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">decoded_samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decode_sampleset</span><span class="p">(</span><span class="n">sampleset</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict</span><span class="p">)</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">decoded_samples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">total_time</span> <span class="o">=</span> <span class="n">end_time</span><span class="o">-</span><span class="n">start_time</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Sorts samples by numbers to see which quadratic variables are 0 and 1</span>
+<span class="n">sampleKeys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">sortbynumber</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sampleKeys</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">sortbynumber</span><span class="p">)</span>
+<span class="n">sortedSample</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sampleKeys</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Print the identified pathway.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># converts quadratic variables back to genes and computes coverage, coverage/gene, independence, and measure as mentioned in CMU paper</span>
+<span class="n">pathway</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sampleKeys</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">sortedSample</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">pathway</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geneList</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])])</span>
+        <span class="c1">#coverage += D[geneList.index(geneList[int(i[2:len(i)-1])])][geneList.index(geneList[int(i[2:len(i)-1])])]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pathway</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;coverage: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">coverage</span><span class="p">(</span><span class="n">pathway</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;coverage/gene: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">coverage</span><span class="p">(</span><span class="n">pathway</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">pathway</span><span class="p">),</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;indep: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">indep</span><span class="p">(</span><span class="n">pathway</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;measure: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">coverage</span><span class="p">(</span><span class="n">pathway</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">pathway</span><span class="p">)</span><span class="o">/</span><span class="n">indep</span><span class="p">(</span><span class="n">pathway</span><span class="p">),</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">total_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;ASXL1&#39;, &#39;BRINP3&#39;, &#39;CACNA1B&#39;, &#39;CACNA1E&#39;, &#39;CEBPA&#39;, &#39;COL12A1&#39;]
+coverage: 32.0
+coverage/gene: 5.33
+indep: 0.0
+measure: inf
+0.007361650466918945
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-403-f510e5eab2bb&gt;:11: RuntimeWarning: divide by zero encountered in scalar divide
+  print(&quot;measure: &quot; + str(round(coverage(pathway)/len(pathway)/indep(pathway), 2)))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-5-hedge-fund-applications">
+<h2><strong>Example 5 - Hedge Fund Applications</strong><a class="headerlink" href="#example-5-hedge-fund-applications" title="Link to this heading">#</a></h2>
+<p>As derived in the main paper, the Order Partitioning QUBO is of the form:</p>
+<div class="math notranslate nohighlight">
+\[Q=a(T-2\sum_{j=1}^{n}q_{j}x_{j})^2 + b\sum_{i=1}^{m}(\sum_{j=1}^{n}p_{ij}(2x_{j}-1))^2\]</div>
+<p>Where <span class="math notranslate nohighlight">\(T\)</span> is the sum of the stock values, <span class="math notranslate nohighlight">\(q_{j}\)</span> are the stocks and <span class="math notranslate nohighlight">\(p_{ij}\)</span> are the risk factor matrix entries</p>
+<p>Creating parameters for the Order Partitioning Problem.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Stocks</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">]</span>
+<span class="n">stock_vals</span> <span class="o">=</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+<span class="n">risk_factor_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+                      <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
+                      <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]]</span>
+<span class="n">T</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">stock_vals</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">6</span> <span class="c1"># number of stocks</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># number of risk factors</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We create the Order Partitioning QUBO.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">Array</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;BINARY&#39;</span><span class="p">)</span>
+<span class="n">H1</span> <span class="o">=</span> <span class="p">(</span><span class="n">T</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">stock_vals</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">H2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">risk_factor_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construct hamiltonian</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">H1</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">H2</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate QUBO</span>
+<span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">bqm</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to_bqm</span><span class="p">(</span><span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We solve the QUBO using the Simulated Annealing Sampler.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Getting Results from Sampler</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">sa</span> <span class="o">=</span> <span class="n">neal</span><span class="o">.</span><span class="n">SimulatedAnnealingSampler</span><span class="p">()</span>
+<span class="n">sampleset</span> <span class="o">=</span> <span class="n">sa</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">bqm</span><span class="p">,</span> <span class="n">num_reads</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">decoded_samples</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decode_sampleset</span><span class="p">(</span><span class="n">sampleset</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict</span><span class="p">)</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">decoded_samples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We display the solving details and solution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Sorts samples by numbers to see which quadratic variables are 0 and 1</span>
+<span class="n">sampleKeys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">sortbynumber</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sampleKeys</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="n">sortbynumber</span><span class="p">)</span>
+<span class="n">sortedSample</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sampleKeys</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sortedSample</span><span class="p">)</span>
+<span class="n">total_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">total_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;x[0]&#39;: 0, &#39;x[1]&#39;: 0, &#39;x[2]&#39;: 0, &#39;x[3]&#39;: 1, &#39;x[4]&#39;: 1, &#39;x[5]&#39;: 1}
+0.005046844482421875
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Converting the output binary variables to produce a valid output</span>
+<span class="n">Set_A</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">net_cost_A</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">net_risk_1A</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">net_risk_2A</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">net_risk_3A</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Set_B</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">net_cost_B</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">net_risk_1B</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">net_risk_2B</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">net_risk_3B</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">keylist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sortedSample</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">keylist</span><span class="p">)):</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">sortedSample</span><span class="p">[</span><span class="n">keylist</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="n">Set_A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Stocks</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">net_cost_A</span> <span class="o">+=</span> <span class="n">stock_vals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">net_risk_1A</span> <span class="o">+=</span> <span class="n">risk_factor_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">net_risk_2A</span> <span class="o">+=</span> <span class="n">risk_factor_matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">net_risk_3A</span> <span class="o">+=</span> <span class="n">risk_factor_matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">Set_B</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Stocks</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">net_cost_B</span> <span class="o">+=</span> <span class="n">stock_vals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">net_risk_1B</span> <span class="o">+=</span> <span class="n">risk_factor_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">net_risk_2B</span> <span class="o">+=</span> <span class="n">risk_factor_matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">net_risk_3B</span> <span class="o">+=</span> <span class="n">risk_factor_matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stock Partition: &quot;</span><span class="p">,</span> <span class="n">Set_A</span><span class="p">,</span> <span class="n">Set_B</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Difference of Net Cost between Partition: &quot;</span><span class="p">,</span> <span class="n">net_cost_A</span><span class="o">-</span><span class="n">net_cost_B</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Difference of Net Risk between Partition: &quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">((</span><span class="n">net_risk_1A</span><span class="o">+</span><span class="n">net_risk_2A</span><span class="o">+</span><span class="n">net_risk_3A</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">net_risk_1B</span><span class="o">+</span><span class="n">net_risk_2B</span><span class="o">+</span><span class="n">net_risk_3B</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Stock Partition:  [&#39;A&#39;, &#39;B&#39;, &#39;C&#39;] [&#39;D&#39;, &#39;E&#39;, &#39;F&#39;]
+Difference of Net Cost between Partition:  0
+Difference of Net Risk between Partition:  0.1
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Benchmarking.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Benchmarking</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction"><strong>Introduction</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-number-partitioning-problem"><strong>Example 1 - Number Partitioning Problem</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-max-cut"><strong>Example 2 - Max-Cut</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-minimum-vertex-cover"><strong>Example 3 - Minimum Vertex Cover</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-cancer-genomics"><strong>Example 4 - Cancer Genomics</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-5-hedge-fund-applications"><strong>Example 5 - Hedge Fund Applications</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ben Murray
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

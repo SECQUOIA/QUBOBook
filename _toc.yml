@@ -1,0 +1,12 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: Introduction to Mathematical Programming
+- file: QUBO and Ising Models
+- file: Graver Augmentation Multiseed Algorithm
+- file: Quantum Annealing via D-Wave
+- file: Benchmarking
+- file: DWAVE Simulated Annealing
