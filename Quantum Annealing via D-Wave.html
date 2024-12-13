@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Quantum Annealing via D-Wave';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="About this Notebook" href="Benchmarking.html" />
+    <link rel="next" title="Benchmarking" href="Benchmarking.html" />
     <link rel="prev" title="Introduction to GAMA" href="Graver%20Augmentation%20Multiseed%20Algorithm.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -187,13 +187,8 @@
 
 <li class="toctree-l1"><a class="reference internal" href="Graver%20Augmentation%20Multiseed%20Algorithm.html">Introduction to GAMA</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Quantum Annealing via D-Wave</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">About this Notebook</a></li>
-
-
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DWAVE%20Simulated%20Annealing.html">Solving QUBOs with DWAVE Simulated Annealing</a></li>
 </ul>
 
     </div>
@@ -410,18 +405,12 @@ document.write(`
     <br>
     <i>Davidson School of Chemical Engineering, Purdue University</i>
     <br>
-    <i>Universities Space Research Association</i>
-    <br>
-    <i>NASA QuAIL</i>
-    <br>
     <br>
     <a href="https://github.com/pedromxavier">Pedro Maciel Xavier</a>
     <br>
     <i>Davidson School of Chemical Engineering, Purdue University</i>
     <br>
     <i>Computer Science &amp; Systems Engineering Program, Federal University of Rio de Janeiro</i>
-    <br>
-    <i>PSR Energy Consulting &amp; Analytics</i>
     <br>
     <br>
     <a href="https://github.com/murraybj">Benjamin J. L. Murray</a>
@@ -431,7 +420,7 @@ document.write(`
     <i>Undergraduate Research Assistant</i>
     <br>
     <br>
-    <a href="https://colab.research.google.com/github/JuliaQUBO/QUBONotebooks/blob/main/notebooks_py/4-DWAVE_python.ipynb" target="_parent">
+    <a href="https://colab.research.google.com/github/SECQUOIA/QUBONotebooks/blob/main/notebooks_py/5-Benchmarking_python.ipynb" target="_parent">
         <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
     </a>
     <a href="https://secquoia.github.io/">
@@ -443,16 +432,18 @@ document.write(`
 We will also leverage the use of <strong><a class="reference external" href="https://networkx.github.io/">Networkx</a></strong> for network models/graphs.</p>
 <section id="problem-statement">
 <h2>Problem statement<a class="headerlink" href="#problem-statement" title="Link to this heading">#</a></h2>
-<p>We define a QUBO as the following optimization problem:
-$<span class="math notranslate nohighlight">\(
+<p>We define a QUBO as the following optimization problem:</p>
+<div class="math notranslate nohighlight">
+\[
 \min_{x \in \{0,1 \}^n} \sum_{(ij) \in E(G)} Q_{ij}x_i x_j + \sum_{i \in V(G)}Q_{ii}x_i + c_Q = \min_{x \in \{0,1 \}^n}  x^\top Q x + c_Q
-\)</span><span class="math notranslate nohighlight">\(
-where we optimize over binary variables \)</span>x \in { 0,1 }^n<span class="math notranslate nohighlight">\(, on a constrained graph \)</span>G(V,E)<span class="math notranslate nohighlight">\( defined by an adjacency matrix \)</span>Q<span class="math notranslate nohighlight">\(. We also include an arbitrary offset  \)</span>c_Q$.</p>
+\]</div>
+<p>where we optimize over binary variables <span class="math notranslate nohighlight">\(x \in \{ 0,1 \}^n\)</span>, on a constrained graph <span class="math notranslate nohighlight">\(G(V,E)\)</span> defined by an adjacency matrix <span class="math notranslate nohighlight">\(Q\)</span>. We also include an arbitrary offset  <span class="math notranslate nohighlight">\(c_Q\)</span>.</p>
 </section>
 <section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
-<p>Suppose we want to solve the following problem via QUBO
-$<span class="math notranslate nohighlight">\(
+<p>Suppose we want to solve the following problem via QUBO</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \min_{\mathbf{x}} 2𝑥_0+4𝑥_1+4𝑥_2+4𝑥_3+4𝑥_4+4𝑥_5+5𝑥_6+4𝑥_7+5𝑥_8+6𝑥_9+5𝑥_{10} \\
 s.t. \begin{bmatrix}
 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 1 &amp; 1\\
@@ -465,7 +456,7 @@ s.t. \begin{bmatrix}
 1
 \end{bmatrix} \\
 \mathbf{x} \in \{0,1 \}^{11}
-\)</span>$</p>
+\end{split}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># If using this on Google collab, we need to install the packages</span>
@@ -513,22 +504,25 @@ s.t. \begin{bmatrix}
 </div>
 </div>
 </div>
-<p>In order to define the <span class="math notranslate nohighlight">\(Q\)</span> matrix, we write the problem
-$<span class="math notranslate nohighlight">\(
+<p>In order to define the <span class="math notranslate nohighlight">\(Q\)</span> matrix, we write the problem</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \min_{\mathbf{x}} \mathbf{c}^\top \mathbf{x}\\
 s.t. \mathbf{A}\mathbf{x}=\mathbf{b} \\
 \mathbf{x} \in \{0,1 \}^{11}
-\)</span><span class="math notranslate nohighlight">\(
-as follows:
-\)</span><span class="math notranslate nohighlight">\(
+\end{split}\]</div>
+<p>as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \min_{\mathbf{x}} \mathbf{c}^\top \mathbf{x} + \rho(\mathbf{A}\mathbf{x}-\mathbf{b})^\top (\mathbf{A}\mathbf{x}-\mathbf{b}) \\
 \mathbf{x} \in \{0,1 \}^{11}
-\)</span><span class="math notranslate nohighlight">\(
-Exploting the fact that \)</span>x^2=x<span class="math notranslate nohighlight">\( for \)</span>x \in {0,1}<span class="math notranslate nohighlight">\(, we can make the linear terms appear in the diagonal of the \)</span>Q<span class="math notranslate nohighlight">\( matrix.
-\)</span><span class="math notranslate nohighlight">\(
+\end{split}\]</div>
+<p>Exploting the fact that <span class="math notranslate nohighlight">\(x^2=x\)</span> for <span class="math notranslate nohighlight">\(x \in \{0,1\}\)</span>, we can make the linear terms appear in the diagonal of the <span class="math notranslate nohighlight">\(Q\)</span> matrix.</p>
+<div class="math notranslate nohighlight">
+\[
 \rho(\mathbf{A}\mathbf{x}-\mathbf{b})^\top (\mathbf{A}\mathbf{x}-\mathbf{b}) = \rho( \mathbf{x}^\top (\mathbf{A}^\top \mathbf{A}) \mathbf{x} - 2\mathbf{b}^\top \mathbf{A} \mathbf{x} + \mathbf{b}^\top \mathbf{b} )
-\)</span><span class="math notranslate nohighlight">\(
-For this problem in particular, one can prove the the penalization factor is given by \)</span>\rho &gt; \sum_{i=1}^n |c_i|$, therefore we choose this bound + 1.</p>
+\]</div>
+<p>For this problem in particular, one can prove the the penalization factor is given by <span class="math notranslate nohighlight">\(\rho &gt; \sum_{i=1}^n |c_i|\)</span>, therefore we choose this bound + 1.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epsilon</span> <span class="o">=</span> <span class="mi">1</span>
@@ -568,7 +562,7 @@ For this problem in particular, one can prove the the penalization factor is giv
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/96d05b099a77d98d9e1589f705bb6e03287ba895c183eb2d43a53d698bef5e58.png" src="_images/96d05b099a77d98d9e1589f705bb6e03287ba895c183eb2d43a53d698bef5e58.png" />
+<img alt="_images/63150f5a1d9bbe003594d3fb2993ff8c4612749456d12bfb4f7bd99982ec8da9.png" src="_images/63150f5a1d9bbe003594d3fb2993ff8c4612749456d12bfb4f7bd99982ec8da9.png" />
 </div>
 </div>
 <p>Let’s define a QUBO model and then solve it via simulated annealing.</p>
@@ -648,8 +642,8 @@ For this problem in particular, one can prove the the penalization factor is giv
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
 </pre></div>
 </div>
-<img alt="_images/90abed9427fcd6d9c8a8fb21eeda274ff178ae13db0ed81f74a5fa457dc37927.png" src="_images/90abed9427fcd6d9c8a8fb21eeda274ff178ae13db0ed81f74a5fa457dc37927.png" />
-<img alt="_images/d9490af4d2b6fa6cb9e2f8c9de6ab1e684e473ba862f9048b090dcdb6fef6b85.png" src="_images/d9490af4d2b6fa6cb9e2f8c9de6ab1e684e473ba862f9048b090dcdb6fef6b85.png" />
+<img alt="_images/550ebf7ae47d73658f66aae406050ee728741e9ad8f121cfc75631330528b05a.png" src="_images/550ebf7ae47d73658f66aae406050ee728741e9ad8f121cfc75631330528b05a.png" />
+<img alt="_images/8dd49a114f3199a7cf621d832507acd8fecac2f699ae5d44e245342d0f991e89.png" src="_images/8dd49a114f3199a7cf621d832507acd8fecac2f699ae5d44e245342d0f991e89.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
 </pre></div>
 </div>
@@ -681,21 +675,21 @@ Using region: na-west-1
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using solver: Advantage_system4.1
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Submitted problem ID: c7bd349f-53b0-4b05-816d-0124c3c2bc12
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Submitted problem ID: f2abd2ae-64f2-4203-812d-a2d700e9b27c
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wall clock time:
- * Solver definition fetch: 657.042 ms
- * Problem submit and results fetch: 1040.471 ms
- * Total: 1697.513 ms
+ * Solver definition fetch: 550.347 ms
+ * Problem submit and results fetch: 1043.683 ms
+ * Total: 1594.029 ms
 
 QPU timing:
  * post_processing_overhead_time = 1.0 us
- * qpu_access_overhead_time = 241.06 us
- * qpu_access_time = 15860.94 us
+ * qpu_access_overhead_time = 0.0 us
+ * qpu_access_time = 15860.54 us
  * qpu_anneal_time_per_sample = 20.0 us
  * qpu_delay_time_per_sample = 20.58 us
- * qpu_programming_time = 15783.96 us
+ * qpu_programming_time = 15783.56 us
  * qpu_readout_time_per_sample = 36.4 us
  * qpu_sampling_time = 76.98 us
  * total_post_processing_time = 1.0 us
@@ -765,7 +759,7 @@ Number of couplers= 40279
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;timing&#39;: {&#39;qpu_sampling_time&#39;: 116700.0, &#39;qpu_anneal_time_per_sample&#39;: 20.0, &#39;qpu_readout_time_per_sample&#39;: 76.12, &#39;qpu_access_time&#39;: 132464.36, &#39;qpu_access_overhead_time&#39;: 948.64, &#39;qpu_programming_time&#39;: 15764.36, &#39;qpu_delay_time_per_sample&#39;: 20.58, &#39;post_processing_overhead_time&#39;: 1.0, &#39;total_post_processing_time&#39;: 1.0}, &#39;problem_id&#39;: &#39;3a36d937-65de-47e5-8516-76ea0acac0bf&#39;, &#39;embedding_context&#39;: {&#39;embedding&#39;: {3: (5148, 5147), 0: (582,), 1: (537,), 4: (5222, 522), 2: (597,), 5: (5192, 672), 6: (5132, 5133), 7: (567, 5087), 8: (687, 5207), 9: (611, 5162), 10: (656, 5177)}, &#39;chain_break_method&#39;: &#39;majority_vote&#39;, &#39;embedding_parameters&#39;: {}, &#39;chain_strength&#39;: 159.83033942960208}}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;timing&#39;: {&#39;qpu_sampling_time&#39;: 175620.0, &#39;qpu_anneal_time_per_sample&#39;: 20.0, &#39;qpu_readout_time_per_sample&#39;: 135.04, &#39;qpu_access_time&#39;: 191383.56, &#39;qpu_access_overhead_time&#39;: 543.44, &#39;qpu_programming_time&#39;: 15763.56, &#39;qpu_delay_time_per_sample&#39;: 20.58, &#39;post_processing_overhead_time&#39;: 1.0, &#39;total_post_processing_time&#39;: 1.0}, &#39;problem_id&#39;: &#39;429a98d2-cd92-49d3-9cb9-c6b4890dcd8e&#39;, &#39;embedding_context&#39;: {&#39;embedding&#39;: {3: (3721, 423), 0: (394,), 1: (468,), 4: (3707, 559), 2: (3647, 498), 5: (3662,), 6: (438, 3571), 7: (409, 3646), 8: (3736, 453), 9: (3692, 544), 10: (3677,)}, &#39;chain_break_method&#39;: &#39;majority_vote&#39;, &#39;embedding_parameters&#39;: {}, &#39;chain_strength&#39;: 159.83033942960208}}
 </pre></div>
 </div>
 </div>
@@ -781,7 +775,7 @@ Number of couplers= 40279
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c047b593413256814678542e91fa261593af126a6429ed91593de4e988df22d9.png" src="_images/c047b593413256814678542e91fa261593af126a6429ed91593de4e988df22d9.png" />
+<img alt="_images/966de39254baabfc27ffa386ff40e8646e4ff2a4931d3d6decd6b7fdc79607b7.png" src="_images/966de39254baabfc27ffa386ff40e8646e4ff2a4931d3d6decd6b7fdc79607b7.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -795,8 +789,8 @@ Number of couplers= 40279
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
 </pre></div>
 </div>
-<img alt="_images/fb12f2a69d68f1c5ea3bf3656595a0fa88a9cf803425d30a0c063507da5d7fa6.png" src="_images/fb12f2a69d68f1c5ea3bf3656595a0fa88a9cf803425d30a0c063507da5d7fa6.png" />
-<img alt="_images/36cc7bd3abd29f316b45cde95f17be88146c8059ebde73cec3542a55ea994f73.png" src="_images/36cc7bd3abd29f316b45cde95f17be88146c8059ebde73cec3542a55ea994f73.png" />
+<img alt="_images/c48a29e515ce14bb83ab3456dd898bfe0cfc2f62a9d235cff3819e4264877bc2.png" src="_images/c48a29e515ce14bb83ab3456dd898bfe0cfc2f62a9d235cff3819e4264877bc2.png" />
+<img alt="_images/485db60d0327ec992a74687d955d2216a02e04e07418eeab1d1f2b604c57ab98.png" src="_images/485db60d0327ec992a74687d955d2216a02e04e07418eeab1d1f2b604c57ab98.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
 </pre></div>
 </div>
@@ -850,7 +844,7 @@ Number of couplers= 40279
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">About this Notebook</p>
+        <p class="prev-next-title">Benchmarking</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

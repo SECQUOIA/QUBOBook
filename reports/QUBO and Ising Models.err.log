@@ -1,0 +1,98 @@
+Traceback (most recent call last):
+  File "/home/murraybj/CHE498/QUBOBook/.venv/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/murraybj/CHE498/QUBOBook/.venv/lib/python3.10/site-packages/nbclient/client.py", line 1314, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/murraybj/CHE498/QUBOBook/.venv/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/home/murraybj/CHE498/QUBOBook/.venv/lib/python3.10/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/home/murraybj/CHE498/QUBOBook/.venv/lib/python3.10/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/murraybj/CHE498/QUBOBook/.venv/lib/python3.10/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Some useful functions to get plots
+def plot_enumerate(results, title=None):
+
+    plt.figure()
+
+    energies = [datum.energy for datum in results.data(
+        ['energy'], sorted_by='energy')]
+    
+    if results.vartype == 'Vartype.BINARY':
+        samples = [''.join(c for c in str(datum.sample.values()).strip(
+            ', ') if c.isdigit()) for datum in results.data(['sample'], sorted_by=None)]
+        plt.xlabel('bitstring for solution')
+    else:
+        samples = np.arange(len(energies))
+        plt.xlabel('solution')
+
+    plt.bar(samples,energies)
+    plt.xticks(rotation=90)
+    plt.ylabel('Energy')
+    plt.title(str(title))
+    print("minimum energy:", min(energies))
+
+def plot_samples(results, title=None):
+    plt.figure()
+    if results.vartype == 'Vartype.BINARY':
+        samples = [''.join(c for c in str(datum.sample.values()).strip(
+            ', ') if c.isdigit()) for datum in results.data(['sample'], sorted_by=None)]
+        plt.xlabel('bitstring for solution')
+    else:
+        samples = np.arange(len(energies))
+        plt.xlabel('solution')
+
+    counts = Counter(samples)
+    total = len(samples)
+    for key in counts:
+        counts[key] /= total
+    df = pd.DataFrame.from_dict(counts, orient='index').sort_index()
+    df.plot(kind='bar', legend=None)
+
+    plt.xticks(rotation=80)
+    plt.ylabel('Probabilities')
+    plt.title(str(title))
+    plt.show()
+    print("minimum energy:", min(energies))
+
+
+def plot_energies(results, title=None, skip=1):
+    # skip parameter given to avoid putting all xlabels
+    energies = results.data_vectors['energy']
+    occurrences = results.data_vectors['num_occurrences']
+    counts = Counter(energies)
+    total = sum(occurrences)
+    counts = {}
+    for index, energy in enumerate(energies):
+        if energy in counts.keys():
+            counts[energy] += occurrences[index]
+        else:
+            counts[energy] = occurrences[index]
+    for key in counts:
+        counts[key] /= total
+    df = pd.DataFrame.from_dict(counts, orient='index').sort_index()
+    ax = df.plot(kind='bar', legend=None)
+
+    plt.xlabel('Energy')
+    plt.ylabel('Probabilities')
+    # Plot only a subset of xlabels (every skip steps)
+    for i, label in enumerate(ax.get_xticklabels()):
+    if i % 2 != 0:
+        label.set_visible(False)
+    plt.title(str(title))
+    plt.show()
+    print("minimum energy:", min(energies))
+------------------
+
+
+[0;36m  Cell [0;32mIn[8], line 68[0;36m[0m
+[0;31m    if i % 2 != 0:[0m
+[0m    ^[0m
+[0;31mIndentationError[0m[0;31m:[0m expected an indented block after 'for' statement on line 67
+
+

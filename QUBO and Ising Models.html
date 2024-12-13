@@ -187,13 +187,8 @@
 
 <li class="toctree-l1"><a class="reference internal" href="Graver%20Augmentation%20Multiseed%20Algorithm.html">Introduction to GAMA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Quantum%20Annealing%20via%20D-Wave.html">Quantum Annealing via D-Wave</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">About this Notebook</a></li>
-
-
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DWAVE%20Simulated%20Annealing.html">Solving QUBOs with DWAVE Simulated Annealing</a></li>
 </ul>
 
     </div>
@@ -422,18 +417,12 @@ document.write(`
     <br>
     <i>Davidson School of Chemical Engineering, Purdue University</i>
     <br>
-    <i>Universities Space Research Association</i>
-    <br>
-    <i>NASA QuAIL</i>
-    <br>
     <br>
     <a href="https://github.com/pedromxavier">Pedro Maciel Xavier</a>
     <br>
     <i>Davidson School of Chemical Engineering, Purdue University</i>
     <br>
     <i>Computer Science &amp; Systems Engineering Program, Federal University of Rio de Janeiro</i>
-    <br>
-    <i>PSR Energy Consulting &amp; Analytics</i>
     <br>
     <br>
     <a href="https://github.com/murraybj">Benjamin J. L. Murray</a>
@@ -443,7 +432,7 @@ document.write(`
     <i>Undergraduate Research Assistant</i>
     <br>
     <br>
-    <a href="https://colab.research.google.com/github/JuliaQUBO/QUBONotebooks/blob/main/notebooks_py/2-QUBO_python.ipynb" target="_parent">
+    <a href="https://colab.research.google.com/github/SECQUOIA/QUBONotebooks/blob/main/notebooks_py/5-Benchmarking_python.ipynb" target="_parent">
         <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
     </a>
     <a href="https://secquoia.github.io/">
@@ -455,11 +444,12 @@ document.write(`
 We will also leverage the use of D-Wave’s package <strong><a class="reference external" href="https://github.com/dwavesystems/dwavebinarycsp">dwavebinarycsp</a></strong> to translate constraint satisfaction problems to QUBOs. Finally, for Groebner basis computations we will use <strong><a class="reference external" href="https://www.sympy.org/">Sympy</a></strong> for symbolic computation in Python and <strong><a class="reference external" href="https://networkx.github.io/">Networkx</a></strong> for network models/graphs.</p>
 <section id="problem-statement">
 <h2>Problem statement<a class="headerlink" href="#problem-statement" title="Link to this heading">#</a></h2>
-<p>We define a QUBO as the following optimization problem:
-$<span class="math notranslate nohighlight">\(
+<p>We define a QUBO as the following optimization problem:</p>
+<div class="math notranslate nohighlight">
+\[
 \min_{x \in \{0,1 \}^n} \sum_{(ij) \in E(G)} Q_{ij}x_i x_j + \sum_{i \in V(G)}Q_{ii}x_i + c_Q = \min_{x \in \{0,1 \}^n}  x^\top Q x + c_Q
-\)</span><span class="math notranslate nohighlight">\(
-where we optimize over binary variables \)</span>x \in { 0,1 }^n<span class="math notranslate nohighlight">\(, on a constrained graph \)</span>G(V,E)<span class="math notranslate nohighlight">\( defined by an adjacency matrix \)</span>Q<span class="math notranslate nohighlight">\(. We also include an arbitrary offset  \)</span>c_Q$.</p>
+\]</div>
+<p>where we optimize over binary variables <span class="math notranslate nohighlight">\(x \in \{ 0,1 \}^n\)</span>, on a constrained graph <span class="math notranslate nohighlight">\(G(V,E)\)</span> defined by an adjacency matrix <span class="math notranslate nohighlight">\(Q\)</span>. We also include an arbitrary offset  <span class="math notranslate nohighlight">\(c_Q\)</span>.</p>
 </section>
 <section id="example">
 <h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
@@ -594,7 +584,7 @@ s.t. \begin{bmatrix}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5a9c3da393e24e216b3022291eedb007a1820c1c5f09d3574287ee88b7df0bd6.png" src="_images/5a9c3da393e24e216b3022291eedb007a1820c1c5f09d3574287ee88b7df0bd6.png" />
+<img alt="_images/26a65eb79c164c7035bfb4eda7c6aa43260aeb42e8bbede9759a7ca57d27c91a.png" src="_images/26a65eb79c164c7035bfb4eda7c6aa43260aeb42e8bbede9759a7ca57d27c91a.png" />
 </div>
 </div>
 <p>Let’s define a QUBO model and then solve it using DWaves code for complete enumeration and simulated annealing (eventually with Quantum annealiing too!).</p>
@@ -688,7 +678,9 @@ s.t. \begin{bmatrix}
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probabilities&#39;</span><span class="p">)</span>
     <span class="c1"># Plot only a subset of xlabels (every skip steps)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="n">t</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">i</span><span class="o">%</span><span class="k">skip</span> else &quot;&quot; for i,t in enumerate(ax.get_xticklabels())])
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">label</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;minimum energy:&quot;</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">energies</span><span class="p">))</span>
@@ -1398,11 +1390,12 @@ ERROR: evaluating object as numeric value: y[3,0]
 The examples solved here will make use of open-source solver <strong><a class="reference external" href="https://www.gnu.org/software/glpk/">GLPK</a></strong> for mixed-integer linear programming.</p>
 <section id="id1">
 <h2>Problem statement<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>We pose the Ising problem as the following optimization problem:
-$<span class="math notranslate nohighlight">\(
+<p>We pose the Ising problem as the following optimization problem:</p>
+<div class="math notranslate nohighlight">
+\[
 \min_{\sigma \in \{ -1,+1 \}^n} H(\sigma) =\min_{\sigma \in \{ -1,+1 \}^n} \sum_{(ij) \in E(G)} J_{ij}\sigma_i\sigma_j + \sum_{i \in V(G)}h_i\sigma_i + c_I
-\)</span><span class="math notranslate nohighlight">\(
-where we optimize over spins \)</span>\sigma \in { -1,+1 }^n<span class="math notranslate nohighlight">\(, on a constrained graph \)</span>G(V,E)<span class="math notranslate nohighlight">\(, where the quadratic coefficients are \)</span>J_{ij}<span class="math notranslate nohighlight">\( and the linear coefficients are \)</span>h_i<span class="math notranslate nohighlight">\(. We also include an arbitrary offset of the Ising model \)</span>c_I$.</p>
+\]</div>
+<p>where we optimize over spins <span class="math notranslate nohighlight">\(\sigma \in \{ -1,+1 \}^n\)</span>, on a constrained graph <span class="math notranslate nohighlight">\(G(V,E)\)</span>, where the quadratic coefficients are <span class="math notranslate nohighlight">\(J_{ij}\)</span> and the linear coefficients are <span class="math notranslate nohighlight">\(h_i\)</span>. We also include an arbitrary offset of the Ising model <span class="math notranslate nohighlight">\(c_I\)</span>.</p>
 </section>
 <section id="id2">
 <h2>Example<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
@@ -1460,7 +1453,7 @@ J = \begin{bmatrix}
 </pre></div>
 </div>
 <img alt="_images/5340412cadfe312df44ae680cc9a7868a3cb1230832a7bb9bd5f2fca3ddbfd29.png" src="_images/5340412cadfe312df44ae680cc9a7868a3cb1230832a7bb9bd5f2fca3ddbfd29.png" />
-<img alt="_images/a93d160a3db8ecbc1669620293bd8532fc8333102a9bfd74a2a0937c3daa0f82.png" src="_images/a93d160a3db8ecbc1669620293bd8532fc8333102a9bfd74a2a0937c3daa0f82.png" />
+<img alt="_images/7cfc2a9010c087c2bbd93ab9611f3a3238f5fb97821145cb0b691e7903f66c5a.png" src="_images/7cfc2a9010c087c2bbd93ab9611f3a3238f5fb97821145cb0b691e7903f66c5a.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
 </pre></div>
 </div>
@@ -2139,8 +2132,8 @@ ERROR: evaluating object as numeric value: y[3,0]
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
 </pre></div>
 </div>
-<img alt="_images/ae0056cb937d611e47cdccce808485904481c3086de914e9d2c5065a9b36eca1.png" src="_images/ae0056cb937d611e47cdccce808485904481c3086de914e9d2c5065a9b36eca1.png" />
-<img alt="_images/b5cca0466888a67e29248154dcbf0b1522c4475fe54f921a3d38e5234ab81f0c.png" src="_images/b5cca0466888a67e29248154dcbf0b1522c4475fe54f921a3d38e5234ab81f0c.png" />
+<img alt="_images/4ac94262c851bb9c269ea2a4674a2d0b3e8c23e9be6fcc04533b677e86f94fbf.png" src="_images/4ac94262c851bb9c269ea2a4674a2d0b3e8c23e9be6fcc04533b677e86f94fbf.png" />
+<img alt="_images/2cd3266f03f17c5cef1aa739efefde5d411b925fd0b28687a6aef0ef06df1e27.png" src="_images/2cd3266f03f17c5cef1aa739efefde5d411b925fd0b28687a6aef0ef06df1e27.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 5.0
 </pre></div>
 </div>
@@ -2155,9 +2148,9 @@ ERROR: evaluating object as numeric value: y[3,0]
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;beta_range&#39;: [0.00041111932417553103, 0.1458971970580513],
  &#39;beta_schedule_type&#39;: &#39;geometric&#39;,
- &#39;timing&#39;: {&#39;preprocessing_ns&#39;: 1803106,
-  &#39;sampling_ns&#39;: 277244162,
-  &#39;postprocessing_ns&#39;: 239426}}
+ &#39;timing&#39;: {&#39;preprocessing_ns&#39;: 1475168,
+  &#39;sampling_ns&#39;: 281521474,
+  &#39;postprocessing_ns&#39;: 264931}}
 </pre></div>
 </div>
 </div>
@@ -2253,8 +2246,8 @@ Let’s first encode <span class="math notranslate nohighlight">\(V\)</span> and
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 0.0
 </pre></div>
 </div>
-<img alt="_images/c6a45c78cbb2cc95f3db318a2f239225786ebbd3b8f5170e908d874e557a9d13.png" src="_images/c6a45c78cbb2cc95f3db318a2f239225786ebbd3b8f5170e908d874e557a9d13.png" />
-<img alt="_images/c975d26fc28fa6aca86381936fe7a3e4a0e474f1cf9582e3395ed0480ab8b0a5.png" src="_images/c975d26fc28fa6aca86381936fe7a3e4a0e474f1cf9582e3395ed0480ab8b0a5.png" />
+<img alt="_images/c19b953c135e02d44d26a24d73efb719c9dda73a00c2bc7aed9cff62a8c84d3f.png" src="_images/c19b953c135e02d44d26a24d73efb719c9dda73a00c2bc7aed9cff62a8c84d3f.png" />
+<img alt="_images/76a57878b86b59e519d1bd8092c55e3c6dc77a139d3f2828aa9455ddce2a12a1.png" src="_images/76a57878b86b59e519d1bd8092c55e3c6dc77a139d3f2828aa9455ddce2a12a1.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: 0.0
 </pre></div>
 </div>
@@ -2273,7 +2266,7 @@ Let’s first encode <span class="math notranslate nohighlight">\(V\)</span> and
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;x1,0&#39;: 0, &#39;x1,1&#39;: 1, &#39;x1,2&#39;: 0, &#39;x10,0&#39;: 0, &#39;x10,1&#39;: 1, &#39;x10,2&#39;: 0, &#39;x11,0&#39;: 1, &#39;x11,1&#39;: 0, &#39;x11,2&#39;: 0, &#39;x12,0&#39;: 0, &#39;x12,1&#39;: 0, &#39;x12,2&#39;: 1, &#39;x2,0&#39;: 1, &#39;x2,1&#39;: 0, &#39;x2,2&#39;: 0, &#39;x3,0&#39;: 0, &#39;x3,1&#39;: 0, &#39;x3,2&#39;: 1, &#39;x4,0&#39;: 0, &#39;x4,1&#39;: 0, &#39;x4,2&#39;: 1, &#39;x5,0&#39;: 0, &#39;x5,1&#39;: 1, &#39;x5,2&#39;: 0, &#39;x6,0&#39;: 1, &#39;x6,1&#39;: 0, &#39;x6,2&#39;: 0, &#39;x7,0&#39;: 0, &#39;x7,1&#39;: 0, &#39;x7,2&#39;: 1, &#39;x8,0&#39;: 0, &#39;x8,1&#39;: 1, &#39;x8,2&#39;: 0, &#39;x9,0&#39;: 1, &#39;x9,1&#39;: 0, &#39;x9,2&#39;: 0}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;x1,0&#39;: 1, &#39;x1,1&#39;: 0, &#39;x1,2&#39;: 0, &#39;x10,0&#39;: 1, &#39;x10,1&#39;: 0, &#39;x10,2&#39;: 0, &#39;x11,0&#39;: 0, &#39;x11,1&#39;: 1, &#39;x11,2&#39;: 0, &#39;x12,0&#39;: 0, &#39;x12,1&#39;: 0, &#39;x12,2&#39;: 1, &#39;x2,0&#39;: 0, &#39;x2,1&#39;: 1, &#39;x2,2&#39;: 0, &#39;x3,0&#39;: 0, &#39;x3,1&#39;: 0, &#39;x3,2&#39;: 1, &#39;x4,0&#39;: 0, &#39;x4,1&#39;: 0, &#39;x4,2&#39;: 1, &#39;x5,0&#39;: 1, &#39;x5,1&#39;: 0, &#39;x5,2&#39;: 0, &#39;x6,0&#39;: 0, &#39;x6,1&#39;: 1, &#39;x6,2&#39;: 0, &#39;x7,0&#39;: 0, &#39;x7,1&#39;: 0, &#39;x7,2&#39;: 1, &#39;x8,0&#39;: 1, &#39;x8,1&#39;: 0, &#39;x8,2&#39;: 0, &#39;x9,0&#39;: 0, &#39;x9,1&#39;: 1, &#39;x9,2&#39;: 0}
 </pre></div>
 </div>
 </div>
@@ -2303,7 +2296,7 @@ Let’s first encode <span class="math notranslate nohighlight">\(V\)</span> and
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6f72db60968238b9b86a065ee0bf19687e86961773c4671d62e53ef6ecba98e1.png" src="_images/6f72db60968238b9b86a065ee0bf19687e86961773c4671d62e53ef6ecba98e1.png" />
+<img alt="_images/a3bceeab19ec433b7b033e2679b71b0988824853596784e64495c89fed02b552.png" src="_images/a3bceeab19ec433b7b033e2679b71b0988824853596784e64495c89fed02b552.png" />
 </div>
 </div>
 </section>

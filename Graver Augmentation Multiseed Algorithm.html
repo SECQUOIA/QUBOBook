@@ -187,13 +187,8 @@
 
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to GAMA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Quantum%20Annealing%20via%20D-Wave.html">Quantum Annealing via D-Wave</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">About this Notebook</a></li>
-
-
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DWAVE%20Simulated%20Annealing.html">Solving QUBOs with DWAVE Simulated Annealing</a></li>
 </ul>
 
     </div>
@@ -410,18 +405,12 @@ document.write(`
     <br>
     <i>Davidson School of Chemical Engineering, Purdue University</i>
     <br>
-    <i>Universities Space Research Association</i>
-    <br>
-    <i>NASA QuAIL</i>
-    <br>
     <br>
     <a href="https://github.com/pedromxavier">Pedro Maciel Xavier</a>
     <br>
     <i>Davidson School of Chemical Engineering, Purdue University</i>
     <br>
     <i>Computer Science &amp; Systems Engineering Program, Federal University of Rio de Janeiro</i>
-    <br>
-    <i>PSR Energy Consulting &amp; Analytics</i>
     <br>
     <br>
     <a href="https://github.com/murraybj">Benjamin J. L. Murray</a>
@@ -431,7 +420,7 @@ document.write(`
     <i>Undergraduate Research Assistant</i>
     <br>
     <br>
-    <a href="https://colab.research.google.com/github/JuliaQUBO/QUBONotebooks/blob/main/notebooks_py/3-GAMA_python.ipynb" target="_parent">
+    <a href="https://colab.research.google.com/github/SECQUOIA/QUBONotebooks/blob/main/notebooks_py/5-Benchmarking_python.ipynb" target="_parent">
         <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
     </a>
     <a href="https://secquoia.github.io/">
@@ -585,13 +574,14 @@ This notebook studies the behavior of the search algorithm in the case that we o
 </div>
 </div>
 </div>
-<p>We will be solving EXAMPLE 4 in the code, which corresponds to the Case 2 in the original GAMA paper. The problem is derived from finance and deals with the maximization of expected returns on an investments and the minimization of the variance.
-$<span class="math notranslate nohighlight">\(
+<p>We will be solving EXAMPLE 4 in the code, which corresponds to the Case 2 in the original GAMA paper. The problem is derived from finance and deals with the maximization of expected returns on an investments and the minimization of the variance.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \min -\sum_{i=1}^n \mu_ix_i + \sqrt{\frac{1-\epsilon}{\epsilon}\sum_{i=1}^n \sigma_i^2 x_i^2} \\
 s.t. Ax = b, x \in \{-2,-1,-0,1,2 \}^n
-\)</span><span class="math notranslate nohighlight">\(
-This particular instance of convex INLP has \)</span>n=25, \epsilon=0.01, \mu_i = \text{Rand}[0,1], \sigma_i = \text{Rand}[0,\mu_i]<span class="math notranslate nohighlight">\(.
-The matrix \)</span>A<span class="math notranslate nohighlight">\( is a matrix with 1's and 0's and the \)</span>b<span class="math notranslate nohighlight">\( vector is half of the sum of the rows of \)</span>A<span class="math notranslate nohighlight">\(, in this case \)</span>b = (9,8,7,5,5)^\top$.</p>
+\end{split}\]</div>
+<p>This particular instance of convex INLP has <span class="math notranslate nohighlight">\(n=25, \epsilon=0.01, \mu_i = \text{Rand}[0,1], \sigma_i = \text{Rand}[0,\mu_i]\)</span>.
+The matrix <span class="math notranslate nohighlight">\(A\)</span> is a matrix with 1’s and 0’s and the <span class="math notranslate nohighlight">\(b\)</span> vector is half of the sum of the rows of <span class="math notranslate nohighlight">\(A\)</span>, in this case <span class="math notranslate nohighlight">\(b = (9,8,7,5,5)^\top\)</span>.</p>
 <p>The Graver basis of this matrix <span class="math notranslate nohighlight">\(A\)</span> has 29789 elements, which in a standard laptop using 4ti2 takes ~5 seeconds to compute. If you are in Colab you will import it from a file.</p>
 </section>
 <section id="example">
@@ -732,24 +722,24 @@ In this example, <span class="math notranslate nohighlight">\(\mathbf{b} = \left
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best-augmentation: Choosing among the best step that each element of G can do (via bisection), the one that reduces the most the objective
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.924081506 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>21.782159845 seconds
 7 iterations
-solution: -1.3897512717073077 [ 0  0  1  0  1  1  1  0  1  0  2  0 -2  0  0  1  2  1  0  0  0  0  0  2
-  1]
+solution: -3.438435146955161 [-2  0  2  0  0  1  2  2  2  0  0  0  2  1  2  0  0  0  0  0  2  0  0  1
+  0]
 Greedy-best-augmentation: Choosing among the best step that each element of G can do (via bisection), the first one encountered that reduces the objective
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.030924369000001 seconds
-34 iterations
-solution: -1.3897512717073077 [ 0  0  1  0  1  1  1  0  1  0  2  0 -2  0  0  1  2  1  0  0  0  0  0  2
-  1]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.054381827999997 seconds
+36 iterations
+solution: -3.438435146955161 [-2  0  2  0  0  1  2  2  2  0  0  0  2  1  2  0  0  0  0  0  2  0  0  1
+  0]
 Greedy-augmentation: Choosing among the first element of G that with a single step reduces the objective
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0040787590000022 seconds
-23 iterations
-solution: -0.6829442680568016 [ 0  0  1  0  1  1  1  0  1  0  2  0 -2  1  0  1  2  1  0 -1  0  1  1  1
-  1]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0106465889999967 seconds
+29 iterations
+solution: -3.2429148003065675 [-1  0  2  0  0  1  1  2  2  1  0  0  2  1  2  0  0  0  0 -1  2  0  0  1
+  0]
 </pre></div>
 </div>
 </div>
@@ -822,7 +812,7 @@ We also include an arbitrary offset of the Ising model <span class="math notrans
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20  feasible solutions found.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_160924/1613598710.py:9: DeprecationWarning: BQM.from_numpy_matrix(M) is deprecated since dimod 0.10.0 and will be removed in 0.12.0. Use BQM(M, &quot;BINARY&quot;) instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_114436/1613598710.py:9: DeprecationWarning: BQM.from_numpy_matrix(M) is deprecated since dimod 0.10.0 and will be removed in 0.12.0. Use BQM(M, &quot;BINARY&quot;) instead.
   bqm = dimod.BinaryQuadraticModel.from_numpy_matrix(mat=Q, offset=offset)
 </pre></div>
 </div>
@@ -871,10 +861,10 @@ We also include an arbitrary offset of the Ising model <span class="math notrans
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x735375744760&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7a4019d88790&gt;
 </pre></div>
 </div>
-<img alt="_images/a4bb6d3c43ade770840bcc177f2dbacbe67a2e1ca4b0153bd1dbcdeec18361d9.png" src="_images/a4bb6d3c43ade770840bcc177f2dbacbe67a2e1ca4b0153bd1dbcdeec18361d9.png" />
+<img alt="_images/0346b178cd9d12ae50d0bf6a252dbdb48e4613fd75d17ce9224242a8f792bc5b.png" src="_images/0346b178cd9d12ae50d0bf6a252dbdb48e4613fd75d17ce9224242a8f792bc5b.png" />
 </div>
 </div>
 <p>Notice that we reach the globally optimal solution regardless of the initial point and that even if the initial objective was closer to the optimal objective function, it might take more iterations to reach the optimum.</p>
@@ -921,10 +911,10 @@ We also include an arbitrary offset of the Ising model <span class="math notrans
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x73537596b730&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7a4019cc0a60&gt;
 </pre></div>
 </div>
-<img alt="_images/8e21a8542cf40776855afaf4e0634f378d75c137bccbe52047d7c4541f1c3271.png" src="_images/8e21a8542cf40776855afaf4e0634f378d75c137bccbe52047d7c4541f1c3271.png" />
+<img alt="_images/e48193d14a5a3ed2c92563a418142bc11e39b9f99a3c078c6adbbfce5a2c9b32.png" src="_images/e48193d14a5a3ed2c92563a418142bc11e39b9f99a3c078c6adbbfce5a2c9b32.png" />
 </div>
 </div>
 <p>Here we can barely improve the objective and can only perform a few iterations before we cannot improve the solution. But if we compare the runtimes in both cases, we find that…</p>
@@ -941,10 +931,10 @@ We also include an arbitrary offset of the Ising model <span class="math notrans
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x735375506ce0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7a4019d1e3b0&gt;
 </pre></div>
 </div>
-<img alt="_images/dac209bee8b6db182834e9fec3ee3b34eb02851f29aece13970050ce4d879291.png" src="_images/dac209bee8b6db182834e9fec3ee3b34eb02851f29aece13970050ce4d879291.png" />
+<img alt="_images/da863224a4d17a42751b431af8a1b098f3d5da5620701e152f2c66f162601dc0.png" src="_images/da863224a4d17a42751b431af8a1b098f3d5da5620701e152f2c66f162601dc0.png" />
 </div>
 </div>
 <p>…the time to do augmentation only having 10 choices is minimal. We can search for a sweet spot in between, with good solutions and little time.</p>
@@ -1004,7 +994,7 @@ We also include an arbitrary offset of the Ising model <span class="math notrans
   Text(12, 0, &#39;|G|&#39;)])
 </pre></div>
 </div>
-<img alt="_images/aaa24ab8befb495493a479550b83d7c918248aa358a37760efac8eeee97b342c.png" src="_images/aaa24ab8befb495493a479550b83d7c918248aa358a37760efac8eeee97b342c.png" />
+<img alt="_images/5db5a30c1fe8ed45819fb0560a4d662cca20c3d2a4e9dfeca2598a95eafdb1f6.png" src="_images/5db5a30c1fe8ed45819fb0560a4d662cca20c3d2a4e9dfeca2598a95eafdb1f6.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1033,7 +1023,7 @@ We also include an arbitrary offset of the Ising model <span class="math notrans
   Text(11, 0, &#39;|G|&#39;)])
 </pre></div>
 </div>
-<img alt="_images/1721119c0b285cc18779fa7e2e2330f8ab8f2e036314cc4609637759e2a1319b.png" src="_images/1721119c0b285cc18779fa7e2e2330f8ab8f2e036314cc4609637759e2a1319b.png" />
+<img alt="_images/6b90d323f39b4f53a592641f19832932a3228b9009113c1230552f1850817137.png" src="_images/6b90d323f39b4f53a592641f19832932a3228b9009113c1230552f1850817137.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1062,7 +1052,7 @@ We also include an arbitrary offset of the Ising model <span class="math notrans
   Text(11, 0, &#39;|G|&#39;)])
 </pre></div>
 </div>
-<img alt="_images/06b89c8945b66602537f1ab32c74de4164e1c0bb4e06935cbc95305aef656952.png" src="_images/06b89c8945b66602537f1ab32c74de4164e1c0bb4e06935cbc95305aef656952.png" />
+<img alt="_images/cd91c9711482963e0ab6e53538eb0f377c81294a7d30dd9205ab913d8e4ff7ee.png" src="_images/cd91c9711482963e0ab6e53538eb0f377c81294a7d30dd9205ab913d8e4ff7ee.png" />
 </div>
 </div>
 </section>
