@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Benchmarking';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Solving QUBOs with DWAVE Simulated Annealing" href="DWAVE%20Simulated%20Annealing.html" />
     <link rel="prev" title="Quantum Annealing via D-Wave" href="Quantum%20Annealing%20via%20D-Wave.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -187,6 +188,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Graver%20Augmentation%20Multiseed%20Algorithm.html">Introduction to GAMA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Quantum%20Annealing%20via%20D-Wave.html">Quantum Annealing via D-Wave</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DWAVE%20Simulated%20Annealing.html">Solving QUBOs with DWAVE Simulated Annealing</a></li>
 </ul>
 
     </div>
@@ -407,18 +409,12 @@ document.write(`
     <br>
     <i>Davidson School of Chemical Engineering, Purdue University</i>
     <br>
-    <i>Universities Space Research Association</i>
-    <br>
-    <i>NASA QuAIL</i>
-    <br>
     <br>
     <a href="https://github.com/pedromxavier">Pedro Maciel Xavier</a>
     <br>
     <i>Davidson School of Chemical Engineering, Purdue University</i>
     <br>
     <i>Computer Science &amp; Systems Engineering Program, Federal University of Rio de Janeiro</i>
-    <br>
-    <i>PSR Energy Consulting &amp; Analytics</i>
     <br>
     <br>
     <a href="https://github.com/murraybj">Benjamin J. L. Murray</a>
@@ -557,11 +553,11 @@ c_I = 1319.5
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_162951/1437022254.py:1: DeprecationWarning: BinaryQuadraticModel.to_networkx_graph() is deprecated since dimod 0.10.0 and will be removed in 0.12.0. Use dimod.to_networkx_graph() instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_114151/1437022254.py:1: DeprecationWarning: BinaryQuadraticModel.to_networkx_graph() is deprecated since dimod 0.10.0 and will be removed in 0.12.0. Use dimod.to_networkx_graph() instead.
   nx_graph = model_ising.to_networkx_graph()
 </pre></div>
 </div>
-<img alt="_images/a05255e68464a3287caf2e9b938b300697a3afb37af7c97cfe9a79f34fee4c33.png" src="_images/a05255e68464a3287caf2e9b938b300697a3afb37af7c97cfe9a79f34fee4c33.png" />
+<img alt="_images/52ac469c8efcb9d1530e4fcd142174fd8fde43c3b4b64aad26ca551cae6a946d.png" src="_images/52ac469c8efcb9d1530e4fcd142174fd8fde43c3b4b64aad26ca551cae6a946d.png" />
 </div>
 </div>
 <p>Since the problem is relatively small (11 variables, <span class="math notranslate nohighlight">\(2^{11}=2048\)</span> combinations), we can afford to enumerate all the solutions.</p>
@@ -576,7 +572,7 @@ c_I = 1319.5
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>runtime: 0.004312992095947266 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>runtime: 0.0047452449798583984 seconds
 </pre></div>
 </div>
 </div>
@@ -709,8 +705,8 @@ minimum energy: 5.0
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: title={&#39;center&#39;: &#39;Simulated annealing in default parameters&#39;}, xlabel=&#39;Energy&#39;, ylabel=&#39;Probabilities&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/5c0dca24844819bc24e5963bfa9618c58a6a67afbe767b9eec5062a15435beec.png" src="_images/5c0dca24844819bc24e5963bfa9618c58a6a67afbe767b9eec5062a15435beec.png" />
-<img alt="_images/897508c917daa428a78a82188e6abb08c5b5db2ac7bf9f4ee90af1c57cd20a9e.png" src="_images/897508c917daa428a78a82188e6abb08c5b5db2ac7bf9f4ee90af1c57cd20a9e.png" />
+<img alt="_images/c5979016d53e10229ec348a238851d0fb95126da684c52566661bd905179f5bd.png" src="_images/c5979016d53e10229ec348a238851d0fb95126da684c52566661bd905179f5bd.png" />
+<img alt="_images/4e08541716e121f7a6e3dfd1296428659f3509e7ae89587f98234cf2a170ea6f.png" src="_images/4e08541716e121f7a6e3dfd1296428659f3509e7ae89587f98234cf2a170ea6f.png" />
 </div>
 </div>
 <p>We are going to use the default limits of temperature given by the simulating annealing code. These are defined using the minimum and maximum nonzero coefficients in the Ising model. Then the range for beta is defined as</p>
@@ -855,18 +851,19 @@ minimum energy: 5.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7733105a6710&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7bfa9eee0760&gt;
 </pre></div>
 </div>
-<img alt="_images/137ffab0ed301f71b56a46760a58f67bfc5bea9014bf61ac561e75fc9d69438b.png" src="_images/137ffab0ed301f71b56a46760a58f67bfc5bea9014bf61ac561e75fc9d69438b.png" />
+<img alt="_images/fcd26b93065efadc154fcefd04b9718b6aced8c9768ef975e4ea486970763fc0.png" src="_images/fcd26b93065efadc154fcefd04b9718b6aced8c9768ef975e4ea486970763fc0.png" />
 </div>
 </div>
 <p>These plots represent ofter contradictory metrics, on one hand you would like to obtain a large probability of finding a right solution (the deffinition of right comes from what you define as success). On the other hand, the time it takes to solve these cases should be as small as possible.
-This is why we are interested in a metric that combines both, and that is why we settle on the Time To Solution (TTS) which is defined as
-$<span class="math notranslate nohighlight">\(
+This is why we are interested in a metric that combines both, and that is why we settle on the Time To Solution (TTS) which is defined as</p>
+<div class="math notranslate nohighlight">
+\[
 TTS = \frac{\log{1-s}}{\log{1-p}}
-\)</span><span class="math notranslate nohighlight">\(
-where s is a success factor, usually takes as \)</span>s = 99%<span class="math notranslate nohighlight">\(, and \)</span>p$ is the success probability, usually accounted as the observed success probability.</p>
+\]</div>
+<p>where s is a success factor, usually takes as <span class="math notranslate nohighlight">\(s = 99\%\)</span>, and <span class="math notranslate nohighlight">\(p\)</span> is the success probability, usually accounted as the observed success probability.</p>
 <p>One usually reads this as the time to solution within 99% probability.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -897,10 +894,10 @@ where s is a success factor, usually takes as \)</span>s = 99%<span class="math 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x77330e537670&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7bfa9edc5fc0&gt;
 </pre></div>
 </div>
-<img alt="_images/2ad1767169caf68a3b6f7aa98c7501843bb083a6922e2fa12124ebaccecd04b9.png" src="_images/2ad1767169caf68a3b6f7aa98c7501843bb083a6922e2fa12124ebaccecd04b9.png" />
+<img alt="_images/b853c6dd160d4ba62f4925b200fb816967d75c3f76c97ee1a06204204cc26241.png" src="_images/b853c6dd160d4ba62f4925b200fb816967d75c3f76c97ee1a06204204cc26241.png" />
 </div>
 </div>
 <p>As you can notice, the default parameters given by D-Wave (number of sweeps = 1000 and a geometric update of <span class="math notranslate nohighlight">\(\beta\)</span>) are not optimal for our tiny example in terms of expected runtime.
@@ -939,7 +936,7 @@ This parameters choice might not generalize to any other problem, as seen below.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_162951/1579279843.py:1: DeprecationWarning: BinaryQuadraticModel.to_networkx_graph() is deprecated since dimod 0.10.0 and will be removed in 0.12.0. Use dimod.to_networkx_graph() instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_114151/1579279843.py:1: DeprecationWarning: BinaryQuadraticModel.to_networkx_graph() is deprecated since dimod 0.10.0 and will be removed in 0.12.0. Use dimod.to_networkx_graph() instead.
   nx_graph = model_random.to_networkx_graph()
 </pre></div>
 </div>
@@ -959,7 +956,7 @@ This parameters choice might not generalize to any other problem, as seen below.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average random energy:0.20821570081702884
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average random energy:-0.2504200813470361
 </pre></div>
 </div>
 </div>
@@ -972,13 +969,13 @@ This parameters choice might not generalize to any other problem, as seen below.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: -68.92432189311049
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: -79.53825499710057
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: title={&#39;center&#39;: &#39;Random sampling&#39;}, xlabel=&#39;solution&#39;, ylabel=&#39;Energy&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/250e34d059bc1064d5446a6972cccaa14314946ded727cf00eae6f710c2316ad.png" src="_images/250e34d059bc1064d5446a6972cccaa14314946ded727cf00eae6f710c2316ad.png" />
+<img alt="_images/830a497f8ab9df2c01d5678d38c289ccb6bd95dc8d79aea328cd8b2f5ef055db.png" src="_images/830a497f8ab9df2c01d5678d38c289ccb6bd95dc8d79aea328cd8b2f5ef055db.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -996,7 +993,7 @@ This parameters choice might not generalize to any other problem, as seen below.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: -236.4258051878277
-runtime: 3.028658866882324 seconds
+runtime: 3.1673173904418945 seconds
 </pre></div>
 </div>
 </div>
@@ -1023,7 +1020,9 @@ We also include an arbitrary offset of the Ising model <span class="math notrans
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: -236.4258051878277
-minimum energy: -236.4258051878277
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>minimum energy: -236.4258051878277
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: title={&#39;center&#39;: &#39;Simulated annealing with default parameters&#39;}, xlabel=&#39;Energy&#39;, ylabel=&#39;Probabilities&#39;&gt;
@@ -1048,7 +1047,7 @@ Moreover, the distributions that both lead to are extremely different too.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;beta_range&#39;: [0.0061437051318809005, 86238.87552721801], &#39;beta_schedule_type&#39;: &#39;geometric&#39;, &#39;timing&#39;: {&#39;preprocessing_ns&#39;: 19006312, &#39;sampling_ns&#39;: 3009042127, &#39;postprocessing_ns&#39;: 483317}}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;beta_range&#39;: [0.0061437051318809005, 86238.87552721801], &#39;beta_schedule_type&#39;: &#39;geometric&#39;, &#39;timing&#39;: {&#39;preprocessing_ns&#39;: 20513575, &#39;sampling_ns&#39;: 3146221946, &#39;postprocessing_ns&#39;: 435022}}
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Default Geometric temperature schedule&#39;)
@@ -1058,11 +1057,12 @@ Moreover, the distributions that both lead to are extremely different too.</p>
 </div>
 </div>
 <p>We can solve this problem using IP such that we have guarantees that it is solved to optimality (this might be a great quiz for future lectures), but in this case let us define the “success” as getting an objective certain percentage of the best found solution in all cases (which we see it might not be even found with the default parameters).
-To get a scaled version of this success equivalent for all instances, we will define this success with respect to the metric:
-$<span class="math notranslate nohighlight">\(
+To get a scaled version of this success equivalent for all instances, we will define this success with respect to the metric:</p>
+<div class="math notranslate nohighlight">
+\[
 \frac{found - random}{minimum - random}
-\)</span><span class="math notranslate nohighlight">\(
-Where \)</span>found<span class="math notranslate nohighlight">\( corresponds to the best found solution within our sampling, \)</span>random<span class="math notranslate nohighlight">\( is the mean of the random sampling shown above, and \)</span>minimum$ corresponds to the best found solution to our problem during the exploration. Consider that this minimum might not be the global minimum.
+\]</div>
+<p>Where <span class="math notranslate nohighlight">\(found\)</span> corresponds to the best found solution within our sampling, <span class="math notranslate nohighlight">\(random\)</span> is the mean of the random sampling shown above, and <span class="math notranslate nohighlight">\(minimum\)</span> corresponds to the best found solution to our problem during the exploration. Consider that this minimum might not be the global minimum.
 This metric is very informative given that the best performance you can have is 1, being at the minimum, and negative values would correspond to a method that at best behaves worse that the random sampling.
 Success now is counted as being within certain treshold of this value of 1.
 This new way of measuring each method is very similar to the approximation ratio of approximation algorithms, therefore we will use that terminology from now on.</p>
@@ -1242,8 +1242,8 @@ To account for the stochasticity of this method, we are bootstrapping all of our
         <span class="n">bestnp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;bestci&#39;</span><span class="p">][</span><span class="n">boot</span><span class="p">][</span><span class="n">schedule</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">sweeps</span><span class="p">,</span><span class="n">bestnp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">bestnp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Sweeps&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Approximation ratio = </span><span class="se">\n</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="s1">&#39;(best found - random sample) / (min energy - random sample)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing approximation ratio of Ising 42 N=100</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Performance ratio = </span><span class="se">\n</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="s1">&#39;(best found - random sample) / (min energy - random sample)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing performance ratio of Ising 42 N=100</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
           <span class="s1">&#39; with varying schedule, &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n_boot</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; bootstrap re-samples, and sweeps&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper center&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
@@ -1256,7 +1256,7 @@ To account for the stochasticity of this method, we are bootstrapping all of our
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(0.8, 1.01)]
 </pre></div>
 </div>
-<img alt="_images/9f408c5b7463193af26c806cce584d258df9c3e93745aa92d516232399eca973.png" src="_images/9f408c5b7463193af26c806cce584d258df9c3e93745aa92d516232399eca973.png" />
+<img alt="_images/7a59545e282a2525d718e60bfa26f9d80cee8390c4b1a136274715a1dc9cf3f7.png" src="_images/7a59545e282a2525d718e60bfa26f9d80cee8390c4b1a136274715a1dc9cf3f7.png" />
 </div>
 </div>
 <p>Now, besides looking at the sweeps, which are our parameter, we want to see how the performance changes with respect to the number of shots, which in this case are proportional to the computational time/effort that it takes to solve the problem.</p>
@@ -1270,8 +1270,8 @@ To account for the stochasticity of this method, we are bootstrapping all of our
         <span class="n">bestnp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;bestci&#39;</span><span class="p">][</span><span class="n">boot</span><span class="p">][</span><span class="n">schedule</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">reads</span><span class="p">,</span><span class="n">bestnp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">bestnp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Total number of reads&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Approximation ratio = </span><span class="se">\n</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="s1">&#39;(best found - random sample) / (min energy - random sample)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing approximation ratio of Ising 42 N=100</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Performance ratio = </span><span class="se">\n</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="s1">&#39;(best found - random sample) / (min energy - random sample)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing performance ratio of Ising 42 N=100</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
           <span class="s1">&#39; with varying schedule, &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n_boot</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; bootstrap re-samples, and sweeps&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper center&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
@@ -1284,7 +1284,7 @@ To account for the stochasticity of this method, we are bootstrapping all of our
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(0.8, 1.01)]
 </pre></div>
 </div>
-<img alt="_images/b647690a7d3fd82f92364b31a278f4e73b51ca72b0eedcdf5c2dc4660b1d3bd7.png" src="_images/b647690a7d3fd82f92364b31a278f4e73b51ca72b0eedcdf5c2dc4660b1d3bd7.png" />
+<img alt="_images/2a4c3ced50fb2fa5f0ff5a826b07cfa06270e8348ba488014256b491d7f7879c.png" src="_images/2a4c3ced50fb2fa5f0ff5a826b07cfa06270e8348ba488014256b491d7f7879c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1317,7 +1317,7 @@ To account for the stochasticity of this method, we are bootstrapping all of our
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x77330c8bb220&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7bfa9d76fac0&gt;
 </pre></div>
 </div>
 <img alt="_images/6158fd3afd37dc7bba94a7bac3370b0b3c148e9caac3f32a94f3f7268a06d44c.png" src="_images/6158fd3afd37dc7bba94a7bac3370b0b3c148e9caac3f32a94f3f7268a06d44c.png" />
@@ -1389,7 +1389,7 @@ To account for the stochasticity of this method, we are bootstrapping all of our
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x77330c312650&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7bfa9d34db10&gt;
 </pre></div>
 </div>
 <img alt="_images/39ea0aba9fc5d4d787f13165f5fbec63f23f584889b3096a4e68225070204a40.png" src="_images/39ea0aba9fc5d4d787f13165f5fbec63f23f584889b3096a4e68225070204a40.png" />
@@ -1469,18 +1469,18 @@ To account for the stochasticity of this method, we are bootstrapping all of our
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">1.01</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mf">1e2</span><span class="p">,</span><span class="mf">1e4</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Total number of reads (equivalent to time)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Approximation ratio = </span><span class="se">\n</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="s1">&#39;(best found - random sample) / (min energy - random sample)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing approximation ratio of Ising 42 N=100</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Performance ratio = </span><span class="se">\n</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="s1">&#39;(best found - random sample) / (min energy - random sample)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing performance ratio of Ising 42 N=100</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
           <span class="s1">&#39; with varying schedule, &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n_boot</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; bootstrap re-samples, and sweeps&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x77330c423b80&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7bfa9d398190&gt;
 </pre></div>
 </div>
-<img alt="_images/8f6911ad51aa87629a98d7a98697cc06e9ed3a8664237370e1e47b930663a02b.png" src="_images/8f6911ad51aa87629a98d7a98697cc06e9ed3a8664237370e1e47b930663a02b.png" />
+<img alt="_images/d77fdc1db023f6b91558defd778fd087900aa6cc4c44bc7887235c5475b73e35.png" src="_images/d77fdc1db023f6b91558defd778fd087900aa6cc4c44bc7887235c5475b73e35.png" />
 </div>
 </div>
 <p>Here see how using the optimal number of sweeps is better than using other values (including the default recommended by the solver) in terms of solving this problem.
@@ -1762,8 +1762,8 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
         <span class="c1"># min_median_best = min(np.nanmedian(results_array, axis=0))</span>
         <span class="n">tsplotboot</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sweeps</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">best_array</span><span class="p">,</span> <span class="n">error_est</span><span class="o">=</span><span class="s1">&#39;bootstrap&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Ensemble &quot;</span> <span class="o">+</span> <span class="n">schedule</span> <span class="o">+</span> <span class="s1">&#39; with &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">boot</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; reads&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Sweeps&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Approximation ratio </span><span class="se">\n</span><span class="s1"> = best found / min energy&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing approximation ratio of </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Performance ratio </span><span class="se">\n</span><span class="s1"> = best found / min energy&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing performance ratio of </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
           <span class="s1">&#39; Ensemble of Ising N=100 with varying schedule, sweeps, and number of reads&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper center&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
@@ -1776,7 +1776,7 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(0.8, 1.01)]
 </pre></div>
 </div>
-<img alt="_images/79dba2885e19eaa0e5bce5fd743b6595b2d19741fd6b692a320c36898137bc8c.png" src="_images/79dba2885e19eaa0e5bce5fd743b6595b2d19741fd6b692a320c36898137bc8c.png" />
+<img alt="_images/1409cb599ecc9f524ce79ef20e7a58c6c8cbed86b10951115bf3cf371a40f829.png" src="_images/1409cb599ecc9f524ce79ef20e7a58c6c8cbed86b10951115bf3cf371a40f829.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1789,8 +1789,8 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
         <span class="c1"># min_median_best = min(np.nanmedian(results_array, axis=0))</span>
         <span class="n">tsplotboot</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">reads</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">best_array</span><span class="p">,</span> <span class="n">error_est</span><span class="o">=</span><span class="s1">&#39;bootstrap&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Ensemble &quot;</span> <span class="o">+</span> <span class="n">schedule</span> <span class="o">+</span> <span class="s1">&#39; with &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">boot</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; reads&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Total number of reads&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Approximation ratio </span><span class="se">\n</span><span class="s1"> = best found / min energy&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing approximation ratio of </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Performance ratio </span><span class="se">\n</span><span class="s1"> = best found / min energy&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing performance ratio of </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
           <span class="s1">&#39; Ensemble of Ising N=100 with varying schedule, sweeps, and number of reads&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper center&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
@@ -1803,7 +1803,7 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(0.8, 1.01)]
 </pre></div>
 </div>
-<img alt="_images/3e03909d69aa81e3e30b6343c8f187d400f5106aeb72befee6368e3dea64bdc5.png" src="_images/3e03909d69aa81e3e30b6343c8f187d400f5106aeb72befee6368e3dea64bdc5.png" />
+<img alt="_images/96cd5008ac3e228e26c9590a8d4c0a23780b72743b983c9093408fd4f59e29d3.png" src="_images/96cd5008ac3e228e26c9590a8d4c0a23780b72743b983c9093408fd4f59e29d3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1827,7 +1827,7 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x77330c827340&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7bfa9d9e7310&gt;
 </pre></div>
 </div>
 <img alt="_images/3dd989b0a1d670a6d3a15cc97d57982a0b3a92a041b5deb05f13921f113bb99e.png" src="_images/3dd989b0a1d670a6d3a15cc97d57982a0b3a92a041b5deb05f13921f113bb99e.png" />
@@ -1902,18 +1902,18 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mf">0.95</span><span class="p">,</span><span class="mf">1.001</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mf">1e2</span><span class="p">,</span><span class="mf">1e4</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Total number of reads (equivalent to time)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Approximation ratio = </span><span class="se">\n</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="s1">&#39;(best found - random sample) / (min energy - random sample)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing approximation ratio of Ising 42 N=100</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Performance ratio = </span><span class="se">\n</span><span class="s1"> &#39;</span> <span class="o">+</span> <span class="s1">&#39;(best found - random sample) / (min energy - random sample)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Simulated annealing performance ratio of Ising 42 N=100</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
           <span class="s1">&#39; with varying schedule, &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n_boot</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; bootstrap re-samples, and sweeps&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x773307c5fac0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7bfa9c8bc7c0&gt;
 </pre></div>
 </div>
-<img alt="_images/dd0ddf68059afa5be2f19392f54520392d51d0f57837fd3353058fc0d9c773b2.png" src="_images/dd0ddf68059afa5be2f19392f54520392d51d0f57837fd3353058fc0d9c773b2.png" />
+<img alt="_images/a1ac2f774be4e6fcb260cf3de9ed9bda9328124cb8507e957ea1c291dee1f7a4.png" src="_images/a1ac2f774be4e6fcb260cf3de9ed9bda9328124cb8507e957ea1c291dee1f7a4.png" />
 </div>
 </div>
 </section>
@@ -1957,6 +1957,15 @@ minimum TTS for instance 42 with geometric schedule = 3.2688155801866294s at swe
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Quantum Annealing via D-Wave</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="DWAVE%20Simulated%20Annealing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Solving QUBOs with DWAVE Simulated Annealing</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

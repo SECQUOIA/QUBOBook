@@ -187,13 +187,8 @@
 
 <li class="toctree-l1"><a class="reference internal" href="Graver%20Augmentation%20Multiseed%20Algorithm.html">Introduction to GAMA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Quantum%20Annealing%20via%20D-Wave.html">Quantum Annealing via D-Wave</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">About this Notebook</a></li>
-
-
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="Benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DWAVE%20Simulated%20Annealing.html">Solving QUBOs with DWAVE Simulated Annealing</a></li>
 </ul>
 
     </div>
@@ -430,8 +425,6 @@ document.write(`
     <br>
     <i>Computer Science &amp; Systems Engineering Program, Federal University of Rio de Janeiro</i>
     <br>
-    <i>PSR Energy Consulting &amp; Analytics</i>
-    <br>
     <br>
     <a href="https://github.com/murraybj">Benjamin J. L. Murray</a>
     <br>
@@ -440,7 +433,7 @@ document.write(`
     <i>Undergraduate Research Assistant</i>
     <br>
     <br>
-    <a href="https://colab.research.google.com/github/JuliaQUBO/QUBONotebooks/blob/main/notebooks_py/1-MathProg_python.ipynb" target="_parent">
+    <a href="https://colab.research.google.com/github/SECQUOIA/QUBONotebooks/blob/main/notebooks_py/5-Benchmarking_python.ipynb" target="_parent">
         <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
     </a>
     <a href="https://secquoia.github.io/">
@@ -646,12 +639,12 @@ Assuming the units produced of A are <span class="math notranslate nohighlight">
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLPSOL--GLPK LP/MIP Solver 5.0
 Parameter(s) specified in the command line:
- --write /tmp/tmpsjjfwvef.glpk.raw --wglp /tmp/tmp2pnbpcht.glpk.glp --cpxlp
- /tmp/tmp5a3_0t6t.pyomo.lp
-Reading problem data from &#39;/tmp/tmp5a3_0t6t.pyomo.lp&#39;...
+ --write /tmp/tmp18o2yoy_.glpk.raw --wglp /tmp/tmp9t4vao_b.glpk.glp --cpxlp
+ /tmp/tmpmlestks0.pyomo.lp
+Reading problem data from &#39;/tmp/tmpmlestks0.pyomo.lp&#39;...
 2 rows, 2 columns, 4 non-zeros
 23 lines were read
-Writing problem data to &#39;/tmp/tmp2pnbpcht.glpk.glp&#39;...
+Writing problem data to &#39;/tmp/tmp9t4vao_b.glpk.glp&#39;...
 15 lines were written
 GLPK Simplex Optimizer 5.0
 2 rows, 2 columns, 4 non-zeros
@@ -667,7 +660,7 @@ Size of triangular part is 2
 OPTIMAL LP SOLUTION FOUND
 Time used:   0.0 secs
 Memory used: 0.0 Mb (39693 bytes)
-Writing basic solution to &#39;/tmp/tmpsjjfwvef.glpk.raw&#39;...
+Writing basic solution to &#39;/tmp/tmp18o2yoy_.glpk.raw&#39;...
 13 lines were written
 </pre></div>
 </div>
@@ -839,7 +832,7 @@ Number of inequality constraint evaluations          = 6
 Number of equality constraint Jacobian evaluations   = 0
 Number of inequality constraint Jacobian evaluations = 6
 Number of Lagrangian Hessian evaluations             = 5
-Total CPU secs in IPOPT (w/o function evaluations)   =      0.001
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.003
 Total CPU secs in NLP function evaluations           =      0.000
 
 EXIT: Optimal Solution Found.

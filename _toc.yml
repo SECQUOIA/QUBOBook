@@ -5,8 +5,14 @@ format: jb-book
 root: intro
 chapters:
 - file: Introduction to Mathematical Programming
+  title: Introduction to Mathematical Programming
 - file: QUBO and Ising Models
+  title: Quadratic Unconstrained Binary Optimization
 - file: Graver Augmentation Multiseed Algorithm
+  title: Graver Augmentation Multiseed Algorithm
 - file: Quantum Annealing via D-Wave
+  title: Quantum Annealing via D-Wave
 - file: Benchmarking
+  title: Benchmarking
 - file: DWAVE Simulated Annealing
+  title: Solving QUBOs with DWAVE Simulated Annealing
